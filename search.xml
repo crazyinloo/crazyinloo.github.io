@@ -13,8 +13,7 @@
 <p>BLOG&#x2F;node_modules&#x2F;hexo-theme-candelas&#x2F;_config.yml</p>
 </blockquote>
 <p>在里面更改。</p>
-<h1 id="更新blog"><a href="#更新blog" class="headerlink" title="更新blog"></a>更新blog</h1><hr>
-<h2 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h2><p>终端进入blog文件夹后，输入:</p>
+<h1 id="更新blog"><a href="#更新blog" class="headerlink" title="更新blog"></a>更新blog</h1><h2 id="更新需要一段时间请不要着急（）"><a href="#更新需要一段时间请不要着急（）" class="headerlink" title="更新需要一段时间请不要着急（）"></a>更新需要一段时间请不要着急（）</h2><h2 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h2><p>终端进入blog文件夹后，输入:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g -d</span><br></pre></td></tr></table></figure>
 <h2 id="markdown格式相关"><a href="#markdown格式相关" class="headerlink" title="markdown格式相关"></a>markdown格式相关</h2><h3 id="开头"><a href="#开头" class="headerlink" title="开头"></a>开头</h3><pre><code><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: Hello World</span><br><span class="line">date: 2025/10/11</span><br><span class="line">categories: </span><br><span class="line">- tech</span><br><span class="line">- new</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 </code></pre>
