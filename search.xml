@@ -37,25 +37,6 @@
 </li>
 <li><p>图片<br><code>![title](link)</code></p>
 </li>
-<li><p>表格</p>
- <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">| 左对齐 | 居中对齐 | 右对齐 |</span><br><span class="line">| :--- | :---: | ---: |</span><br><span class="line">| 1 | 2 | 3 |</span><br></pre></td></tr></table></figure>
-
-<p> 效果：</p>
-<table>
-<thead>
-<tr>
-<th align="left">左对齐</th>
-<th align="center">居中对齐</th>
-<th align="right">右对齐</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">1</td>
-<td align="center">2</td>
-<td align="right">3</td>
-</tr>
-</tbody></table>
-</li>
 <li><p>换行<br>段落间建议使用一个空行</p>
 </li>
 </ol>
