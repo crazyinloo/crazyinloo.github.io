@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>To Begin</title>
-    <url>/project/2025/10/11/toBegin/</url>
+    <url>/2025/10/11/toBegin/</url>
     <content><![CDATA[<h1 id="Operation"><a href="#Operation" class="headerlink" title="Operation"></a>Operation</h1><hr>
 <h2 id="本地打开"><a href="#本地打开" class="headerlink" title="本地打开"></a>本地打开</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> C:\Users\69877\blog</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <h2 id="清除缓存"><a href="#清除缓存" class="headerlink" title="清除缓存"></a>清除缓存</h2><p>ctrl + c 停止服务</p>
