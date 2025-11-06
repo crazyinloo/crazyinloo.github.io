@@ -5,15 +5,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Operation 本地打开12$ cd C:\Users\69877\blog$ hexo server 清除缓存ctrl + c 停止服务 1$ hexo clean &amp;&amp; hexo server 添加图片在blog&#x2F;source&#x2F;image中添加即可，后续所有路径写成&#x2F;image&#x2F;的形式 更改设置路径：   BLOG&#x2F;node_modules&#x2F;hexo-t">
+  <meta name="description" content="Operation 本地打开12$ cd C:\Users\69877\blog$ hexo server 清除缓存ctrl + c 停止服务 1$ hexo clean &amp;&amp; hexo server 添加图片在blog&#x2F;source&#x2F;images中添加即可，后续所有路径写成&#x2F;images&#x2F;的形式 更改设置路径：   BLOG&#x2F;node_modules&#x2F;hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="To Begin">
 <meta property="og:url" content="https://crazyinloo.github.io/project/2025/10/11/toBegin/index.html">
 <meta property="og:site_name" content="CRZ&#39;s Blog">
-<meta property="og:description" content="Operation 本地打开12$ cd C:\Users\69877\blog$ hexo server 清除缓存ctrl + c 停止服务 1$ hexo clean &amp;&amp; hexo server 添加图片在blog&#x2F;source&#x2F;image中添加即可，后续所有路径写成&#x2F;image&#x2F;的形式 更改设置路径：   BLOG&#x2F;node_modules&#x2F;hexo-t">
+<meta property="og:description" content="Operation 本地打开12$ cd C:\Users\69877\blog$ hexo server 清除缓存ctrl + c 停止服务 1$ hexo clean &amp;&amp; hexo server 添加图片在blog&#x2F;source&#x2F;images中添加即可，后续所有路径写成&#x2F;images&#x2F;的形式 更改设置路径：   BLOG&#x2F;node_modules&#x2F;hexo">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-27T15:31:00.720Z">
+<meta property="article:modified_time" content="2025-11-06T13:26:29.066Z">
 <meta property="article:author" content="Lee">
 <meta name="twitter:card" content="summary">
   <title>To Begin | CRZ&#39;s Blog</title>
@@ -137,7 +137,7 @@
 <h2 id="本地打开"><a href="#本地打开" class="headerlink" title="本地打开"></a>本地打开</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> C:\Users\69877\blog</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <h2 id="清除缓存"><a href="#清除缓存" class="headerlink" title="清除缓存"></a>清除缓存</h2><p>ctrl + c 停止服务</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo server</span><br></pre></td></tr></table></figure>
-<h2 id="添加图片"><a href="#添加图片" class="headerlink" title="添加图片"></a>添加图片</h2><p>在<code>blog/source/image</code>中添加即可，后续所有路径写成<code>/image/</code>的形式</p>
+<h2 id="添加图片"><a href="#添加图片" class="headerlink" title="添加图片"></a>添加图片</h2><p>在<code>blog/source/images</code>中添加即可，后续所有路径写成<code>/images/</code>的形式</p>
 <h2 id="更改设置"><a href="#更改设置" class="headerlink" title="更改设置"></a>更改设置</h2><p>路径： </p>
 <blockquote>
 <p>BLOG&#x2F;node_modules&#x2F;hexo-theme-candelas&#x2F;_config.yml</p>
@@ -174,10 +174,14 @@
 <li>行内插入：<code>$E = \frac{1}{2}mv^2$</code></li>
 <li>块级公式：<code>$$</code> <code>$$</code></li>
 <li>常用Latex语法<ul>
-<li>上标：<code>x^{20}</code></li>
-<li>下标：<code>x_{10}</code></li>
-<li>分数：<code>\frac{1}{2}</code></li>
-<li>希腊字母<table>
+<li><p>上标：<code>x^{20}</code></p>
+</li>
+<li><p>下标：<code>x_{10}</code></p>
+</li>
+<li><p>分数：<code>\frac{1}{2}</code></p>
+</li>
+<li><p>希腊字母</p>
+<table>
 <thead>
 <tr>
 <th>命令</th>
@@ -254,23 +258,26 @@
 </tr>
 </tbody></table>
 </li>
-<li>常见符号<ul>
-<li>\sin</li>
-<li>\sqrt[n]{expression}</li>
-<li>\times,\div,\cdot</li>
-<li>\sum,\int,\lim</li>
-<li>\infty</li>
-<li>\rightarrow,</li>
+<li><p>常见符号</p>
+<ul>
+<li><code>\sin</code></li>
+<li><code>\sqrt[n]{expression}</code> $\sqrt[n]{expression}$</li>
+<li><code>\times</code> $\times$,<code>\div</code> $\div$,<code>\cdot</code> $\cdot$</li>
+<li><code>\sum</code> $\sum$,<code>\int</code> $\int$,,<code>\lim</code> $\lim$</li>
+<li><code>\infty</code> $\infty$</li>
+<li><code>\rightarrow</code></li>
 </ul>
 </li>
-<li>矩阵 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A = \begin&#123;pmatrix&#125;</span><br><span class="line">a &amp; b \\</span><br><span class="line">c &amp; d</span><br><span class="line">\end&#123;pmatrix&#125;</span><br></pre></td></tr></table></figure>
- 效果：<br> $$<br> A &#x3D; \begin{pmatrix}</li>
+<li><p>矩阵</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A = \begin&#123;pmatrix&#125;</span><br><span class="line">a &amp; b \\</span><br><span class="line">c &amp; d</span><br><span class="line">\end&#123;pmatrix&#125;</span><br></pre></td></tr></table></figure>
+<p> 效果：</p>
+<p> $$<br> A &#x3D; \begin{pmatrix}<br> a &amp; b \<br> c &amp; d<br> \end{pmatrix}<br> $$</p>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<p>a &amp; b \<br>c &amp; d<br>\end{pmatrix}<br>$$</p>
 
       
     </div>
@@ -301,6 +308,16 @@
   </div>
   
     
+  <nav id="article-nav">
+    
+      <a href="/2025/11/06/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/" id="article-nav-newer" class="article-nav-link-wrap">
+        <h4 class="article-nav-caption">Read This Next</h4>
+        <div class="article-nav-title">2025-BUAA-OOPre学习心得</div>
+      </a>
+    
+    
+  </nav>
+
 
   
 </article>
@@ -316,6 +333,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/11/06/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/">2025-BUAA-OOPre学习心得</a>
+          </li>
         
           <li>
             <a href="/2025/10/11/toBegin/">To Begin</a>
