@@ -13,7 +13,7 @@
 <meta property="og:description" content="声明 P3对alu、grf的设计非常不合理，直接将各个可能的操作数接入alu，而且默认grf要读的寄存器是rs、rt。但因为足够应付需求（懒得重构）就保留了这种错误方法，但在后面的设计中都注意规避了。 前置理解 内存 1. 哈佛结构（本CPU应用的） 内存 &#x3D; 数据内存（DM） + 指令内存（IM）  IM： CPU只会从IM读取指令，永远不会写入指令                    #mj">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-10T13:18:00.000Z">
-<meta property="article:modified_time" content="2025-11-10T13:26:41.671Z">
+<meta property="article:modified_time" content="2025-11-10T13:27:46.769Z">
 <meta property="article:author" content="Lee">
 <meta name="twitter:card" content="summary">
   <title>BUAA-CO-P3 基于logisim的单周期MIPS架构CPU | CRZ&#39;s Blog</title>
@@ -168,9 +168,9 @@
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-4ff11e1">
+    <span id="mjx-f674eec">
       <style>
-      #mjx-4ff11e1{
+      #mjx-f674eec{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -331,9 +331,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-217ee1e">
+    <span id="mjx-089449d">
       <style>
-      #mjx-217ee1e{
+      #mjx-089449d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -500,9 +500,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-3805b26">
+    <span id="mjx-4066498">
       <style>
-      #mjx-3805b26{
+      #mjx-4066498{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -708,9 +708,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-d080e99">
+    <span id="mjx-13c68f">
       <style>
-      #mjx-d080e99{
+      #mjx-13c68f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -888,9 +888,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-f5fbe48">
+    <span id="mjx-0eabe06">
       <style>
-      #mjx-f5fbe48{
+      #mjx-0eabe06{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
