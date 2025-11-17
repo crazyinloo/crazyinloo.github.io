@@ -12,12 +12,12 @@
 <meta property="og:site_name" content="CRZ&#39;s Blog">
 <meta property="og:description" content="改动 相比P3，需要增加的：  自行实现ROM、RAM 实例化&amp;端口映射 改为同步复位 用initial对reg赋初值 对P3中集成alu进行拆分：增加aluControl来进行operand1、operand2的选择 对grf的修改  现在默认RA1接rs，RA2接rt 若需读取二者以外的寄存器，可临时为grf添加RA3、RD3，为aluControl添加rd3   DM添加LoadTy">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://crazyinloo.github.io/image/CO/P4/dm%E6%8E%A5%E5%8F%A3.png">
+<meta property="og:image" content="https://crazyinloo.github.io/images/CO/P4/dm%E6%8E%A5%E5%8F%A3.png">
 <meta property="article:published_time" content="2025-11-17T14:05:02.000Z">
-<meta property="article:modified_time" content="2025-11-17T14:05:12.323Z">
+<meta property="article:modified_time" content="2025-11-17T14:08:02.265Z">
 <meta property="article:author" content="Lee">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://crazyinloo.github.io/image/CO/P4/dm%E6%8E%A5%E5%8F%A3.png">
+<meta name="twitter:image" content="https://crazyinloo.github.io/images/CO/P4/dm%E6%8E%A5%E5%8F%A3.png">
   <title>BUAA-CO-P4 基于verilog的单周期MIPS架构CPU | CRZ&#39;s Blog</title>
   
   
@@ -1102,7 +1102,7 @@
 <ol>
 <li>
 <p>阅读下面给出的 DM 的输入示例中（示例 DM 容量为 4KB，即 32bit × 1024字），根据你的理解回答，这个 addr 信号又是从哪里来的？地址信号 addr 位数为什么是 [11:2] 而不是 [9:0] ？</p>
-<p><img src="/image/CO/P4/dm%E6%8E%A5%E5%8F%A3.png" alt="alt text"></p>
+<p><img src="/images/CO/P4/dm%E6%8E%A5%E5%8F%A3.png" alt="alt text"></p>
 <ul>
 <li>这个addr由alu给出（alu对<code>gpr(base)</code>和<code>(sign_ext)offset</code>做加运算）</li>
 <li>addr以字节为单位，对应到以字为单位的DM，故应除以4，即取[11:2]</li>
