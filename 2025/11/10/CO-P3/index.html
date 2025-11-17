@@ -13,7 +13,7 @@
 <meta property="og:description" content="声明 P3对alu、grf的设计非常不合理，直接将各个可能的操作数接入alu，而且默认grf要读的寄存器是rs、rt。但因为足够应付需求（懒得重构）就保留了这种错误方法，但在后面的设计中都注意规避了。 前置理解 内存 1. 哈佛结构（本CPU应用的） 内存 &#x3D; 数据内存（DM） + 指令内存（IM）  IM： CPU只会从IM读取指令，永远不会写入指令                    #mj">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-10T13:18:00.000Z">
-<meta property="article:modified_time" content="2025-11-10T13:27:46.769Z">
+<meta property="article:modified_time" content="2025-11-17T14:04:40.233Z">
 <meta property="article:author" content="Lee">
 <meta name="twitter:card" content="summary">
   <title>BUAA-CO-P3 基于logisim的单周期MIPS架构CPU | CRZ&#39;s Blog</title>
@@ -168,9 +168,9 @@
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-f674eec">
+    <span id="mjx-c1d9436">
       <style>
-      #mjx-f674eec{
+      #mjx-c1d9436{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -331,9 +331,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-089449d">
+    <span id="mjx-d58227">
       <style>
-      #mjx-089449d{
+      #mjx-d58227{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -500,9 +500,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-4066498">
+    <span id="mjx-e90ce78">
       <style>
-      #mjx-4066498{
+      #mjx-e90ce78{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -708,9 +708,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-13c68f">
+    <span id="mjx-f7a7075">
       <style>
-      #mjx-13c68f{
+      #mjx-f7a7075{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -888,9 +888,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-0eabe06">
+    <span id="mjx-ade202b">
       <style>
-      #mjx-0eabe06{
+      #mjx-ade202b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1891,6 +1891,11 @@ File - Dump Memory
     
   <nav id="article-nav">
     
+      <a href="/2025/11/17/CO-P4/" id="article-nav-newer" class="article-nav-link-wrap">
+        <h4 class="article-nav-caption">Read This Next</h4>
+        <div class="article-nav-title">BUAA-CO-P4 基于verilog的单周期MIPS架构CPU</div>
+      </a>
+    
     
       <a href="/2025/11/06/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/" id="article-nav-older" class="article-nav-link-wrap">
         <h4 class="article-nav-caption">You Might Enjoy</h4>
@@ -1914,6 +1919,10 @@ File - Dump Memory
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/11/17/CO-P4/">BUAA-CO-P4 基于verilog的单周期MIPS架构CPU</a>
+          </li>
         
           <li>
             <a href="/2025/11/10/CO-P3/">BUAA-CO-P3 基于logisim的单周期MIPS架构CPU</a>
