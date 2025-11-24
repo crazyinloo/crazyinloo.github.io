@@ -14,7 +14,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://crazyinloo.github.io/images/CO/P4/dm%E6%8E%A5%E5%8F%A3.png">
 <meta property="article:published_time" content="2025-11-17T14:05:02.000Z">
-<meta property="article:modified_time" content="2025-11-17T14:08:02.265Z">
+<meta property="article:modified_time" content="2025-11-24T13:34:03.985Z">
 <meta property="article:author" content="Lee">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://crazyinloo.github.io/images/CO/P4/dm%E6%8E%A5%E5%8F%A3.png">
@@ -80,7 +80,9 @@
   <script async src="https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
-<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
 
 
@@ -126,6 +128,63 @@
   
 </aside>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const tocLinks = document.querySelectorAll('.post-toc-link, .toc-link');
+    const article = document.querySelector('.article-entry');
+
+    if (tocLinks.length > 0 && article) {
+      // 获取所有标题
+      const headers = Array.from(article.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+                           .filter(h => h.id);
+
+      function onScroll() {
+        const scrollPos = window.scrollY || document.documentElement.scrollTop;
+        // 修正触发线：让它稍微靠下一点，更容易触发
+        const topThreshold = 150; 
+        
+        let currentId = '';
+
+        // ★ 核心逻辑改进：
+        // 遍历所有标题，找到“最后一个”处于“触发线之上”的标题
+        // 这样可以确保无论是一级还是二级，只要它是当前最上面的，就会被选中
+        for (let i = 0; i < headers.length; i++) {
+          const headerTop = headers[i].getBoundingClientRect().top;
+          
+          // 如果标题在触发线上面，它就是潜在的“当前标题”
+          if (headerTop < topThreshold) {
+            currentId = headers[i].id;
+          } else {
+            // 如果遇到一个标题在触发线下面，因为是顺序排列的，后面的肯定也在下面
+            // 所以直接停止寻找，最后记录的 currentId 就是正确的
+            break;
+          }
+        }
+
+        // 页面回到最顶端时清除高亮
+        if (scrollPos < 10) currentId = '';
+
+        // 更新样式
+        tocLinks.forEach(link => {
+          link.classList.remove('active');
+          
+          const href = link.getAttribute('href');
+          if (!href) return;
+          
+          // 兼容处理：有的 href 是 #Title，有的是 #title
+          const linkId = decodeURIComponent(href).replace('#', '');
+          
+          if (linkId && linkId === currentId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll);
+      onScroll();
+    }
+  });
+</script>
   </section>
   <section class="post-main">
     <article id="post-CO-P4" class="h-entry article article-type-post"
@@ -1100,7 +1159,7 @@
 <ol>
 <li>
 <p>阅读下面给出的 DM 的输入示例中（示例 DM 容量为 4KB，即 32bit × 1024字），根据你的理解回答，这个 addr 信号又是从哪里来的？地址信号 addr 位数为什么是 [11:2] 而不是 [9:0] ？</p>
-<p><img src="/images/CO/P4/dm%E6%8E%A5%E5%8F%A3.png" alt="alt text"></p>
+<p><img src="/images/CO/P4/dm%E6%8E%A5%E5%8F%A3.png" alt="DM示意图"></p>
 <ul>
 <li>这个addr由alu给出（alu对<code>gpr(base)</code>和<code>(sign_ext)offset</code>做加运算）</li>
 <li>addr以字节为单位，对应到以字为单位的DM，故应除以4，即取[11:2]</li>

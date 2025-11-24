@@ -78,7 +78,9 @@
   <script async src="https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
-<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
 
 
@@ -124,6 +126,63 @@
   
 </aside>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const tocLinks = document.querySelectorAll('.post-toc-link, .toc-link');
+    const article = document.querySelector('.article-entry');
+
+    if (tocLinks.length > 0 && article) {
+      // 获取所有标题
+      const headers = Array.from(article.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+                           .filter(h => h.id);
+
+      function onScroll() {
+        const scrollPos = window.scrollY || document.documentElement.scrollTop;
+        // 修正触发线：让它稍微靠下一点，更容易触发
+        const topThreshold = 150; 
+        
+        let currentId = '';
+
+        // ★ 核心逻辑改进：
+        // 遍历所有标题，找到“最后一个”处于“触发线之上”的标题
+        // 这样可以确保无论是一级还是二级，只要它是当前最上面的，就会被选中
+        for (let i = 0; i < headers.length; i++) {
+          const headerTop = headers[i].getBoundingClientRect().top;
+          
+          // 如果标题在触发线上面，它就是潜在的“当前标题”
+          if (headerTop < topThreshold) {
+            currentId = headers[i].id;
+          } else {
+            // 如果遇到一个标题在触发线下面，因为是顺序排列的，后面的肯定也在下面
+            // 所以直接停止寻找，最后记录的 currentId 就是正确的
+            break;
+          }
+        }
+
+        // 页面回到最顶端时清除高亮
+        if (scrollPos < 10) currentId = '';
+
+        // 更新样式
+        tocLinks.forEach(link => {
+          link.classList.remove('active');
+          
+          const href = link.getAttribute('href');
+          if (!href) return;
+          
+          // 兼容处理：有的 href 是 #Title，有的是 #title
+          const linkId = decodeURIComponent(href).replace('#', '');
+          
+          if (linkId && linkId === currentId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll);
+      onScroll();
+    }
+  });
+</script>
   </section>
   <section class="post-main">
     <article id="post-CO-P3" class="h-entry article article-type-post"
@@ -166,9 +225,9 @@
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-23b3ebb">
+    <span id="mjx-7628bd7">
       <style>
-      #mjx-23b3ebb{
+      #mjx-7628bd7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -329,9 +388,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-702644a">
+    <span id="mjx-9d42451">
       <style>
-      #mjx-702644a{
+      #mjx-9d42451{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -498,9 +557,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-b88fc78">
+    <span id="mjx-c000bea">
       <style>
-      #mjx-b88fc78{
+      #mjx-c000bea{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -706,9 +765,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-2edaa69">
+    <span id="mjx-219f747">
       <style>
-      #mjx-2edaa69{
+      #mjx-219f747{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -886,9 +945,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-5624abe">
+    <span id="mjx-e61bf6b">
       <style>
-      #mjx-5624abe{
+      #mjx-e61bf6b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
