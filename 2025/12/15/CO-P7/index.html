@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="目标简述 在P6的基础上，实现一个简单的计算机系统（MIPS微系统）。 三种外设  Timer（计时器）：计时部件，可以按照配置定时产生时钟中断 Memory（存储器）：外置IM、DM（类似P6） InterruptGenerator（中断发生器）：随机产生外部中断信号，产生的中断信号在CPU响应前会持续置高  支持异常处理的CPU   异常  内部异常：  由于指令执行错误导致的“事件” 例如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUAA-CO-P7 MIPS微系统">
+<meta property="og:url" content="https://crazyinloo.github.io/2025/12/15/CO-P7/index.html">
+<meta property="og:site_name" content="CRZ&#39;s Blog">
+<meta property="og:description" content="目标简述 在P6的基础上，实现一个简单的计算机系统（MIPS微系统）。 三种外设  Timer（计时器）：计时部件，可以按照配置定时产生时钟中断 Memory（存储器）：外置IM、DM（类似P6） InterruptGenerator（中断发生器）：随机产生外部中断信号，产生的中断信号在CPU响应前会持续置高  支持异常处理的CPU   异常  内部异常：  由于指令执行错误导致的“事件” 例如">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://crazyinloo.github.io/images/CO/P7/image.png">
+<meta property="og:image" content="https://crazyinloo.github.io/images/CO/P7/image-159.png">
+<meta property="og:image" content="https://crazyinloo.github.io/images/CO/P7/image-158.png">
+<meta property="og:image" content="https://crazyinloo.github.io/images/CO/P7/image-156.png">
+<meta property="og:image" content="https://crazyinloo.github.io/images/CO/P7/timer.jpg">
+<meta property="article:published_time" content="2025-12-15T14:24:00.000Z">
+<meta property="article:modified_time" content="2025-12-15T14:25:25.393Z">
+<meta property="article:author" content="Lee">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://crazyinloo.github.io/images/CO/P7/image.png">
+  <title>BUAA-CO-P7 MIPS微系统 | CRZ&#39;s Blog</title>
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS&#x2F;woiFS3uNKo8eIuni59rjyNGtXfstRzStA&#x3D;" crossorigin="anonymous">
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo&#x3D;" defer crossorigin="anonymous"></script>
+
+  
+  
+    
+<script src="/js/toc.js" defer></script>
+
+  
+  
+  
+<script src="/js/script.js" defer></script>
+
+  
+<script src="/js/search.js" defer></script>
+
+  
+<script src="/js/chocolate.js" defer></script>
+
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP&#x2F;HTHLT7097U8Y5b8&#x3D;" crossorigin="anonymous" defer></script>
+
+  
+  
+  
+  
+  
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,   // 允许 \$ 之类的转义
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        ignoreHtmlClass: 'tex2jax_ignore',
+        processHtmlClass: 'tex2jax_process'
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script async src="https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header" class="post-header">
+    <div id="header-inner">
+        <nav id="main-nav">
+            <a id="main-nav-toggle" class="nav-icon"></a>
+            
+                <a class="main-nav-link" href="/">Home</a>
+            
+                <a class="main-nav-link" href="/categories">Category</a>
+            
+                <a class="main-nav-link" href="/archives">Archive</a>
+            
+        </nav>
+        <nav id="sub-nav">
+            <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        </nav>
+        <script>
+            window.SEARCH_PATH = "/search.xml";
+        </script>
+        <!-- Search Form Wrapper - MODIFIED SECTION -->
+        <div id="search-form-wrap">
+        <!-- Use the theme's class for styling -->
+            <div class="search-form">
+                <input type="text" id="search-input" class="search-form-input" placeholder="Search...">
+            </div>
+            <!-- Container for search results, placed outside the styled form -->
+            <div id="search-results"></div>
+        </div>
+</header>
+      <div class="post-outer" data-post-title="BUAA-CO-P7 MIPS微系统" id="post">
+  <section class="post-toc">
+    <aside class="post-fixed-container">
+  <div class="toc-wrap">
+  <h3 class="toc-title">Contents</h3>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">目标简述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%A4%96%E8%AE%BE"><span class="toc-number">1.1.</span> <span class="toc-text">三种外设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84CPU"><span class="toc-number">1.2.</span> <span class="toc-text">支持异常处理的CPU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E7%A1%AC%E4%BB%B6%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.3.</span> <span class="toc-text">软硬件接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8F%E8%A7%82PC"><span class="toc-number">1.4.</span> <span class="toc-text">宏观PC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">顶层设计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">任务清单</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8CP0"><span class="toc-number">3.1.</span> <span class="toc-text">协处理器CP0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E4%B8%8E%E6%B5%81%E6%B0%B4"><span class="toc-number">3.2.</span> <span class="toc-text">内部异常检测与流水</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BDinGenerator"><span class="toc-number">3.3.</span> <span class="toc-text">BDinGenerator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bridge%E7%B3%BB%E7%BB%9F%E6%A1%A5"><span class="toc-number">3.4.</span> <span class="toc-text">Bridge系统桥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E6%97%B6%E5%99%A8"><span class="toc-number">3.5.</span> <span class="toc-text">计时器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E7%9A%84%E5%B0%81%E8%A3%85"><span class="toc-number">3.6.</span> <span class="toc-text">单周期CPU的封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCU%E6%96%B0%E5%A2%9E%E6%8E%A7%E5%88%B6"><span class="toc-number">3.7.</span> <span class="toc-text">HCU新增控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DM"><span class="toc-number">3.8.</span> <span class="toc-text">DM</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">思考题</span></a></li></ol>
+</div>
+
+  
+</aside>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const tocLinks = document.querySelectorAll('.post-toc-link, .toc-link');
+    const article = document.querySelector('.article-entry');
+
+    if (tocLinks.length > 0 && article) {
+      // 获取所有标题
+      const headers = Array.from(article.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+                           .filter(h => h.id);
+
+      function onScroll() {
+        const scrollPos = window.scrollY || document.documentElement.scrollTop;
+        // 修正触发线：让它稍微靠下一点，更容易触发
+        const topThreshold = 150; 
+        
+        let currentId = '';
+
+        // ★ 核心逻辑改进：
+        // 遍历所有标题，找到“最后一个”处于“触发线之上”的标题
+        // 这样可以确保无论是一级还是二级，只要它是当前最上面的，就会被选中
+        for (let i = 0; i < headers.length; i++) {
+          const headerTop = headers[i].getBoundingClientRect().top;
+          
+          // 如果标题在触发线上面，它就是潜在的“当前标题”
+          if (headerTop < topThreshold) {
+            currentId = headers[i].id;
+          } else {
+            // 如果遇到一个标题在触发线下面，因为是顺序排列的，后面的肯定也在下面
+            // 所以直接停止寻找，最后记录的 currentId 就是正确的
+            break;
+          }
+        }
+
+        // 页面回到最顶端时清除高亮
+        if (scrollPos < 10) currentId = '';
+
+        // 更新样式
+        tocLinks.forEach(link => {
+          link.classList.remove('active');
+          
+          const href = link.getAttribute('href');
+          if (!href) return;
+          
+          // 兼容处理：有的 href 是 #Title，有的是 #title
+          const linkId = decodeURIComponent(href).replace('#', '');
+          
+          if (linkId && linkId === currentId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll);
+      onScroll();
+    }
+  });
+</script>
+  </section>
+  <section class="post-main">
+    <article id="post-CO-P7" class="h-entry article article-type-post"
+  itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <p class="article-date">
+  <time class="dt-published" datetime="2025-12-15T14:24:00.000Z" itemprop="datePublished">2025-12-15</time>
+</p>
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CO/">CO</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      BUAA-CO-P7 MIPS微系统
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><img src="/images/CO/P7/image.png" alt="通关纪念！"></p>
+<h1>目标简述</h1>
+<p>在P6的基础上，实现一个简单的计算机系统（MIPS微系统）。</p>
+<h2 id="三种外设">三种外设</h2>
+<ul>
+<li>Timer（计时器）：计时部件，可以按照配置定时产生<code>时钟中断</code></li>
+<li>Memory（存储器）：外置IM、DM（类似P6）</li>
+<li>InterruptGenerator（中断发生器）：随机产生外部中断信号，产生的中断信号在CPU响应前会持续<strong>置高</strong></li>
+</ul>
+<h2 id="支持异常处理的CPU">支持异常处理的CPU</h2>
+<ol>
+<li>
+<p>异常</p>
+<ol>
+<li>内部异常：
+<ul>
+<li>由于<strong>指令执行错误</strong>导致的“事件”</li>
+<li>例如：加法溢出，除法除零</li>
+</ul>
+</li>
+<li>外部中断
+<ul>
+<li>由于<strong>外部设备信号</strong>导致的“事件”</li>
+<li>例如：计时器信号</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>内部异常检测</p>
+</li>
+<li>
+<p>外部中断检测</p>
+</li>
+<li>
+<p>CP0：接收异常，储存异常类型，实现精确异常</p>
+</li>
+<li>
+<p>异常处理</p>
+</li>
+</ol>
+<h2 id="软硬件接口">软硬件接口</h2>
+<ol>
+<li>外设的接口设计——==系统桥==
+<ul>
+<li>
+<p>连接CPU和外设的功能设备</p>
+<ul>
+<li>CPU — SystemBridge — { DM , Timer , InterruptGen , … }</li>
+</ul>
+</li>
+<li>
+<p>给CPU提供一种接口，使得CPU可以按地址读写复杂多变的外设</p>
+<ul>
+<li>CPU不再关心外设长什么样，它只会按地址读写（用统一的方法访问外设）</li>
+<li>所有外设都是“DM”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CPU的接口设计
+<ul>
+<li>封装成单周期CPU</li>
+</ul>
+</li>
+</ol>
+<h2 id="宏观PC">宏观PC</h2>
+<ul>
+<li>把复杂的多级流水线CPU封装成单周期CPU</li>
+<li>宏观PC：整个 CPU “宏观”运行指令所对应的PC地址。我把<code>CP0</code>放在了M级，所以把<code>M_PC</code>作为宏观PC。
+<ul>
+<li>该指令之前的所有指令序列对 CPU 的更新已完成</li>
+<li>该指令及其之后的指令序列对 CPU 的更新未完成</li>
+</ul>
+</li>
+</ul>
+<h1>顶层设计</h1>
+<p><img src="/images/CO/P7/image-159.png" alt="整体层次">
+<img src="/images/CO/P7/image-158.png" alt="顶层数据通路示意图"></p>
+<h1>任务清单</h1>
+<p><img src="/images/CO/P7/image-156.png" alt="最终架构图">
+设计思路：从<code>CP0</code>开始，一步步推进。</p>
+<h2 id="协处理器CP0">协处理器CP0</h2>
+<ul>
+<li>
+<p>功能
+接收内部异常和外部中断，产生异常控制</p>
+</li>
+<li>
+<p>设计
+本质上是一组特殊寄存器。</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>编号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SR（State Register）</td>
+<td>12</td>
+<td>配置异常的功能，即：<br>当前CPU：<br>1.能不能处理外部中断（IE）<br>2.能处理哪些外部中断（IM）<br>3.是否正在处理异常(EXL)</td>
+</tr>
+<tr>
+<td>Cause</td>
+<td>13</td>
+<td>记录异常发生的原因和情况<br>- 外部中断源：IP<br>- 内部异常类型：ExcCode）</td>
+</tr>
+<tr>
+<td>EPC</td>
+<td>14</td>
+<td>记录异常处理结束后需要返回的PC</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>功能域</th>
+<th>位域</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SR（State Register）</td>
+<td>IM（Interrupt Mask）</td>
+<td>15:10</td>
+<td>分别对应六个<strong>外部中断</strong>源，相应位置 1 表示允许中断，置 0 表示禁止中断。<br>==控制能处理哪些外部中断==</td>
+</tr>
+<tr>
+<td>SR（State Register）</td>
+<td>EXL（Exception Level）</td>
+<td>1</td>
+<td>只要进入异常（I&amp;E）就置1，处理完异常、执行<code>eret</code>时置0</td>
+</tr>
+<tr>
+<td>SR（State Register）</td>
+<td>IE（Interrupt Enable）</td>
+<td>0</td>
+<td>全局中断使能，该位置 1 表示允许外部中断</td>
+</tr>
+<tr>
+<td>Cause</td>
+<td>BD（Branch Delay）</td>
+<td>31</td>
+<td>异常是否发生在分支延迟槽中<br>tip:只有内部异常才可能导致BD为1</td>
+</tr>
+<tr>
+<td>Cause</td>
+<td>IP（Interrupt Pending）</td>
+<td>15:10</td>
+<td>为 6 位待决的中断位，分别对应 6 个<strong>外部中断</strong>，相应位置 1 表示有中断，置 0 表示无中断<br>==反映外部中断源==</td>
+</tr>
+<tr>
+<td>Cause</td>
+<td>ExcCode</td>
+<td>6:2</td>
+<td>内部异常编码，记录当前发生的是什么内部异常。</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>模块规格</p>
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>复位信号</td>
+</tr>
+<tr>
+<td>CP0WE</td>
+<td>I</td>
+<td>1</td>
+<td>CP0 写使能信号</td>
+</tr>
+<tr>
+<td>CP0Address</td>
+<td>I</td>
+<td>5</td>
+<td><strong>要访问哪个CP0寄存器</strong>（SR/Cause/EPC）</td>
+</tr>
+<tr>
+<td>CP0WD</td>
+<td>I</td>
+<td>32</td>
+<td>写入 CP0 的数据</td>
+</tr>
+<tr>
+<td>VPC</td>
+<td>I</td>
+<td>32</td>
+<td>受害 PC（发生异常时的 PC）</td>
+</tr>
+<tr>
+<td>BDIn</td>
+<td>I</td>
+<td>1</td>
+<td>是否处于延迟槽</td>
+</tr>
+<tr>
+<td>ExcCodeIn</td>
+<td>I</td>
+<td>5</td>
+<td>内部异常类型编码</td>
+</tr>
+<tr>
+<td>HWInt</td>
+<td>I</td>
+<td>6</td>
+<td><strong>外部</strong>硬件中断信号，对应Cause_IP/SR_IM</td>
+</tr>
+<tr>
+<td>EXLclr</td>
+<td>I</td>
+<td>1</td>
+<td>清除 EXL，用于执行 <code>eret</code></td>
+</tr>
+<tr>
+<td>CP0RD</td>
+<td>O</td>
+<td>32</td>
+<td>从 CP0 读出的数据</td>
+</tr>
+<tr>
+<td>EPC</td>
+<td>O</td>
+<td>32</td>
+<td>EPC 寄存器输出值</td>
+</tr>
+<tr>
+<td>Req</td>
+<td>O</td>
+<td>1</td>
+<td>是否进入异常处理程序<br>1: PC ← 异常入口地址</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>==tips==：</p>
+<ol>
+<li>
+<p><code>CP0Address</code>、<code>CP0WE</code> 是针对 CPU 执行<code> mfc0 / mtc0</code> 指令时访问 CP0 寄存器用的，而<code>异常更新</code>并不会经过CP0Address。这两条路径几乎完全分离；</p>
+</li>
+<li>
+<p>Req生成逻辑</p>
+<ul>
+<li>Req = 外部中断|内部异常</li>
+<li>外部中断（Interrupt）：
+能处理中断(<code>SR.IE</code>) &amp; 未在处理异常(<code>!SR.EXL</code>) &amp; 存在外部中断源且该中断源可以被处理(<code>SR.IM&amp;HWInt</code>)
+    <span id="mjx-e97c2ec">
+      <style>
+      #mjx-e97c2ec{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.054ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.242ex" role="img" focusable="false" viewBox="0 -525 1000 549" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">⇒</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+  需要处理外部中断（Interrupt置高）
+<ul>
+<li>外部中断看情况处理！</li>
+</ul>
+</li>
+<li>内部异常（Execption）：
+未在处理异常(<code>!SR.EXL</code>) &amp; 存在内部异常(ExcCodeIn)
+    <span id="mjx-7d4b903">
+      <style>
+      #mjx-7d4b903{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.054ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.242ex" role="img" focusable="false" viewBox="0 -525 1000 549" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">⇒</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+  需要处理内部异常（Execption置高）
+<ul>
+<li>内部异常必须处理！</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>CP0何时被写？
+
+    <span id="mjx-99235dd">
+      <style>
+      #mjx-99235dd{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.054ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.242ex" role="img" focusable="false" viewBox="0 -525 1000 549" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">⇒</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+  顺序如下：</p>
+<ol>
+<li>HWInt无论如何会被更新到Cause.IP</li>
+<li>Req == 1
+更新SR.EXL/Cause.BD/EPC
+<ol>
+<li>Exception?
+更新Cause.ExcCode，否则置零</li>
+</ol>
+</li>
+<li>EXLclr == 1
+即：执行<code>eret</code>，将SR.EXL置零</li>
+<li>CP0WE == 1
+写对应寄存器
+<ul>
+<li>CP0 寄存器的初始值均为 0，<strong>未实现位始终保持 0</strong>。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>CP0接线</p>
+<ul>
+<li>M_CP0WE\M_EXLclr来自控制信号M_ControlBus（增加Control）</li>
+<li>M_PC来自M</li>
+<li>M_ExcCodein来自内部异常检测，M_HWInt来自外部异常检测</li>
+<li>M_BDin：BranchControl生成BDin信号，向后流水，从Reg_M取出</li>
+<li>M_CP0RD：向后流水，传入WDsel</li>
+<li>Req：接入IFU/Reg_D/Reg_E/Reg_M,实现精确异常</li>
+<li>EPC：核心在于理解==eret没有延迟槽==
+<ul>
+<li>绝对不执行已经被取到F中的错误指令（eret后面紧跟的指令清空）</li>
+<li><code>eret</code>指令在D时，插入一个 nop（类似likely清空延迟槽——D_Flush）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Req如何实现精确异常？</p>
+<ul>
+<li>精确异常：
+<ul>
+<li>异常受害指令之前的所有指令都生效</li>
+<li>异常指令以及之后的指令都不产生任何副作用</li>
+<li>返回后从异常指令（or上一条<code>（BDin）</code>）重新执行</li>
+</ul>
+</li>
+<li>流水线表现
+<ul>
+<li>W级：正常执行</li>
+<li>M级：指令停止，进入异常处理</li>
+<li>E/D/F：flush</li>
+</ul>
+</li>
+<li>优先级：reset &gt; Req &gt; stall &gt; (To_nop) &gt; likely造成的D_flush</li>
+<li>具体实现
+<ul>
+<li>IFU：PC跳转至异常处理地址</li>
+<li>Reg_D：清空instr，PC正常流水</li>
+<li>Reg_E：清空所有，PC、BD正常流水</li>
+<li>Reg_M：清空所有，PC、BD正常流水</li>
+<li>Reg_W：清空所有</li>
+</ul>
+</li>
+<li>特别规定，在进入中断或异常状态时，如果受害指令及其后续指令已经改变了<code>MDU</code>的状态，则无需恢复。考虑以下情况：
+<ul>
+<li><code>mult</code> 在 E 级启动了乘法运算(其它<code>乘除法指令</code>同理)，流水到 M 级时产生了中断
+<ul>
+<li><strong>MDU不用恢复</strong></li>
+</ul>
+</li>
+<li><code>mthi</code> 在 E 级修改了 HI 寄存器(<code>mtlo</code> 同理)，流水到 M 级时产生了中断。
+<ul>
+<li><strong>MDU不用恢复</strong></li>
+</ul>
+</li>
+<li><code>mult</code> 在 E 级，受害指令在 M 级，此时还<strong>未改变 MDU 状态</strong>，不应开始乘法计算，其它乘除法指令同理。</li>
+<li><code>mthi</code> 在 E 级，受害指令在 M 级，此时还<strong>未改变 MDU 状态</strong>，不应修改 HI 寄存器的值，<code>mtlo</code> 同理。</li>
+</ul>
+</li>
+</ul>
+<p>总之：</p>
+<ul>
+<li>MDU接入req。如果<code>req&amp;!Busy</code>，那么MDU freeze（MDU不应开始运算/改变HI、LO状态）</li>
+</ul>
+</li>
+<li>
+<p>关于PC的处理</p>
+<ul>
+<li>核心问题：flush造成的nop的PC到底应该怎么取，才保证外部中断后EPC更新不出错？</li>
+<li>nop的分类
+<ul>
+<li>天然指令nop：不管</li>
+<li>异常指令视作nop：PC、BDin、ExcCode正常流水，其它清零</li>
+<li>D_flush替换的nop：PC正常流水</li>
+<li>stall插入的bubble（nop）：PC、BDin正常流水，其它清零</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>中断和异常优先级：中断优先级高于异常优先级，即当有异常提交至 CP0 寄存器时，若有中断发生，则硬件应<strong>先响应中断</strong>（<code>强制将Cause.IP记为5'b0</code>）</p>
+</li>
+</ol>
+<h2 id="内部异常检测与流水">内部异常检测与流水</h2>
+<ul>
+<li>
+<p>异常与中断码</p>
+<table>
+<thead>
+<tr>
+<th>异常码</th>
+<th>助记符与名称</th>
+<th>指令与类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Int（外部中断）</td>
+<td>所有指令</td>
+<td>中断请求，来源于计时器与外部中断。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>AdEL（取指异常）</td>
+<td>所有指令</td>
+<td>PC 地址未字对齐。<br>PC 地址超过 0x3000 ~ 0x6ffc。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>AdEL（取数异常）</td>
+<td>lw</td>
+<td>取数地址未与 4 字节对齐。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>lh</td>
+<td>取数地址未与 2 字节对齐。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>lh, lb</td>
+<td>取 Timer 寄存器的值。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>load 型指令</td>
+<td>计算地址时加法溢出。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>load 型指令</td>
+<td>取数地址超出 DM、Timer0、Timer1、中断发生器范围。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>AdES（存数异常）</td>
+<td>sw</td>
+<td>存数地址未 4 字节对齐。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>sh</td>
+<td>存数地址未 2 字节对齐。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>sh, sb</td>
+<td>存 Timer 寄存器的值。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>store 型指令</td>
+<td>计算地址加法溢出。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>store 型指令</td>
+<td>向计时器 Count 寄存器存值。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>store 型指令</td>
+<td>存数地址超出 DM、Timer0、Timer1、中断发生器范围。</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Syscall（系统调用）</td>
+<td>syscall</td>
+<td>系统调用。</td>
+</tr>
+<tr>
+<td>10</td>
+<td>RI（未知指令）</td>
+<td>-</td>
+<td>未知指令码。</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Ov（溢出异常）</td>
+<td>add, addi, sub</td>
+<td>算术溢出。</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>指令异常检测位置</p>
+<table>
+<thead>
+<tr>
+<th>异常与中断码</th>
+<th>异常</th>
+<th>检测位置（到该阶段才能检测）</th>
+<th>检测指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>外部中断Int</td>
+<td>E</td>
+<td>\</td>
+</tr>
+<tr>
+<td>4</td>
+<td>AdEL</td>
+<td>D</td>
+<td>PC</td>
+</tr>
+<tr>
+<td>4</td>
+<td>AdEL</td>
+<td>E</td>
+<td>ALUresult</td>
+</tr>
+<tr>
+<td>5</td>
+<td>AdES</td>
+<td>E</td>
+<td>ALUresult/operand1、operand2</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Syscall</td>
+<td>D</td>
+<td>Instrction</td>
+</tr>
+<tr>
+<td>10</td>
+<td>RI（未知指令）</td>
+<td>D</td>
+<td>Instruction</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Ov（算术溢出）</td>
+<td>E</td>
+<td>operand1、operand2、ALUop</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>ExceptionDetect（指令异常检测模块）</p>
+<ul>
+<li>功能
+检测内部异常类型，生成ExcCode</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D_ControlBus</td>
+<td>I</td>
+<td>32</td>
+<td>D ControlBus</td>
+</tr>
+<tr>
+<td>E_ControlBus</td>
+<td>I</td>
+<td>32</td>
+<td>E ControlBus</td>
+</tr>
+<tr>
+<td>D_PC</td>
+<td>I</td>
+<td>32</td>
+<td>D PC</td>
+</tr>
+<tr>
+<td>E_ExcCode</td>
+<td>I</td>
+<td>5</td>
+<td>从E取出的ExcCode</td>
+</tr>
+<tr>
+<td>E_operand1</td>
+<td>I</td>
+<td>32</td>
+<td>ALU operand1</td>
+</tr>
+<tr>
+<td>E_operand2</td>
+<td>I</td>
+<td>32</td>
+<td>ALU operand2</td>
+</tr>
+<tr>
+<td>D_ExcCode</td>
+<td>O</td>
+<td>5</td>
+<td>存入E的ExcCode</td>
+</tr>
+<tr>
+<td>E_NewExcCode</td>
+<td>O</td>
+<td>5</td>
+<td>真正存入M的ExcCode</td>
+</tr>
+<tr>
+<td>2nop</td>
+<td>O</td>
+<td>1</td>
+<td>是否将D中指令视为nop</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>
+<p>tips：</p>
+<ul>
+<li>发生取指异常或 RI 异常后视为 nop 直至提交到 CP0（保留BDin，PC和ExcCode）</li>
+<li>内部异常优先级：AdEL最大（先有取，再有译）</li>
+<li>Timer中count映射的地址？
+<ul>
+<li>看Timer中count的定义 &amp; 整个Timer映射的地址范围</li>
+<li>e.g.
+<ul>
+<li>Timer0: <code>0x0000_7F00 ~ 0x0000_7F0B</code>   （长度 12 字节 = 3 个 4 字节寄存器）</li>
+<li>Timer:``define count  mem[2]`</li>
+<li>
+    <span id="mjx-fe7d2b5">
+      <style>
+      #mjx-fe7d2b5{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.054ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.242ex" role="img" focusable="false" viewBox="0 -525 1000 549" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">⇒</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+  count:<code>0x0000_7F08 ~ 0x0000_7F0B</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="BDinGenerator">BDinGenerator</h2>
+<ul>
+<li>
+<p>BDin
+
+    <span id="mjx-c2f4323">
+      <style>
+      #mjx-c2f4323{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.054ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.242ex" role="img" focusable="false" viewBox="0 -525 1000 549" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">⇒</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+   异常发生的这条指令是否位于延迟槽（B/J - 延迟槽（该指令））
+
+    <span id="mjx-628672d">
+      <style>
+      #mjx-628672d{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.054ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.242ex" role="img" focusable="false" viewBox="0 -525 1000 549" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">⇒</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+   上一条指令是不是B/J</p>
+</li>
+<li>
+<p>功能
+生成BDin，向后流水</p>
+</li>
+<li>
+<p>原理
+分支跳转指令无论跳转与否，延迟槽指令为受害指令时 BD 均需要置位。</p>
+</li>
+<li>
+<p>模块规格</p>
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D_ifB</td>
+<td>I</td>
+<td>1</td>
+<td>D级指令是否是B指令</td>
+</tr>
+<tr>
+<td>D_ifJ</td>
+<td>I</td>
+<td>1</td>
+<td>D级指令是否是J指令</td>
+</tr>
+<tr>
+<td>BDin</td>
+<td>O</td>
+<td>1</td>
+<td>D级指令紧跟的指令是否位于延迟槽</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>tip：<code>eret</code>没有延迟槽但要跳转</p>
+<h2 id="Bridge系统桥">Bridge系统桥</h2>
+<ul>
+<li>
+<p>功能</p>
+<ol>
+<li>地址解码：当前地址属于哪个设备</li>
+<li>把CPU的读写信号、写数据转发给对应外设</li>
+<li>从对应外设返回数据给CPU</li>
+</ol>
+</li>
+<li>
+<p>架构</p>
+<pre><code>  CPU 给地址、数据、byteen
+  ↓
+  Bridge 内部解码
+  ↓
+  Bridge 产生 DM_Byteen / Timer_Byteen / Int_Byteen
+  ↓
+  Bridge 选择外设返回数据 RD
+</code></pre>
+</li>
+</ul>
+<h2 id="计时器">计时器</h2>
+<ul>
+<li>功能：根据设定的时间来定时产生中断信号</li>
+</ul>
+<h2 id="单周期CPU的封装">单周期CPU的封装</h2>
+<p>宏观PC：M_PC</p>
+<h2 id="HCU新增控制">HCU新增控制</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wire stall_eret = D_eret &amp; (</span><br><span class="line">    (E_mtc0 &amp; (E_rd_addr == 5&#x27;d14)) ||</span><br><span class="line">    (M_mtc0 &amp; (M_rd_addr == 5&#x27;d14))</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="DM">DM</h2>
+<ul>
+<li>DM写入要屏蔽异常
+<code>wire M_TrueMemWrite = M_MemWrite &amp; (!Req)</code></li>
+</ul>
+<h1>思考题</h1>
+<ol>
+<li>
+<p>请查阅相关资料，说明鼠标和键盘的输入信号是如何被 CPU 知晓的？</p>
+<ul>
+<li>通过外设控制器发出的中断信号 + OS 注册的中断服务程序，CPU 被动接收并处理输入数据。</li>
+</ul>
+</li>
+<li>
+<p>请思考为什么我们的 CPU 处理中断异常必须是已经指定好的地址？如果你的 CPU 支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）</p>
+<ul>
+<li>CPU 在异常发生时必须立即进入可信、统一、受保护的处理入口，才能保证系统继续正确运行。</li>
+<li>如果允许用户自定义入口，虽然仍能处理中断，但会出现无法保存现场、破坏内核权限、系统不可恢复等问题，使 CPU 无法提供可靠的操作系统支持。</li>
+</ul>
+</li>
+<li>
+<p>为何与外设通信需要 Bridge？</p>
+<ul>
+<li>我们可能随时需要增加外设，但不可能每增加一种外设就给CPU增加响应接口。为此我们设计Bridge来连接外设和CPU，将所有外设都映射为一段地址（“DM”），使得CPU能以统一的方式访问不同外设。</li>
+</ul>
+</li>
+<li>
+<p>请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并分别针对每一种模式绘制状态移图。</p>
+<ul>
+<li>异：计时结束动作不同
+<ul>
+<li>模式0：单次中断，计时结束持续输出中断信号</li>
+<li>模式1：循环计时，每次计时归零输出一周期中断信号</li>
+</ul>
+</li>
+<li>同：计时过程相同
+<img src="/images/CO/P7/timer.jpg" alt="timer"></li>
+</ul>
+</li>
+<li>
+<p>倘若中断信号流入的时候，在检测宏观 PC 的一级如果是一条空泡（你的 CPU 该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在 P7 中，清空流水线产生的空泡指令应该保留原指令的哪些信息？</p>
+<ul>
+<li>问题：EPC出错</li>
+<li>保留PC、BDin</li>
+</ul>
+</li>
+<li>
+<p>为什么 jalr 指令为什么不能写成 jalr $31, $31？</p>
+<ul>
+<li>从jalr的语义来看，PC转向被调用函数，函数入口地址保存在 GPR[rs]中。但如果rs和rd相同，那么将PC+8写入rd的操作就会覆盖保存的函数入口地址，使得程序无法返回调用点。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="copyright">
+  <p><a href="https://crazyinloo.github.io/2025/12/15/CO-P7/">https://crazyinloo.github.io/2025/12/15/CO-P7/</a></p>
+  <p>本作品采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可</p>
+</div>
+
+      
+      
+
+      
+        <div class="article-share-links">
+  <a href="https://twitter.com/intent/tweet?text=BUAA-CO-P7%20MIPS%E5%BE%AE%E7%B3%BB%E7%BB%9F&amp;url=https%3A%2F%2Fcrazyinloo.github.io%2F2025%2F12%2F15%2FCO-P7%2F"
+    class="article-share-twitter" target="_blank" title="Twitter"></a>
+  <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fcrazyinloo.github.io%2F2025%2F12%2F15%2FCO-P7%2F"
+    class="article-share-facebook" target="_blank" title="Facebook"></a>
+  ​<a href="http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fcrazyinloo.github.io%2F2025%2F12%2F15%2FCO-P7%2F"
+    class="article-share-pinterest" target="_blank" title="Pinterest"></a>
+  ​<a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fcrazyinloo.github.io%2F2025%2F12%2F15%2FCO-P7%2F"
+    class="article-share-linkedin" target="_blank" title="LinkedIn"></a>
+</div>
+
+      
+    </footer>
+  </div>
+  
+    
+  <nav id="article-nav">
+    
+    
+      <a href="/2025/12/01/CO-P6/" id="article-nav-older" class="article-nav-link-wrap">
+        <h4 class="article-nav-caption">You Might Enjoy</h4>
+        <div class="article-nav-title">BUAA-CO-P6 基于verilog的流水线MIPS架构CPU（2）</div>
+      </a>
+    
+  </nav>
+
+
+  
+</article>
+
+    
+  </section>
+  <section class="post-sidebar">
+    <aside>
+  
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/12/15/CO-P7/">BUAA-CO-P7 MIPS微系统</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/01/CO-P6/">BUAA-CO-P6 基于verilog的流水线MIPS架构CPU（2）</a>
+          </li>
+        
+          <li>
+            <a href="/2025/11/24/COT%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">BUAA-COT 使用手册</a>
+          </li>
+        
+          <li>
+            <a href="/2025/11/24/CO-P5/">BUAA-CO-P5 基于verilog的流水线MIPS架构CPU（1）</a>
+          </li>
+        
+          <li>
+            <a href="/2025/11/17/CO-P4/">BUAA-CO-P4 基于verilog的单周期MIPS架构CPU</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="widget-wrap">
+  <h3 class="widget-title">
+    Profile
+  </h3>
+  <div class="widget">
+    <div class="profile">
+      <div class="motto">
+        
+        <div class="quote">&#10077;</div>
+        <p class="content">Nerding……</p>
+        <div class="close quote">&#10077;</div>
+      </div>
+      <div class="basic">
+        <div class="avatar"></div>
+        <div class="info">
+          <h2 class="name">CRZ</h2>
+          <h3 class="location">Wonderland</h3>
+          <div class="emoji">&gt;(๑•̀ㅂ•́)و✧</div>
+        </div>
+      </div>
+      <div class="links">
+        
+          <a id="github-link" class="profile-link" target="_blank" rel="noopener" href="https://github.com/crazyinloo" title="GitHub"></a>
+        
+        
+        
+          <a id="email-link" class="profile-link" href="mailto:24373274@buaa.edu.cn" title="Email"></a>
+        
+        
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">FRIENDS</h3>
+    <div class="widget">
+      <ul class="friend-list">
+        
+          
+          <li class="friend-item">
+            <a href="https://hexo.io/ToBeContinued" title="ToBeContinued" target="_blank">
+              ToBeContinued
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</aside>
+
+  </section>
+</div>
+
+
+      <footer id="footer">
+  <p>Copyright &copy; 2025 CRZ&#39;s Blog</p>
+  <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> • Theme <a
+                href="https://github.com/DukeLuo/hexo-theme-candelas" target="_blank">Candelas</a></p>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archive</a>
+  
+</nav>
+
+  </div>
+</body>
+</html>
