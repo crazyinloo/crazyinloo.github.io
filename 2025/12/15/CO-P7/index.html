@@ -84,7 +84,9 @@
   <script async src="https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
-<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
 
 
@@ -122,71 +124,17 @@
       <div class="post-outer" data-post-title="BUAA-CO-P7 MIPS微系统" id="post">
   <section class="post-toc">
     <aside class="post-fixed-container">
+  
   <div class="toc-wrap">
   <h3 class="toc-title">Contents</h3>
   <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">目标简述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%A4%96%E8%AE%BE"><span class="toc-number">1.1.</span> <span class="toc-text">三种外设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84CPU"><span class="toc-number">1.2.</span> <span class="toc-text">支持异常处理的CPU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E7%A1%AC%E4%BB%B6%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.3.</span> <span class="toc-text">软硬件接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8F%E8%A7%82PC"><span class="toc-number">1.4.</span> <span class="toc-text">宏观PC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">顶层设计</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">任务清单</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8CP0"><span class="toc-number">3.1.</span> <span class="toc-text">协处理器CP0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E4%B8%8E%E6%B5%81%E6%B0%B4"><span class="toc-number">3.2.</span> <span class="toc-text">内部异常检测与流水</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BDinGenerator"><span class="toc-number">3.3.</span> <span class="toc-text">BDinGenerator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bridge%E7%B3%BB%E7%BB%9F%E6%A1%A5"><span class="toc-number">3.4.</span> <span class="toc-text">Bridge系统桥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E6%97%B6%E5%99%A8"><span class="toc-number">3.5.</span> <span class="toc-text">计时器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E7%9A%84%E5%B0%81%E8%A3%85"><span class="toc-number">3.6.</span> <span class="toc-text">单周期CPU的封装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCU%E6%96%B0%E5%A2%9E%E6%8E%A7%E5%88%B6"><span class="toc-number">3.7.</span> <span class="toc-text">HCU新增控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DM"><span class="toc-number">3.8.</span> <span class="toc-text">DM</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">思考题</span></a></li></ol>
 </div>
 
+
+  
   
 </aside>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const tocLinks = document.querySelectorAll('.post-toc-link, .toc-link');
-    const article = document.querySelector('.article-entry');
-
-    if (tocLinks.length > 0 && article) {
-      // 获取所有标题
-      const headers = Array.from(article.querySelectorAll('h1, h2, h3, h4, h5, h6'))
-                           .filter(h => h.id);
-
-      function onScroll() {
-        const scrollPos = window.scrollY || document.documentElement.scrollTop;
-        // 修正触发线：让它稍微靠下一点，更容易触发
-        const topThreshold = 150; 
-        
-        let currentId = '';
-
-        // ★ 核心逻辑改进：
-        // 遍历所有标题，找到“最后一个”处于“触发线之上”的标题
-        // 这样可以确保无论是一级还是二级，只要它是当前最上面的，就会被选中
-        for (let i = 0; i < headers.length; i++) {
-          const headerTop = headers[i].getBoundingClientRect().top;
-          
-          // 如果标题在触发线上面，它就是潜在的“当前标题”
-          if (headerTop < topThreshold) {
-            currentId = headers[i].id;
-          } else {
-            // 如果遇到一个标题在触发线下面，因为是顺序排列的，后面的肯定也在下面
-            // 所以直接停止寻找，最后记录的 currentId 就是正确的
-            break;
-          }
-        }
-
-        // 页面回到最顶端时清除高亮
-        if (scrollPos < 10) currentId = '';
-
-        // 更新样式
-        tocLinks.forEach(link => {
-          link.classList.remove('active');
-          
-          const href = link.getAttribute('href');
-          if (!href) return;
-          
-          // 兼容处理：有的 href 是 #Title，有的是 #title
-          const linkId = decodeURIComponent(href).replace('#', '');
-          
-          if (linkId && linkId === currentId) {
-            link.classList.add('active');
-          }
-        });
-      }
-
-      window.addEventListener('scroll', onScroll);
-      onScroll();
-    }
-  });
-</script>
   </section>
   <section class="post-main">
     <article id="post-CO-P7" class="h-entry article article-type-post"
@@ -491,9 +439,9 @@
 <li>Req = 外部中断|内部异常</li>
 <li>外部中断（Interrupt）：
 能处理中断(<code>SR.IE</code>) &amp; 未在处理异常(<code>!SR.EXL</code>) &amp; 存在外部中断源且该中断源可以被处理(<code>SR.IM&amp;HWInt</code>)
-    <span id="mjx-e97c2ec">
+    <span id="mjx-7e76b62">
       <style>
-      #mjx-e97c2ec{
+      #mjx-7e76b62{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -658,9 +606,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>内部异常（Execption）：
 未在处理异常(<code>!SR.EXL</code>) &amp; 存在内部异常(ExcCodeIn)
-    <span id="mjx-7d4b903">
+    <span id="mjx-465d87c">
       <style>
-      #mjx-7d4b903{
+      #mjx-465d87c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -828,9 +776,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>CP0何时被写？
 
-    <span id="mjx-99235dd">
+    <span id="mjx-0a1eaeb">
       <style>
-      #mjx-99235dd{
+      #mjx-0a1eaeb{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1350,9 +1298,9 @@ g[data-mml-node="xypic"] path {
 <li>Timer0: <code>0x0000_7F00 ~ 0x0000_7F0B</code>   （长度 12 字节 = 3 个 4 字节寄存器）</li>
 <li>Timer:``define count  mem[2]`</li>
 <li>
-    <span id="mjx-fe7d2b5">
+    <span id="mjx-f9e803e">
       <style>
-      #mjx-fe7d2b5{
+      #mjx-f9e803e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1523,9 +1471,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>BDin
 
-    <span id="mjx-c2f4323">
+    <span id="mjx-e4b1adf">
       <style>
-      #mjx-c2f4323{
+      #mjx-e4b1adf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1685,9 +1633,9 @@ g[data-mml-node="xypic"] path {
     </span>
    异常发生的这条指令是否位于延迟槽（B/J - 延迟槽（该指令））
 
-    <span id="mjx-628672d">
+    <span id="mjx-629d597">
       <style>
-      #mjx-628672d{
+      #mjx-629d597{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2113,11 +2061,12 @@ g[data-mml-node="xypic"] path {
 
 
       <footer id="footer">
-  <p>Copyright &copy; 2025 CRZ&#39;s Blog</p>
+  <p>Copyright &copy; 2026 CRZ&#39;s Blog</p>
   <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> • Theme <a
-                href="https://github.com/DukeLuo/hexo-theme-candelas" target="_blank">Candelas</a></p>
-</footer>
+                  href="https://github.com/DukeLuo/hexo-theme-candelas" target="_blank">Candelas</a></p>
 
+  
+</footer>
     </div>
     <nav id="mobile-nav">
   

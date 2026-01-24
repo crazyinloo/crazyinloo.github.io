@@ -78,7 +78,9 @@
   <script async src="https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
-<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
 
 
@@ -116,71 +118,17 @@
       <div class="post-outer" data-post-title="BUAA-CO-P3 基于logisim的单周期MIPS架构CPU" id="post">
   <section class="post-toc">
     <aside class="post-fixed-container">
+  
   <div class="toc-wrap">
   <h3 class="toc-title">Contents</h3>
   <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">声明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">前置理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-number">2.1.</span> <span class="toc-text">内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E5%A4%84%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">指令处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Debug"><span class="toc-number">2.3.</span> <span class="toc-text">Debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E6%93%8D%E4%BD%9C%E7%9A%84logisim%E9%83%A8%E4%BB%B6"><span class="toc-number">2.4.</span> <span class="toc-text">简化操作的logisim部件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%93%E9%94%99"><span class="toc-number">2.5.</span> <span class="toc-text">易错</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">模块设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IM-%EF%BC%88%E6%8C%87%E4%BB%A4%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">IM （指令存储器）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GRF%EF%BC%88%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">GRF（通用寄存器组）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ALU"><span class="toc-number">3.3.</span> <span class="toc-text">ALU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DM%EF%BC%88%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">DM（数据存储器）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXT%EF%BC%88%E6%89%A9%E5%B1%95%E5%8D%95%E5%85%83%EF%BC%89"><span class="toc-number">3.5.</span> <span class="toc-text">EXT（扩展单元）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Controller"><span class="toc-number">3.6.</span> <span class="toc-text">Controller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NPC"><span class="toc-number">3.7.</span> <span class="toc-text">NPC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">测试方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">4.1.1.</span> <span class="toc-text">环境设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99MIPS%E6%B1%87%E7%BC%96%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-number">4.1.2.</span> <span class="toc-text">编写MIPS汇编测试程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8logisim%E4%B8%AD%E8%BF%90%E8%A1%8CCPU"><span class="toc-number">4.1.3.</span> <span class="toc-text">在logisim中运行CPU</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE"><span class="toc-number">4.2.</span> <span class="toc-text">测试数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%B1%BB%E6%8C%87%E4%BB%A4%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">4.2.1.</span> <span class="toc-text">计算类指令功能测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%8F%96%E7%B1%BB%E6%8C%87%E4%BB%A4%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">4.2.2.</span> <span class="toc-text">存取类指令功能测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E7%B1%BB%E6%8C%87%E4%BB%A4%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">4.2.3.</span> <span class="toc-text">跳转类指令功能测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">可能添加的</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#lb-sb"><span class="toc-number">5.1.</span> <span class="toc-text">lb&#x2F;sb</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">思考题</span></a></li></ol>
 </div>
 
+
+  
   
 </aside>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const tocLinks = document.querySelectorAll('.post-toc-link, .toc-link');
-    const article = document.querySelector('.article-entry');
-
-    if (tocLinks.length > 0 && article) {
-      // 获取所有标题
-      const headers = Array.from(article.querySelectorAll('h1, h2, h3, h4, h5, h6'))
-                           .filter(h => h.id);
-
-      function onScroll() {
-        const scrollPos = window.scrollY || document.documentElement.scrollTop;
-        // 修正触发线：让它稍微靠下一点，更容易触发
-        const topThreshold = 150; 
-        
-        let currentId = '';
-
-        // ★ 核心逻辑改进：
-        // 遍历所有标题，找到“最后一个”处于“触发线之上”的标题
-        // 这样可以确保无论是一级还是二级，只要它是当前最上面的，就会被选中
-        for (let i = 0; i < headers.length; i++) {
-          const headerTop = headers[i].getBoundingClientRect().top;
-          
-          // 如果标题在触发线上面，它就是潜在的“当前标题”
-          if (headerTop < topThreshold) {
-            currentId = headers[i].id;
-          } else {
-            // 如果遇到一个标题在触发线下面，因为是顺序排列的，后面的肯定也在下面
-            // 所以直接停止寻找，最后记录的 currentId 就是正确的
-            break;
-          }
-        }
-
-        // 页面回到最顶端时清除高亮
-        if (scrollPos < 10) currentId = '';
-
-        // 更新样式
-        tocLinks.forEach(link => {
-          link.classList.remove('active');
-          
-          const href = link.getAttribute('href');
-          if (!href) return;
-          
-          // 兼容处理：有的 href 是 #Title，有的是 #title
-          const linkId = decodeURIComponent(href).replace('#', '');
-          
-          if (linkId && linkId === currentId) {
-            link.classList.add('active');
-          }
-        });
-      }
-
-      window.addEventListener('scroll', onScroll);
-      onScroll();
-    }
-  });
-</script>
   </section>
   <section class="post-main">
     <article id="post-CO-P3" class="h-entry article article-type-post"
@@ -223,9 +171,9 @@
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-85441">
+    <span id="mjx-0ee521d">
       <style>
-      #mjx-85441{
+      #mjx-0ee521d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -386,9 +334,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-eb164f6">
+    <span id="mjx-6ba188c">
       <style>
-      #mjx-eb164f6{
+      #mjx-6ba188c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -555,9 +503,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-4e893d7">
+    <span id="mjx-b0017c9">
       <style>
-      #mjx-4e893d7{
+      #mjx-b0017c9{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -763,9 +711,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-144929b">
+    <span id="mjx-b938c9e">
       <style>
-      #mjx-144929b{
+      #mjx-b938c9e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -943,9 +891,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-d6a311d">
+    <span id="mjx-b1f5b19">
       <style>
-      #mjx-d6a311d{
+      #mjx-b1f5b19{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2059,11 +2007,12 @@ File - Dump Memory
 
 
       <footer id="footer">
-  <p>Copyright &copy; 2025 CRZ&#39;s Blog</p>
+  <p>Copyright &copy; 2026 CRZ&#39;s Blog</p>
   <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> • Theme <a
-                href="https://github.com/DukeLuo/hexo-theme-candelas" target="_blank">Candelas</a></p>
-</footer>
+                  href="https://github.com/DukeLuo/hexo-theme-candelas" target="_blank">Candelas</a></p>
 
+  
+</footer>
     </div>
     <nav id="mobile-nav">
   
