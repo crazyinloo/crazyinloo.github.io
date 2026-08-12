@@ -16,7 +16,7 @@
 <meta property="article:modified_time" content="2025-11-17T14:04:40.233Z">
 <meta property="article:author" content="Lee">
 <meta name="twitter:card" content="summary">
-  <title>BUAA-CO-P3 基于logisim的单周期MIPS架构CPU | CRZ&#39;s Blog</title>
+  <title>Category: CO | CRZ&#39;s Blog</title>
   
   
     <link rel="icon" href="/favicon.ico">
@@ -55,77 +55,57 @@
   
   
   
-  
-  
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: true,   // 允许 \$ 之类的转义
-        processEnvironments: true
-      },
-      options: {
-        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-        ignoreHtmlClass: 'tex2jax_ignore',
-        processHtmlClass: 'tex2jax_process'
-      },
-      svg: {
-        fontCache: 'global'
-      }
-    };
-  </script>
-  <script async src="https://fastly.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
-
 
 <body>
   <div id="container">
     <div id="wrap">
-      <header id="header" class="post-header">
-    <div id="header-inner">
-        <nav id="main-nav">
-            <a id="main-nav-toggle" class="nav-icon"></a>
-            
-                <a class="main-nav-link" href="/">Home</a>
-            
-                <a class="main-nav-link" href="/categories">Category</a>
-            
-                <a class="main-nav-link" href="/archives">Archive</a>
-            
-        </nav>
-        <nav id="sub-nav">
-            <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-        </nav>
-        <script>
-            window.SEARCH_PATH = "/search.xml";
-        </script>
-        <!-- Search Form Wrapper - MODIFIED SECTION -->
-        <div id="search-form-wrap">
-        <!-- Use the theme's class for styling -->
-            <div class="search-form">
-                <input type="text" id="search-input" class="search-form-input" placeholder="Search...">
-            </div>
-            <!-- Container for search results, placed outside the styled form -->
-            <div id="search-results"></div>
-        </div>
+      
+<header id="header" class="post-header">
+  <div id="header-inner">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      
+        <a class="main-nav-link" href="/">Home</a>
+      
+        <a class="main-nav-link" href="/categories">Category</a>
+      
+        <a class="main-nav-link" href="/archives">Archive</a>
+      
+        <a class="main-nav-link" href="/profile/">Profile</a>
+      
+    </nav>
+    <nav id="sub-nav">
+      <button id="nav-search-btn" class="nav-icon" type="button"
+        title="Search" aria-label="Search"
+        aria-expanded="false" aria-controls="search-form-wrap"></button>
+    </nav>
+    <div id="search-form-wrap" aria-hidden="true">
+      <form id="local-search-form" class="search-form" role="search"
+        data-search-path="/search.xml" autocomplete="off">
+        <label class="search-label" for="search-input">Search</label>
+        <input id="search-input" class="search-form-input" type="search"
+          placeholder="Search" aria-controls="search-results"
+          aria-autocomplete="list">
+        <button id="search-clear" class="search-clear" type="button"
+          aria-label="Clear search">&#xF00D;</button>
+      </form>
+      <div id="search-results" role="status" aria-live="polite" hidden></div>
+    </div>
+  </div>
 </header>
-      <div class="post-outer" data-post-title="BUAA-CO-P3 基于logisim的单周期MIPS架构CPU" id="post">
+
+      
+<div class="post-outer" data-post-title="BUAA-CO-P3 基于logisim的单周期MIPS架构CPU" id="post">
   <section class="post-toc">
     <aside class="post-fixed-container">
   
-  <div class="toc-wrap">
+<div class="toc-wrap">
   <h3 class="toc-title">Contents</h3>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">声明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">前置理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-number">2.1.</span> <span class="toc-text">内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E5%A4%84%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">指令处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Debug"><span class="toc-number">2.3.</span> <span class="toc-text">Debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E6%93%8D%E4%BD%9C%E7%9A%84logisim%E9%83%A8%E4%BB%B6"><span class="toc-number">2.4.</span> <span class="toc-text">简化操作的logisim部件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%93%E9%94%99"><span class="toc-number">2.5.</span> <span class="toc-text">易错</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">模块设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IM-%EF%BC%88%E6%8C%87%E4%BB%A4%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">IM （指令存储器）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GRF%EF%BC%88%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">GRF（通用寄存器组）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ALU"><span class="toc-number">3.3.</span> <span class="toc-text">ALU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DM%EF%BC%88%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">DM（数据存储器）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXT%EF%BC%88%E6%89%A9%E5%B1%95%E5%8D%95%E5%85%83%EF%BC%89"><span class="toc-number">3.5.</span> <span class="toc-text">EXT（扩展单元）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Controller"><span class="toc-number">3.6.</span> <span class="toc-text">Controller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NPC"><span class="toc-number">3.7.</span> <span class="toc-text">NPC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">测试方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E8%AE%BE%E7%BD%AE"><span class="toc-number">4.1.1.</span> <span class="toc-text">环境设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99MIPS%E6%B1%87%E7%BC%96%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-number">4.1.2.</span> <span class="toc-text">编写MIPS汇编测试程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8logisim%E4%B8%AD%E8%BF%90%E8%A1%8CCPU"><span class="toc-number">4.1.3.</span> <span class="toc-text">在logisim中运行CPU</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE"><span class="toc-number">4.2.</span> <span class="toc-text">测试数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%B1%BB%E6%8C%87%E4%BB%A4%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">4.2.1.</span> <span class="toc-text">计算类指令功能测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%8F%96%E7%B1%BB%E6%8C%87%E4%BB%A4%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">4.2.2.</span> <span class="toc-text">存取类指令功能测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E7%B1%BB%E6%8C%87%E4%BB%A4%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">4.2.3.</span> <span class="toc-text">跳转类指令功能测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">可能添加的</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#lb-sb"><span class="toc-number">5.1.</span> <span class="toc-text">lb&#x2F;sb</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">思考题</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E"><span class="toc-text">声明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%90%86%E8%A7%A3"><span class="toc-text">前置理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-text">内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E5%A4%84%E7%90%86"><span class="toc-text">指令处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Debug"><span class="toc-text">Debug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E6%93%8D%E4%BD%9C%E7%9A%84logisim%E9%83%A8%E4%BB%B6"><span class="toc-text">简化操作的logisim部件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%93%E9%94%99"><span class="toc-text">易错</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="toc-text">模块设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IM-%EF%BC%88%E6%8C%87%E4%BB%A4%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%89"><span class="toc-text">IM （指令存储器）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GRF%EF%BC%88%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84%EF%BC%89"><span class="toc-text">GRF（通用寄存器组）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ALU"><span class="toc-text">ALU</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DM%EF%BC%88%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%89"><span class="toc-text">DM（数据存储器）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXT%EF%BC%88%E6%89%A9%E5%B1%95%E5%8D%95%E5%85%83%EF%BC%89"><span class="toc-text">EXT（扩展单元）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Controller"><span class="toc-text">Controller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NPC"><span class="toc-text">NPC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE"><span class="toc-text">测试数据</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E6%B7%BB%E5%8A%A0%E7%9A%84"><span class="toc-text">可能添加的</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#lb-sb"><span class="toc-text">lb&#x2F;sb</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-text">思考题</span></a></li></ol>
 </div>
 
-
-  
   
 </aside>
 
@@ -162,18 +142,18 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1>声明</h1>
+        <h1 id="声明">声明</h1>
 <p>P3对alu、grf的设计非常不合理，直接将各个可能的操作数接入alu，而且默认grf要读的寄存器是rs、rt。但因为足够应付需求（<s>懒得重构</s>）就保留了这种错误方法，但在后面的设计中都注意规避了。</p>
-<h1>前置理解</h1>
+<h1 id="前置理解">前置理解</h1>
 <h2 id="内存">内存</h2>
 <p><strong>1. 哈佛结构（本CPU应用的）</strong>
 内存 = 数据内存（DM） + 指令内存（IM）</p>
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-0ee521d">
+    <span id="mjx-db8a699">
       <style>
-      #mjx-0ee521d{
+      #mjx-db8a699{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -334,9 +314,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-6ba188c">
+    <span id="mjx-08c3a8e">
       <style>
-      #mjx-6ba188c{
+      #mjx-08c3a8e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -503,9 +483,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-b0017c9">
+    <span id="mjx-8f07ce4">
       <style>
-      #mjx-b0017c9{
+      #mjx-8f07ce4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -711,9 +691,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-b938c9e">
+    <span id="mjx-ad5b217">
       <style>
-      #mjx-b938c9e{
+      #mjx-ad5b217{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -891,9 +871,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-b1f5b19">
+    <span id="mjx-05e80018">
       <style>
-      #mjx-b1f5b19{
+      #mjx-05e80018{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1073,7 +1053,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 </ol>
-<h1>模块设计</h1>
+<h1 id="模块设计">模块设计</h1>
 <h2 id="IM-（指令存储器）">IM （指令存储器）</h2>
 <ul>
 <li>核心任务：根据PC中的地址，从ROM中读出指令输出</li>
@@ -1692,7 +1672,7 @@ g[data-mml-node="xypic"] path {
 </table>
 </li>
 </ul>
-<h1>测试</h1>
+<h1 id="测试">测试</h1>
 <blockquote>
 <p>核心思路：让 CPU 在执行指令后，将关键的结果存储到DM的特定位置。测试结束后，比较 Logisim 和 Mars 的 DM 内容是否完全一致</p>
 </blockquote>
@@ -1804,7 +1784,7 @@ File - Dump Memory
 <li>不跳转，且目标是此跳转指令</li>
 <li>不跳转，且目标在此跳转指令之后</li>
 </ul>
-<h1>可能添加的</h1>
+<h1 id="可能添加的">可能添加的</h1>
 <h2 id="lb-sb">lb/sb</h2>
 <p>dm本身不变</p>
 <ul>
@@ -1816,7 +1796,7 @@ File - Dump Memory
 </ul>
 </li>
 </ul>
-<h1>思考题</h1>
+<h1 id="思考题">思考题</h1>
 <ol>
 <li>
 <p>上面我们介绍了通过 FSM 理解单周期 CPU 的基本方法。请大家指出单周期 CPU 所用到的模块中，哪些发挥状态存储功能，哪些发挥状态转移功能。</p>
@@ -1876,17 +1856,7 @@ File - Dump Memory
       
 
       
-        <div class="article-share-links">
-  <a href="https://twitter.com/intent/tweet?text=BUAA-CO-P3%20%E5%9F%BA%E4%BA%8Elogisim%E7%9A%84%E5%8D%95%E5%91%A8%E6%9C%9FMIPS%E6%9E%B6%E6%9E%84CPU&amp;url=https%3A%2F%2Fcrazyinloo.github.io%2F2025%2F11%2F10%2FCO-P3%2F"
-    class="article-share-twitter" target="_blank" title="Twitter"></a>
-  <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fcrazyinloo.github.io%2F2025%2F11%2F10%2FCO-P3%2F"
-    class="article-share-facebook" target="_blank" title="Facebook"></a>
-  ​<a href="http://pinterest.com/pin/create/button/?url=https%3A%2F%2Fcrazyinloo.github.io%2F2025%2F11%2F10%2FCO-P3%2F"
-    class="article-share-pinterest" target="_blank" title="Pinterest"></a>
-  ​<a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fcrazyinloo.github.io%2F2025%2F11%2F10%2FCO-P3%2F"
-    class="article-share-linkedin" target="_blank" title="LinkedIn"></a>
-</div>
-
+        
       
     </footer>
   </div>
@@ -1914,33 +1884,35 @@ File - Dump Memory
     
   </section>
   <section class="post-sidebar">
-    <aside>
+    
+<aside>
   
 
-  
+  <div class="post-sidebar-sticky">
+    
   <div class="widget-wrap">
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2025/12/15/CO-P7/">BUAA-CO-P7 MIPS微系统</a>
+            <a href="/2026/08/08/At%20the%20End%20of%20the%20World/">At the End of the World</a>
           </li>
         
           <li>
-            <a href="/2025/12/01/CO-P6/">BUAA-CO-P6 基于verilog的流水线MIPS架构CPU（2）</a>
+            <a href="/2026/08/02/Just%20Another%20Day/">Just Another Day</a>
           </li>
         
           <li>
-            <a href="/2025/11/24/COT%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">BUAA-COT 使用手册</a>
+            <a href="/2026/07/31/Tears/">Tears</a>
           </li>
         
           <li>
-            <a href="/2025/11/24/CO-P5/">BUAA-CO-P5 基于verilog的流水线MIPS架构CPU（1）</a>
+            <a href="/2026/07/07/I'm%20Only%20Sleeping/">I&#39;m Only Sleeping</a>
           </li>
         
           <li>
-            <a href="/2025/11/17/CO-P4/">BUAA-CO-P4 基于verilog的单周期MIPS架构CPU</a>
+            <a href="/2026/07/04/Both%20Sides,%20Now/">Both Sides, Now</a>
           </li>
         
       </ul>
@@ -1948,58 +1920,8 @@ File - Dump Memory
   </div>
 
 
-  <div class="widget-wrap">
-  <h3 class="widget-title">
-    Profile
-  </h3>
-  <div class="widget">
-    <div class="profile">
-      <div class="motto">
-        
-        <div class="quote">&#10077;</div>
-        <p class="content">Nerding……</p>
-        <div class="close quote">&#10077;</div>
-      </div>
-      <div class="basic">
-        <div class="avatar"></div>
-        <div class="info">
-          <h2 class="name">CRZ</h2>
-          <h3 class="location">Wonderland</h3>
-          <div class="emoji">&gt;(๑•̀ㅂ•́)و✧</div>
-        </div>
-      </div>
-      <div class="links">
-        
-          <a id="github-link" class="profile-link" target="_blank" rel="noopener" href="https://github.com/crazyinloo" title="GitHub"></a>
-        
-        
-        
-          <a id="email-link" class="profile-link" href="mailto:24373274@buaa.edu.cn" title="Email"></a>
-        
-        
-      </div>
-    </div>
     
   </div>
-</div>
-
-  
-  <div class="widget-wrap">
-    <h3 class="widget-title">FRIENDS</h3>
-    <div class="widget">
-      <ul class="friend-list">
-        
-          
-          <li class="friend-item">
-            <a href="https://hexo.io/ToBeContinued" title="ToBeContinued" target="_blank">
-              ToBeContinued
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
 </aside>
 
   </section>
@@ -2009,10 +1931,9 @@ File - Dump Memory
       <footer id="footer">
   <p>Copyright &copy; 2026 CRZ&#39;s Blog</p>
   <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> • Theme <a
-                  href="https://github.com/DukeLuo/hexo-theme-candelas" target="_blank">Candelas</a></p>
-
-  
+                href="https://github.com/DukeLuo/hexo-theme-candelas" target="_blank">Candelas</a></p>
 </footer>
+
     </div>
     <nav id="mobile-nav">
   
@@ -2021,6 +1942,8 @@ File - Dump Memory
     <a href="/categories" class="mobile-nav-link">Category</a>
   
     <a href="/archives" class="mobile-nav-link">Archive</a>
+  
+    <a href="/profile/" class="mobile-nav-link">Profile</a>
   
 </nav>
 
