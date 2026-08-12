@@ -1811,6 +1811,7 @@ pre .javascript .function {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+  margin-top: 18px;
 }
 .profile .basic .avatar {
   width: 92px;
@@ -1860,7 +1861,9 @@ pre .javascript .function {
 .profile .links {
   display: flex;
   justify-content: center;
-  margin-top: 12px;
+  margin-top: 16px;
+  padding-left: 108px;
+  box-sizing: border-box;
 }
 .profile-link {
   font-family: FontAwesome;
@@ -2199,7 +2202,7 @@ pre .javascript .function {
   outline: none;
 }
 .widget-title-arrow {
-  color: #faae2b;
+  color: #00473e;
   font-size: 1.1rem;
   font-weight: 400;
   transition: transform 0.2s ease;
