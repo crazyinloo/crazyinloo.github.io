@@ -5,18 +5,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="前言 本文灵感来源于Joni Mitchell的同名歌曲。 正文 又飘过一朵云。 这次是羽毛覆盖的峡谷，还是北国巨兽的翅膀？ 我不知道，我只是躺在船上，看着云团聚拢又消散。 听起来文艺又无聊吗？唔，其实我也不知道自己是在看什么，或是在等待什么的出现。只是，风雪过境的日子太多，这样能够捕捉到云朵轨迹的时刻，我好像不想错过。 魔法使的生命太漫长，再稀少的瞬间，叠加起来也算不上稀奇。可我还是不明白，所以">
+  <meta name="description" content="vim学习 Vim Linux系统下的开源文本编辑器  基本输入操作  创建文件（touch） 打开文件1vim helloworld.c  输入内容：按I进入输入模式 保存并退出vim  按esc回到命令模式 按shift+;进入底线命令模式 输入w并enter，保存文件 再进入底线命令模式，输入q即可关闭文件回到CLI shell （3、4可合并为wq）      配置  配置文件：.vimr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Both Sides, Now">
-<meta property="og:url" content="https://crazyinloo.github.io/2026/07/04/Both%20Sides,%20Now/index.html">
+<meta property="og:title" content="vim">
+<meta property="og:url" content="https://crazyinloo.github.io/2026/03/01/vim/index.html">
 <meta property="og:site_name" content="CRZ&#39;s Blog">
-<meta property="og:description" content="前言 本文灵感来源于Joni Mitchell的同名歌曲。 正文 又飘过一朵云。 这次是羽毛覆盖的峡谷，还是北国巨兽的翅膀？ 我不知道，我只是躺在船上，看着云团聚拢又消散。 听起来文艺又无聊吗？唔，其实我也不知道自己是在看什么，或是在等待什么的出现。只是，风雪过境的日子太多，这样能够捕捉到云朵轨迹的时刻，我好像不想错过。 魔法使的生命太漫长，再稀少的瞬间，叠加起来也算不上稀奇。可我还是不明白，所以">
+<meta property="og:description" content="vim学习 Vim Linux系统下的开源文本编辑器  基本输入操作  创建文件（touch） 打开文件1vim helloworld.c  输入内容：按I进入输入模式 保存并退出vim  按esc回到命令模式 按shift+;进入底线命令模式 输入w并enter，保存文件 再进入底线命令模式，输入q即可关闭文件回到CLI shell （3、4可合并为wq）      配置  配置文件：.vimr">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-07-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-08-12T16:23:04.414Z">
+<meta property="article:published_time" content="2026-02-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-12T17:05:11.377Z">
 <meta property="article:author" content="Lee">
 <meta name="twitter:card" content="summary">
-  <title>Category: 产出 | CRZ&#39;s Blog</title>
+  <title>Category: OS | CRZ&#39;s Blog</title>
   
   
     <link rel="icon" href="/favicon.ico">
@@ -99,13 +99,13 @@
 </header>
 
       
-<div class="post-outer" data-post-title="Both Sides, Now" id="post">
+<div class="post-outer" data-post-title="vim" id="post">
   <section class="post-toc">
     <aside class="post-fixed-container">
   
 <div class="toc-wrap">
   <h3 class="toc-title">Contents</h3>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E6%96%87"><span class="toc-text">正文</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vim"><span class="toc-text">Vim</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Normal%E6%A8%A1%E5%BC%8F"><span class="toc-text">Normal模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%A7%86%E6%A8%A1%E5%BC%8F"><span class="toc-text">可视模式</span></a></li></ol></li></ol>
 </div>
 
   
@@ -113,16 +113,16 @@
 
   </section>
   <section class="post-main">
-    <article id="post-Both Sides, Now" class="h-entry article article-type-post"
+    <article id="post-vim" class="h-entry article article-type-post"
   itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <p class="article-date">
-  <time class="dt-published" datetime="2026-07-03T16:00:00.000Z" itemprop="datePublished">2026-07-04</time>
+  <time class="dt-published" datetime="2026-02-28T16:00:00.000Z" itemprop="datePublished">2026-03-01</time>
 </p>
 
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E4%BA%A7%E5%87%BA/">产出</a>
+    <a class="article-category-link" href="/categories/OS/">OS</a>
   </div>
 
 
@@ -135,7 +135,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Both Sides, Now
+      vim
     </h1>
   
 
@@ -144,26 +144,74 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="前言">前言</h1>
-<p>本文灵感来源于Joni Mitchell的同名歌曲。</p>
-<h1 id="正文">正文</h1>
-<p>又飘过一朵云。</p>
-<p>这次是羽毛覆盖的峡谷，还是北国巨兽的翅膀？</p>
-<p>我不知道，我只是躺在船上，看着云团聚拢又消散。</p>
-<p>听起来文艺又无聊吗？唔，其实我也不知道自己是在看什么，或是在等待什么的出现。只是，风雪过境的日子太多，这样能够捕捉到云朵轨迹的时刻，我好像不想错过。</p>
-<p>魔法使的生命太漫长，再稀少的瞬间，叠加起来也算不上稀奇。可我还是不明白，所以仍会一次次等待它出现又离去，连打斗也可以暂且放在一边。</p>
-<p>从前我一直是这样看云的。切雷塔来之前是这样，走之后也是这样。</p>
-<p>我以为我们可以一直这样看着云。我还是躺在那条船上，头枕着手，微眯着眼，望着难得的晴天。身边或许会有魔女突然降落，这样的时刻，即使是聒噪的它也会愿意只是坐在船侧，静静地感受身旁的吐息；或许直到云消散也不会有人来，但那又如何。魔法使的时间看不到尽头，云朵总会在下一次出现，行踪不定的那个人，也总会在某天又带来吵闹的笑声。</p>
-<p>可我还是不懂云，尽管我已经看遍了它，从各个角度。有那么多事，我本来可以去做，却被云挡住了去路。我想去追问它的变幻莫测，不知不觉间，反倒一路跟着它来到了南国。死之湖的云厚重浓烈，飘到这里，却变得缥缈柔软。我不明白，明明一直在看着它，我还是不懂它为什么要变化。</p>
-<p>船只在第谷湖上晃晃悠悠，我躺在上面，想找回熟悉的感觉，却浑身不得劲。这里的云可以从日出逗留到日落，可以被骤雨打散又在晴时恢复如初，一点都不像我地盘上的那家伙。可真懒散啊，我才不要奉陪，你就慢慢悠悠地留在这儿散步吧。猛地坐起来，没有知会任何人，我悄悄地回去了。</p>
-<p>我好像有一点懂它了，在我不再能等到它之后。那些家伙都说它变了，我也依旧这样觉得，可或许，我曾坚信的那些也只是一场幻象呢，厚重却一吹即灭，无形却阴魂不散，这听起来，不是最荒谬的错觉吗？这家伙，真是给我留下了个大麻烦呢。</p>
+        <p><a target="_blank" rel="noopener" href="https://coolshell.cn/articles/5426.html">vim学习</a></p>
+<h1 id="Vim">Vim</h1>
+<p>Linux系统下的开源文本编辑器</p>
+<ul>
+<li>基本输入操作
+<ul>
+<li>创建文件（touch）</li>
+<li>打开文件<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim helloworld.c</span><br></pre></td></tr></table></figure>
+</li>
+<li>输入内容：按<code>I</code>进入输入模式</li>
+<li>保存并退出vim
+<ol>
+<li>按<code>esc</code>回到命令模式</li>
+<li>按<code>shift+;</code>进入底线命令模式</li>
+<li>输入<code>w</code>并<code>enter</code>，保存文件</li>
+<li>再进入底线命令模式，输入<code>q</code>即可关闭文件回到CLI shell
+（3、4可合并为<code>wq</code>）</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="配置">配置</h2>
+<ul>
+<li>配置文件：<code>.vimrc</code>,位于用户主目录下</li>
+<li><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2018/09/vimrc.html">.vimrc配置</a></li>
+</ul>
+<h2 id="Normal模式">Normal模式</h2>
+<h3 id="复制粘贴">复制粘贴</h3>
+<p>如何复制选中内容到系统剪切板？</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/">https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/</a></li>
+<li>粗暴：先cat file，直接打印到shell，再复制</li>
+</ul>
+<h3 id="Undo-Redo">Undo/Redo</h3>
+<ul>
+<li><code>u</code>:undo</li>
+<li><code>&lt;C-r&gt;</code>:redo</li>
+</ul>
+<h3 id="delete">delete</h3>
+<ul>
+<li><code>x</code>:删当前光标所在的一个字符</li>
+<li><code>dd</code>:删除当前行，并把删除的行存到剪贴板里</li>
+</ul>
+<h3 id="移动光标">移动光标</h3>
+<ul>
+<li><code>0</code>:到行头</li>
+<li><code>^</code>:到行首第一个非空字符</li>
+<li><code>:&lt;n&gt;</code>:移动到第n行</li>
+<li><code>gg</code>：移动到第一行</li>
+<li><code>&lt;C-f&gt;</code>/<code>&lt;C-b&gt;</code>：前后翻整页</li>
+</ul>
+<h2 id="可视模式">可视模式</h2>
+<p>输入<code>v</code>进入</p>
+<h3 id="复制粘贴-2">复制粘贴</h3>
+<p>以下仅限于vim内部操作</p>
+<ul>
+<li><code>d</code>:剪切选中的文本段</li>
+<li><code>y</code>:复制</li>
+<li><code>p</code>:粘贴</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
       
         <div id="copyright">
-  <p><a href="https://crazyinloo.github.io/2026/07/04/Both%20Sides,%20Now/">https://crazyinloo.github.io/2026/07/04/Both%20Sides,%20Now/</a></p>
+  <p><a href="https://crazyinloo.github.io/2026/03/01/vim/">https://crazyinloo.github.io/2026/03/01/vim/</a></p>
   <p>本作品采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可</p>
 </div>
 
@@ -179,15 +227,15 @@
     
   <nav id="article-nav">
     
-      <a href="/2026/07/07/I'm%20Only%20Sleeping/" id="article-nav-newer" class="article-nav-link-wrap">
+      <a href="/2026/03/01/linux%E6%93%8D%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
         <h4 class="article-nav-caption">Read This Next</h4>
-        <div class="article-nav-title">I&#39;m Only Sleeping</div>
+        <div class="article-nav-title">linux操作</div>
       </a>
     
     
-      <a href="/2026/03/01/linux%E6%93%8D%E4%BD%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <a href="/2025/12/15/CO-P7/" id="article-nav-older" class="article-nav-link-wrap">
         <h4 class="article-nav-caption">You Might Enjoy</h4>
-        <div class="article-nav-title">linux操作</div>
+        <div class="article-nav-title">BUAA-CO-P7 MIPS微系统</div>
       </a>
     
   </nav>

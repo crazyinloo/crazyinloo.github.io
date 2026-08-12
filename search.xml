@@ -12,9 +12,9 @@
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-a6d6ecc8">
+    <span id="mjx-eb825b98">
       <style>
-      #mjx-a6d6ecc8{
+      #mjx-eb825b98{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -175,9 +175,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-c6382e5">
+    <span id="mjx-86032898">
       <style>
-      #mjx-c6382e5{
+      #mjx-86032898{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -344,9 +344,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-b7df41f8">
+    <span id="mjx-d916d9e">
       <style>
-      #mjx-b7df41f8{
+      #mjx-d916d9e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -552,9 +552,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-dbed5e48">
+    <span id="mjx-258fdb1">
       <style>
-      #mjx-dbed5e48{
+      #mjx-258fdb1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -732,9 +732,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-ba91a368">
+    <span id="mjx-86360d3">
       <style>
-      #mjx-ba91a368{
+      #mjx-86360d3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2707,6 +2707,1422 @@ File - Dump Memory
       </categories>
   </entry>
   <entry>
+    <title>BUAA-CO-P6 基于verilog的流水线MIPS架构CPU（2）</title>
+    <url>/2025/12/01/CO-P6/</url>
+    <content><![CDATA[<h1 id="任务">任务</h1>
+<ul>
+<li>
+<p>将P5中支持{add,sub,ori,lui,lw,sw,beq,jr,jal,nop}十条指令的CPU扩展，要求支持以下指令集：</p>
+<pre><code>      add,sub,and,or,slt,sltu,
+      addi,andi,ori,lui,
+      mult,multu,div,divu,mfhi,mflo,mthi,mtlo,
+      lw,lb,lh,sw,sb,sh,
+      beq,bne,jr,jal,
+      nop
+</code></pre>
+</li>
+<li>
+<p>不再自行模拟IM和DM，而由提供的外设传递instruction和相关数据给CPU</p>
+</li>
+</ul>
+<h1 id="前提">前提</h1>
+<ol>
+<li>不会连续出现乘除指令</li>
+<li>乘除指令之后一定是mfhi/mflo</li>
+</ol>
+<h1 id="需要改动的地方">需要改动的地方</h1>
+<h2 id="IM和DM">IM和DM</h2>
+<p>不用自己实现IM和DM了。</p>
+<ul>
+<li>相当于给出了IM和DM的外置设备，只需要考虑怎么将cpu和IM、DM连接起来</li>
+<li>在MEM阶段设置BE模块来负责数据交互
+<ul>
+<li>原MemWrite变为byteEn总开关</li>
+<li>原MemRead现在没有意义了</li>
+</ul>
+</li>
+</ul>
+<h2 id="MDU">MDU</h2>
+<p>在EX阶段新增乘除模块来实现乘除相关指令</p>
+<ul>
+<li>我们只需要把乘除法相关指令阻塞在D</li>
+<li>在HCU中增加MD_stall的判断</li>
+</ul>
+<h2 id="Control">Control</h2>
+<p>指令集规模扩大，为提高添加指令的效率和conrol代码的简洁性，我们对指令进行分类，可大致分为：
+- R_cal
+- I_cal
+- MD
+- Load &amp; Save
+- Branch &amp; Jump</p>
+<h1 id="计算用组合逻辑积累">计算用组合逻辑积累</h1>
+<ol>
+<li>乘除相关 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//madd</span></span><br><span class="line">&#123;temp_hi, temp_lo&#125; &lt;= &#123;hi, lo&#125; + <span class="built_in">$signed</span>(<span class="built_in">$signed</span>(<span class="number">64&#x27;d0</span>) + <span class="built_in">$signed</span>(rs) * <span class="built_in">$signed</span>(rt));</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">&#123;temp_hi, temp_lo&#125; &lt;= &#123;hi, lo&#125; + <span class="built_in">$signed</span>(&#123;&#123;<span class="number">32</span>&#123;rs[<span class="number">31</span>]&#125;&#125;, rs[<span class="number">31</span>:<span class="number">0</span>]&#125; * <span class="built_in">$signed</span>(&#123;&#123;<span class="number">32</span>&#123;rt[<span class="number">31</span>]&#125;&#125;, rt[<span class="number">31</span>:<span class="number">0</span>]&#125;)); <span class="comment">// 手动进行符号位扩展</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="模块设计">模块设计</h1>
+<h2 id="ID">ID</h2>
+<h3 id="HCU">HCU</h3>
+<ul>
+<li>转发：新增了数据来源（M_HI/M_LO）
+<table>
+<thead>
+<tr>
+<th>转发到/数据来源</th>
+<th>M锁存的ALUresult</th>
+<th>W_WD</th>
+<th>M_PC8</th>
+<th>M_HI</th>
+<th>M_LO</th>
+<th>E_PC8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID stage</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+</tr>
+<tr>
+<td>EX stage</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>不存在</td>
+</tr>
+<tr>
+<td>MEM stage</td>
+<td>不存在</td>
+<td>RtData</td>
+<td>不存在</td>
+<td>不存在</td>
+<td>不存在</td>
+<td>不存在</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>暂停：增加了MD_stall
+<ul>
+<li><code>assign MD_stall = (D_isMDinstr &amp; (E_MDUop != 3'b0 | E_Busy));</code></li>
+<li>即：当E中MDU<code>start/busy</code>且D中为MD相关指令，<strong>stall</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="EX">EX</h2>
+<h3 id="MDU-2">MDU</h3>
+<ul>
+<li>整体设计
+<ul>
+<li>能够实现和乘除有关的功能</li>
+</ul>
+</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>同步复位</td>
+</tr>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>clk</td>
+</tr>
+<tr>
+<td>op</td>
+<td>I</td>
+<td>3</td>
+<td>MDUop<br>000:未start<br>001:mult start<br>010:multu start <br>011:div start <br>100:divu start</td>
+</tr>
+<tr>
+<td>operand1</td>
+<td>I</td>
+<td>32</td>
+<td>默认RsData</td>
+</tr>
+<tr>
+<td>operand2</td>
+<td>I</td>
+<td>32</td>
+<td>默认RtData</td>
+</tr>
+<tr>
+<td>we_HI</td>
+<td>I</td>
+<td>1</td>
+<td>HI写使能信号</td>
+</tr>
+<tr>
+<td>we_LO</td>
+<td>I</td>
+<td>1</td>
+<td>LO写使能信号</td>
+</tr>
+<tr>
+<td>Busy</td>
+<td>O</td>
+<td>1</td>
+<td>MDU繁忙信号</td>
+</tr>
+<tr>
+<td>HI</td>
+<td>O</td>
+<td>32</td>
+<td>HI data</td>
+</tr>
+<tr>
+<td>LO</td>
+<td>O</td>
+<td>32</td>
+<td>LO data</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="MEM">MEM</h2>
+<h3 id="BE">BE</h3>
+<ul>
+<li>模块设计
+<ul>
+<li>将字节写使能信号传入外设DM</li>
+</ul>
+</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Address</td>
+<td>I</td>
+<td>32</td>
+<td>读/写地址，==<strong>默认是ALUresult</strong>==</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>I</td>
+<td>1</td>
+<td>写使能信号</td>
+</tr>
+<tr>
+<td>LoadType</td>
+<td>I</td>
+<td>2</td>
+<td>load模式选择信号</td>
+</tr>
+<tr>
+<td>SaveType</td>
+<td>I</td>
+<td>2</td>
+<td>Save模式选择信号</td>
+</tr>
+<tr>
+<td>MemWriteData</td>
+<td>I</td>
+<td>32</td>
+<td>要被处理准备被写入的数据</td>
+</tr>
+<tr>
+<td>MemReadData</td>
+<td>从DM中读出的对应Word</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>LoadData</td>
+<td>O</td>
+<td>32</td>
+<td>要Load到rt中的数据</td>
+</tr>
+<tr>
+<td>SaveData</td>
+<td>O</td>
+<td>32</td>
+<td>要Save到DM中的数据</td>
+</tr>
+<tr>
+<td>byteEn</td>
+<td>O</td>
+<td>4</td>
+<td>要Save到DM对应字的字节位置</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h1 id="思考题">思考题</h1>
+<ol>
+<li>
+<p>为什么需要有单独的乘除法部件而不是整合进 ALU？为何需要有独立的 HI、LO 寄存器？</p>
+<ul>
+<li>乘除的实现时间远长于ALU中的简单运算，如果整合进去，那么EX阶段的时间就会被拉长，降低效率</li>
+<li>独立的HI、LO：
+<ol>
+<li>运算结果是<code>64位/两个数</code>，而通用寄存器只有<code>32位</code>;</li>
+<li>可以简化寄存器堆的写回逻辑（否则GRF要实现同时写入两个数据，与现有GRF结构不同）</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>真实的流水线 CPU 是如何使用实现乘除法的？请查阅相关资料进行简单说明。</p>
+<ul>
+<li>真实的CPU实际上是通过<code>专用硬件电路 + 内部流水线 + 乱序调度</code>来实现乘法，而除法通过使用 <code>SRT 算法</code>来实现(搜索得到)</li>
+</ul>
+</li>
+<li>
+<p>请结合自己的实现分析，你是如何处理 Busy 信号带来的周期阻塞的？</p>
+<ul>
+<li>我在MDU内部设计了count来计算阻塞周期数，实际上这就是一个有限状态机的实现。</li>
+<li>在HCU中增加了MD_stall(具体见上MDU)</li>
+</ul>
+</li>
+<li>
+<p>请问采用字节使能信号的方式处理写指令有什么好处？（提示：从清晰性、统一性等角度考虑）</p>
+<ul>
+<li>DM内部不再需要区分写入指令的方法（sw/sb/sh/…),它只需要根据Address和字节使能信号决定要不要写入。</li>
+</ul>
+</li>
+<li>
+<p>请思考，我们在按字节读和按字节写时，实际从 DM 获得的数据和向 DM 写入的数据是否是一字节？在什么情况下我们按字节读和按字节写的效率会高于按字读和按字写呢？</p>
+<ul>
+<li>不是，是一个字</li>
+<li>当我们需要紧密地存储数据时，按字节读写效率会更高（比如处理字符串时）</li>
+</ul>
+</li>
+<li>
+<p>为了对抗复杂性你采取了哪些抽象和规范手段？这些手段在译码和处理数据冲突的时候有什么样的特点与帮助？</p>
+<ul>
+<li>把控制信号合成为总线向后传，要用的时候再利用宏取出。当需要新增控制信号（如增加乘除法相关的 we_HI/LO）时，只需修改位宽定义和宏，而无需修改流水线寄存器（Reg_E, Reg_M等）的端口列表；</li>
+<li>在增加指令时把指令分为R-cal\I-cal\Branch and Jump\Load and Save\MD相关，再把它加入对应的控制信号表。填表的过程就是梳理指令全过程、思考待改变模块的过程，因此填完表之后基本就知道要怎么修改cpu。</li>
+<li>转发采取from - to的思路，只要增加的指令没有涉及到转发source的增加就不用改HCU。（如果要改，类似：添加MD相关指令之后，在HCU和顶层数据选择逻辑中加入了M_HI/M_LO,在WDsel的来源中增加了W_HI/W_LO)</li>
+</ul>
+</li>
+<li>
+<p>在本实验中你遇到了哪些不同指令类型组合产生的冲突？你又是如何解决的？相应的测试样例是什么样的？</p>
+<ul>
+<li>转发：按照以下from - to表来列举
+<table>
+<thead>
+<tr>
+<th>转发到/数据来源</th>
+<th>M锁存的ALUresult</th>
+<th>W_WD</th>
+<th>M_PC8</th>
+<th>M_HI</th>
+<th>M_LO</th>
+<th>E_PC8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID stage</td>
+<td>R_cal/I_cal - nop - Branch</td>
+<td>R_cal/I_cal/Load - nop - nop - Branch</td>
+<td>jal - (jump处)nop - Branch</td>
+<td>mfhi - nop - Branch</td>
+<td>mflo - nop - Branch</td>
+<td>jal - (jump处)Branch</td>
+</tr>
+<tr>
+<td>EX stage</td>
+<td>R_cal/I_cal - R_cal/I_cal/MD相关</td>
+<td>R_cal/I_cal/MD相关/jal/Load - nop - R_cal/I_cal/MD相关</td>
+<td>jal - (jump处)R_cal/I_cal/MD相关</td>
+<td>mfhi - R_cal/I_cal/MD相关</td>
+<td>mflo - R_cal/I_cal/MD相关</td>
+<td>不存在</td>
+</tr>
+<tr>
+<td>MEM stage</td>
+<td>不存在</td>
+<td>R_cal/I_cal/MD相关/jal/Load - Save</td>
+<td>不存在</td>
+<td>不存在</td>
+<td>不存在</td>
+<td>不存在</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>暂停：
+<ul>
+<li>E_Conflict： <figure class="highlight mips"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ori </span>$<span class="number">1</span>,$<span class="number">0</span>,<span class="number">3</span></span><br><span class="line"><span class="keyword">beq </span>$<span class="number">1</span>,$<span class="number">0</span>,label</span><br><span class="line"><span class="symbol">label:</span></span><br><span class="line"><span class="keyword">nop</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>M_Conflict： <figure class="highlight mips"><table><tr><td class="code"><pre><span class="line"><span class="keyword">lw </span>$<span class="number">1</span>, <span class="number">0</span>($<span class="number">0</span>)      </span><br><span class="line"><span class="keyword">nop </span>                </span><br><span class="line"><span class="keyword">beq </span>$<span class="number">1</span>, $<span class="number">0</span>, label  </span><br><span class="line"><span class="symbol">label:</span></span><br><span class="line"><span class="keyword">nop</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>如果你是手动构造的样例，请说明构造策略，说明你的测试程序如何保证覆盖了所有需要测试的情况；如果你是完全随机生成的测试样例，请思考完全随机的测试程序有何不足之处；如果你在生成测试样例时采用了特殊的策略，比如构造连续数据冒险序列，请你描述一下你使用的策略如何结合了随机性达到强测的效果。</p>
+<ul>
+<li>手动构造：
+<ul>
+<li>根据7中表格覆盖每一种转发和暂停的场合</li>
+<li>加入 $0 寄存器作为读写目标，确保不会错误地覆盖 $0 的值</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="Control表">Control表</h1>
+<h2 id="R-cal">R_cal</h2>
+<table>
+<thead>
+<tr>
+<th>控制信号\指令</th>
+<th>add</th>
+<th>sub</th>
+<th>and</th>
+<th>or</th>
+<th>slt</th>
+<th>sltu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegWrite</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>0000</td>
+<td>0001</td>
+<td>0010</td>
+<td>0011</td>
+<td>0101</td>
+<td>0110</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>MemWriteDataOp</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>ifB</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ifJ</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>BranchOp</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>useRt</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>islink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isConditionalLink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isLikely</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>LoadType</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>SaveType</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MDUop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>we_HI</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>we_LO</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="I-cal">I_cal</h2>
+<table>
+<thead>
+<tr>
+<th>控制信号\指令</th>
+<th>addi</th>
+<th>andi</th>
+<th>ori</th>
+<th>lui</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegWrite</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>0000</td>
+<td>0010</td>
+<td>0011</td>
+<td>0100</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>MemWriteDataOp</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>ifB</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ifJ</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>BranchOp</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>useRt</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>islink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isConditionalLink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isLikely</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>LoadType</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>SaveType</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MDUop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>we_HI</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>we_LO</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="MD相关">MD相关</h2>
+<table>
+<thead>
+<tr>
+<th>控制信号\指令</th>
+<th>mult</th>
+<th>multu</th>
+<th>div</th>
+<th>divu</th>
+<th>mfhi</th>
+<th>mflo</th>
+<th>mthi</th>
+<th>mtlo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegWrite</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td></td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>011</td>
+<td>100</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>MemWriteDataOp</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>ifB</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ifJ</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>BranchOp</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>useRt</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>islink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isConditionalLink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isLikely</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>LoadType</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>SaveType</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MDUop</td>
+<td>001</td>
+<td>010</td>
+<td>011</td>
+<td>100</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>we_HI</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>we_LO</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Load-Save">Load &amp; Save</h2>
+<table>
+<thead>
+<tr>
+<th>控制信号\指令</th>
+<th>lb</th>
+<th>lh</th>
+<th>lw</th>
+<th>sb</th>
+<th>sh</th>
+<th>sw</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegWrite</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>01</td>
+<td>01</td>
+<td>01</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>MemWriteDataOp</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>ifB</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ifJ</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>BranchOp</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>useRt</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>islink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isConditionalLink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isLikely</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>LoadType</td>
+<td>010</td>
+<td>100</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>SaveType</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0010</td>
+<td>0001</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>MDUop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>we_HI</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>we_LO</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Branch-Jump">Branch &amp; Jump</h2>
+<table>
+<thead>
+<tr>
+<th>控制信号\指令</th>
+<th>beq</th>
+<th>jal</th>
+<th>jr</th>
+<th>bne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegWrite</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>000</td>
+<td>011</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>00</td>
+<td>10</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>001</td>
+<td>010</td>
+<td>011</td>
+<td>001</td>
+</tr>
+<tr>
+<td>MemWriteDataOp</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>ifB</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>ifJ</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>BranchOp</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+</tr>
+<tr>
+<td>useRt</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>islink</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isConditionalLink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isLikely</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>LoadType</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>SaveType</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>MDUop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>we_HI</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>we_LO</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      <categories>
+        <category>CO</category>
+      </categories>
+  </entry>
+  <entry>
     <title>BUAA-CO-P5 基于verilog的流水线MIPS架构CPU（1）</title>
     <url>/2025/11/24/CO-P5/</url>
     <content><![CDATA[<h1 id="要求">要求</h1>
@@ -2761,9 +4177,9 @@ File - Dump Memory
 <h1 id="前置知识">前置知识</h1>
 <h2 id="延迟槽">延迟槽</h2>
 <p>
-    <span id="mjx-b75a4a">
+    <span id="mjx-d5e65738">
       <style>
-      #mjx-b75a4a{
+      #mjx-d5e65738{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3073,9 +4489,9 @@ wire isEven = ~rsData[0];</p>
 <li>
 <p>判断是否是2^n
 
-    <span id="mjx-a3553fd8">
+    <span id="mjx-c3ae99c8">
       <style>
-      #mjx-a3553fd8{
+      #mjx-c3ae99c8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3613,9 +5029,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p>
-    <span id="mjx-f7f3ffd8">
+    <span id="mjx-21ccc3f">
       <style>
-      #mjx-f7f3ffd8{
+      #mjx-21ccc3f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3777,9 +5193,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p>
-    <span id="mjx-140bb898">
+    <span id="mjx-4888f25">
       <style>
-      #mjx-140bb898{
+      #mjx-4888f25{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3938,9 +5354,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.36ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 1927.1 834.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1066,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>T</mi><mrow data-mjx-texclass="ORD"><mi>n</mi><mi>e</mi><mi>w</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ：位于某个流水级的某个指令，它经过
-    <span id="mjx-3dcfcfe8">
+    <span id="mjx-ea75c678">
       <style>
-      #mjx-3dcfcfe8{
+      #mjx-ea75c678{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4101,9 +5517,9 @@ g[data-mml-node="xypic"] path {
   个时钟周期,该指令的结果（即最终要<code>写回 GRF 的值</code>）才会被计算出来，并<code>存入</code>对应的流水级寄存器中，从而可以被后续指令安全使用或转发。</p>
 <ul>
 <li>
-    <span id="mjx-d92da048">
+    <span id="mjx-dc76d94">
       <style>
-      #mjx-d92da048{
+      #mjx-dc76d94{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5848,1416 +7264,40 @@ MEM stage：|不存在|RtData|不存在|不存在</p>
       </categories>
   </entry>
   <entry>
-    <title>BUAA-CO-P6 基于verilog的流水线MIPS架构CPU（2）</title>
-    <url>/2025/12/01/CO-P6/</url>
-    <content><![CDATA[<h1 id="任务">任务</h1>
-<ul>
-<li>
-<p>将P5中支持{add,sub,ori,lui,lw,sw,beq,jr,jal,nop}十条指令的CPU扩展，要求支持以下指令集：</p>
-<pre><code>      add,sub,and,or,slt,sltu,
-      addi,andi,ori,lui,
-      mult,multu,div,divu,mfhi,mflo,mthi,mtlo,
-      lw,lb,lh,sw,sb,sh,
-      beq,bne,jr,jal,
-      nop
-</code></pre>
-</li>
-<li>
-<p>不再自行模拟IM和DM，而由提供的外设传递instruction和相关数据给CPU</p>
-</li>
-</ul>
-<h1 id="前提">前提</h1>
+    <title>BUAA-COT 使用手册</title>
+    <url>/2025/11/24/COT%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<h1 id="声明">声明</h1>
+<p>本文所介绍的工具 <code>COT</code> 来自开源项目，其源代码与详细信息可见：
+<a href="https://github.com/Kie-Chi/COT">COT</a></p>
+<p>该项目版权归原作者所有，并遵循其仓库中所标注的开源许可证。本文仅对其使用方法进行学习性说明，所有原始代码与设计均由原作者贡献。若本文中引用了项目中的代码或截图，均仅用于技术交流目的。</p>
+<h1 id="配置问题">配置问题</h1>
+<h2 id="问题1">问题1</h2>
+<p>我按说明执行<code>start.exe</code>之后出现如下报错：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Mars: Start dumping datas...</span><br><span class="line">arth_test.asm: Mars is dumping data...</span><br><span class="line">ERROR: UnicodeDecodeError&quot;&#x27;utf-8&#x27; codec can&#x27;t decode byte 0xd4 in position 4: invalid continuation byte&quot;</span><br><span class="line">Detailed Stacktree:</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File &quot;start.py&quot;, line 187, in test</span><br><span class="line">    self.machine.start_test()</span><br><span class="line">File &quot;Machine.py&quot;, line 38, in start_test</span><br><span class="line">    self.__get_std_mars()</span><br><span class="line">File &quot;Machine.py&quot;, line 206, in __get_std_mars</span><br><span class="line">    self.__runner.run_mars(src, hex_dst, out_log)</span><br><span class="line">File &quot;Runner.py&quot;, line 142, in run_mars</span><br><span class="line">    self.dump_hex(src, hex_dst)</span><br><span class="line">File &quot;Runner.py&quot;, line 63, in dump_hex</span><br><span class="line">    contents = safe_read(os.path.join(self._dir, &quot;info.txt&quot;))</span><br><span class="line">File &quot;Runner.py&quot;, line 640, in safe_read</span><br><span class="line">    contents = file.readlines()</span><br><span class="line">File &quot;codecs.py&quot;, line 322, in decode</span><br><span class="line">UnicodeDecodeError: &#x27;utf-8&#x27; codec can&#x27;t decode byte 0xd4 in position 4: invalid continuation byte</span><br></pre></td></tr></table></figure>
+<h3 id="解决方法">解决方法</h3>
+<p>把 Windows 的“语言用于非 Unicode 程序”改成 English
+<code>控制面板 → 区域 → 管理 → 非 Unicode 程序语言 → 改为 English(United States) </code></p>
+<h3 id="原理">原理</h3>
+<p><code>MARS/Java</code> 输出用的是系统默认编码（ACP），中文是 <code>GBK</code>，会产生 <code>UTF-8</code> 不能解码的字节；切成英文后输出主要是 ASCII，不再产生非法字节，UTF-8 读取自然不报错。</p>
+<h2 id="问题2">问题2</h2>
+<p>运行cot发现输出永远为空</p>
+<h3 id="解决方法-2">解决方法</h3>
+<p>修改系统<strong>环境变量</strong></p>
 <ol>
-<li>不会连续出现乘除指令</li>
-<li>乘除指令之后一定是mfhi/mflo</li>
-</ol>
-<h1 id="需要改动的地方">需要改动的地方</h1>
-<h2 id="IM和DM">IM和DM</h2>
-<p>不用自己实现IM和DM了。</p>
+<li>添加<code>系统变量</code>
+变量名：<code>XILINX</code>
+变量值：<code>D:\Xilinx\14.7\ISE_DS\ISE</code>（ISE位置）</li>
+<li>新增PATH
+系统变量中选中PATH - 编辑 - 新建
 <ul>
-<li>相当于给出了IM和DM的外置设备，只需要考虑怎么将cpu和IM、DM连接起来</li>
-<li>在MEM阶段设置BE模块来负责数据交互
-<ul>
-<li>原MemWrite变为byteEn总开关</li>
-<li>原MemRead现在没有意义了</li>
-</ul>
-</li>
-</ul>
-<h2 id="MDU">MDU</h2>
-<p>在EX阶段新增乘除模块来实现乘除相关指令</p>
-<ul>
-<li>我们只需要把乘除法相关指令阻塞在D</li>
-<li>在HCU中增加MD_stall的判断</li>
-</ul>
-<h2 id="Control">Control</h2>
-<p>指令集规模扩大，为提高添加指令的效率和conrol代码的简洁性，我们对指令进行分类，可大致分为：
-- R_cal
-- I_cal
-- MD
-- Load &amp; Save
-- Branch &amp; Jump</p>
-<h1 id="计算用组合逻辑积累">计算用组合逻辑积累</h1>
-<ol>
-<li>乘除相关 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//madd</span></span><br><span class="line">&#123;temp_hi, temp_lo&#125; &lt;= &#123;hi, lo&#125; + <span class="built_in">$signed</span>(<span class="built_in">$signed</span>(<span class="number">64&#x27;d0</span>) + <span class="built_in">$signed</span>(rs) * <span class="built_in">$signed</span>(rt));</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">&#123;temp_hi, temp_lo&#125; &lt;= &#123;hi, lo&#125; + <span class="built_in">$signed</span>(&#123;&#123;<span class="number">32</span>&#123;rs[<span class="number">31</span>]&#125;&#125;, rs[<span class="number">31</span>:<span class="number">0</span>]&#125; * <span class="built_in">$signed</span>(&#123;&#123;<span class="number">32</span>&#123;rt[<span class="number">31</span>]&#125;&#125;, rt[<span class="number">31</span>:<span class="number">0</span>]&#125;)); <span class="comment">// 手动进行符号位扩展</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="模块设计">模块设计</h1>
-<h2 id="ID">ID</h2>
-<h3 id="HCU">HCU</h3>
-<ul>
-<li>转发：新增了数据来源（M_HI/M_LO）
-<table>
-<thead>
-<tr>
-<th>转发到/数据来源</th>
-<th>M锁存的ALUresult</th>
-<th>W_WD</th>
-<th>M_PC8</th>
-<th>M_HI</th>
-<th>M_LO</th>
-<th>E_PC8</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ID stage</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-</tr>
-<tr>
-<td>EX stage</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-<td>RtData/RsData</td>
-<td>不存在</td>
-</tr>
-<tr>
-<td>MEM stage</td>
-<td>不存在</td>
-<td>RtData</td>
-<td>不存在</td>
-<td>不存在</td>
-<td>不存在</td>
-<td>不存在</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>暂停：增加了MD_stall
-<ul>
-<li><code>assign MD_stall = (D_isMDinstr &amp; (E_MDUop != 3'b0 | E_Busy));</code></li>
-<li>即：当E中MDU<code>start/busy</code>且D中为MD相关指令，<strong>stall</strong></li>
-</ul>
-</li>
-</ul>
-<h2 id="EX">EX</h2>
-<h3 id="MDU-2">MDU</h3>
-<ul>
-<li>整体设计
-<ul>
-<li>能够实现和乘除有关的功能</li>
-</ul>
-</li>
-<li>模块规格
-<table>
-<thead>
-<tr>
-<th>信号名</th>
-<th>方向</th>
-<th>位宽</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>reset</td>
-<td>I</td>
-<td>1</td>
-<td>同步复位</td>
-</tr>
-<tr>
-<td>clk</td>
-<td>I</td>
-<td>1</td>
-<td>clk</td>
-</tr>
-<tr>
-<td>op</td>
-<td>I</td>
-<td>3</td>
-<td>MDUop<br>000:未start<br>001:mult start<br>010:multu start <br>011:div start <br>100:divu start</td>
-</tr>
-<tr>
-<td>operand1</td>
-<td>I</td>
-<td>32</td>
-<td>默认RsData</td>
-</tr>
-<tr>
-<td>operand2</td>
-<td>I</td>
-<td>32</td>
-<td>默认RtData</td>
-</tr>
-<tr>
-<td>we_HI</td>
-<td>I</td>
-<td>1</td>
-<td>HI写使能信号</td>
-</tr>
-<tr>
-<td>we_LO</td>
-<td>I</td>
-<td>1</td>
-<td>LO写使能信号</td>
-</tr>
-<tr>
-<td>Busy</td>
-<td>O</td>
-<td>1</td>
-<td>MDU繁忙信号</td>
-</tr>
-<tr>
-<td>HI</td>
-<td>O</td>
-<td>32</td>
-<td>HI data</td>
-</tr>
-<tr>
-<td>LO</td>
-<td>O</td>
-<td>32</td>
-<td>LO data</td>
-</tr>
-</tbody>
-</table>
-</li>
-</ul>
-<h2 id="MEM">MEM</h2>
-<h3 id="BE">BE</h3>
-<ul>
-<li>模块设计
-<ul>
-<li>将字节写使能信号传入外设DM</li>
-</ul>
-</li>
-<li>模块规格
-<table>
-<thead>
-<tr>
-<th>信号名</th>
-<th>方向</th>
-<th>位宽</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Address</td>
-<td>I</td>
-<td>32</td>
-<td>读/写地址，==<strong>默认是ALUresult</strong>==</td>
-</tr>
-<tr>
-<td>MemWrite</td>
-<td>I</td>
-<td>1</td>
-<td>写使能信号</td>
-</tr>
-<tr>
-<td>LoadType</td>
-<td>I</td>
-<td>2</td>
-<td>load模式选择信号</td>
-</tr>
-<tr>
-<td>SaveType</td>
-<td>I</td>
-<td>2</td>
-<td>Save模式选择信号</td>
-</tr>
-<tr>
-<td>MemWriteData</td>
-<td>I</td>
-<td>32</td>
-<td>要被处理准备被写入的数据</td>
-</tr>
-<tr>
-<td>MemReadData</td>
-<td>从DM中读出的对应Word</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>LoadData</td>
-<td>O</td>
-<td>32</td>
-<td>要Load到rt中的数据</td>
-</tr>
-<tr>
-<td>SaveData</td>
-<td>O</td>
-<td>32</td>
-<td>要Save到DM中的数据</td>
-</tr>
-<tr>
-<td>byteEn</td>
-<td>O</td>
-<td>4</td>
-<td>要Save到DM对应字的字节位置</td>
-</tr>
-</tbody>
-</table>
-</li>
-</ul>
-<h1 id="思考题">思考题</h1>
-<ol>
-<li>
-<p>为什么需要有单独的乘除法部件而不是整合进 ALU？为何需要有独立的 HI、LO 寄存器？</p>
-<ul>
-<li>乘除的实现时间远长于ALU中的简单运算，如果整合进去，那么EX阶段的时间就会被拉长，降低效率</li>
-<li>独立的HI、LO：
-<ol>
-<li>运算结果是<code>64位/两个数</code>，而通用寄存器只有<code>32位</code>;</li>
-<li>可以简化寄存器堆的写回逻辑（否则GRF要实现同时写入两个数据，与现有GRF结构不同）</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>
-<p>真实的流水线 CPU 是如何使用实现乘除法的？请查阅相关资料进行简单说明。</p>
-<ul>
-<li>真实的CPU实际上是通过<code>专用硬件电路 + 内部流水线 + 乱序调度</code>来实现乘法，而除法通过使用 <code>SRT 算法</code>来实现(搜索得到)</li>
-</ul>
-</li>
-<li>
-<p>请结合自己的实现分析，你是如何处理 Busy 信号带来的周期阻塞的？</p>
-<ul>
-<li>我在MDU内部设计了count来计算阻塞周期数，实际上这就是一个有限状态机的实现。</li>
-<li>在HCU中增加了MD_stall(具体见上MDU)</li>
-</ul>
-</li>
-<li>
-<p>请问采用字节使能信号的方式处理写指令有什么好处？（提示：从清晰性、统一性等角度考虑）</p>
-<ul>
-<li>DM内部不再需要区分写入指令的方法（sw/sb/sh/…),它只需要根据Address和字节使能信号决定要不要写入。</li>
-</ul>
-</li>
-<li>
-<p>请思考，我们在按字节读和按字节写时，实际从 DM 获得的数据和向 DM 写入的数据是否是一字节？在什么情况下我们按字节读和按字节写的效率会高于按字读和按字写呢？</p>
-<ul>
-<li>不是，是一个字</li>
-<li>当我们需要紧密地存储数据时，按字节读写效率会更高（比如处理字符串时）</li>
-</ul>
-</li>
-<li>
-<p>为了对抗复杂性你采取了哪些抽象和规范手段？这些手段在译码和处理数据冲突的时候有什么样的特点与帮助？</p>
-<ul>
-<li>把控制信号合成为总线向后传，要用的时候再利用宏取出。当需要新增控制信号（如增加乘除法相关的 we_HI/LO）时，只需修改位宽定义和宏，而无需修改流水线寄存器（Reg_E, Reg_M等）的端口列表；</li>
-<li>在增加指令时把指令分为R-cal\I-cal\Branch and Jump\Load and Save\MD相关，再把它加入对应的控制信号表。填表的过程就是梳理指令全过程、思考待改变模块的过程，因此填完表之后基本就知道要怎么修改cpu。</li>
-<li>转发采取from - to的思路，只要增加的指令没有涉及到转发source的增加就不用改HCU。（如果要改，类似：添加MD相关指令之后，在HCU和顶层数据选择逻辑中加入了M_HI/M_LO,在WDsel的来源中增加了W_HI/W_LO)</li>
-</ul>
-</li>
-<li>
-<p>在本实验中你遇到了哪些不同指令类型组合产生的冲突？你又是如何解决的？相应的测试样例是什么样的？</p>
-<ul>
-<li>转发：按照以下from - to表来列举
-<table>
-<thead>
-<tr>
-<th>转发到/数据来源</th>
-<th>M锁存的ALUresult</th>
-<th>W_WD</th>
-<th>M_PC8</th>
-<th>M_HI</th>
-<th>M_LO</th>
-<th>E_PC8</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ID stage</td>
-<td>R_cal/I_cal - nop - Branch</td>
-<td>R_cal/I_cal/Load - nop - nop - Branch</td>
-<td>jal - (jump处)nop - Branch</td>
-<td>mfhi - nop - Branch</td>
-<td>mflo - nop - Branch</td>
-<td>jal - (jump处)Branch</td>
-</tr>
-<tr>
-<td>EX stage</td>
-<td>R_cal/I_cal - R_cal/I_cal/MD相关</td>
-<td>R_cal/I_cal/MD相关/jal/Load - nop - R_cal/I_cal/MD相关</td>
-<td>jal - (jump处)R_cal/I_cal/MD相关</td>
-<td>mfhi - R_cal/I_cal/MD相关</td>
-<td>mflo - R_cal/I_cal/MD相关</td>
-<td>不存在</td>
-</tr>
-<tr>
-<td>MEM stage</td>
-<td>不存在</td>
-<td>R_cal/I_cal/MD相关/jal/Load - Save</td>
-<td>不存在</td>
-<td>不存在</td>
-<td>不存在</td>
-<td>不存在</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>暂停：
-<ul>
-<li>E_Conflict： <figure class="highlight mips"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ori </span>$<span class="number">1</span>,$<span class="number">0</span>,<span class="number">3</span></span><br><span class="line"><span class="keyword">beq </span>$<span class="number">1</span>,$<span class="number">0</span>,label</span><br><span class="line"><span class="symbol">label:</span></span><br><span class="line"><span class="keyword">nop</span></span><br></pre></td></tr></table></figure>
-</li>
-<li>M_Conflict： <figure class="highlight mips"><table><tr><td class="code"><pre><span class="line"><span class="keyword">lw </span>$<span class="number">1</span>, <span class="number">0</span>($<span class="number">0</span>)      </span><br><span class="line"><span class="keyword">nop </span>                </span><br><span class="line"><span class="keyword">beq </span>$<span class="number">1</span>, $<span class="number">0</span>, label  </span><br><span class="line"><span class="symbol">label:</span></span><br><span class="line"><span class="keyword">nop</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>如果你是手动构造的样例，请说明构造策略，说明你的测试程序如何保证覆盖了所有需要测试的情况；如果你是完全随机生成的测试样例，请思考完全随机的测试程序有何不足之处；如果你在生成测试样例时采用了特殊的策略，比如构造连续数据冒险序列，请你描述一下你使用的策略如何结合了随机性达到强测的效果。</p>
-<ul>
-<li>手动构造：
-<ul>
-<li>根据7中表格覆盖每一种转发和暂停的场合</li>
-<li>加入 $0 寄存器作为读写目标，确保不会错误地覆盖 $0 的值</li>
-</ul>
-</li>
+<li><code>D:\Xilinx\14.7\ISE_DS\ISE\lib\nt64</code></li>
+<li><code>D:\Xilinx\14.7\ISE_DS\ISE\bin\nt64</code></li>
 </ul>
 </li>
 </ol>
-<h1 id="Control表">Control表</h1>
-<h2 id="R-cal">R_cal</h2>
-<table>
-<thead>
-<tr>
-<th>控制信号\指令</th>
-<th>add</th>
-<th>sub</th>
-<th>and</th>
-<th>or</th>
-<th>slt</th>
-<th>sltu</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RegWrite</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>aluControlSel</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>ALUop</td>
-<td>0000</td>
-<td>0001</td>
-<td>0010</td>
-<td>0011</td>
-<td>0101</td>
-<td>0110</td>
-</tr>
-<tr>
-<td>MemWrite</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>MemRead</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>EXTop</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>RegDst</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>WDsel</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>NPCop</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>MemWriteDataOp</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>ifB</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>ifJ</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>BranchOp</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>useRt</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>islink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isConditionalLink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isLikely</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>LoadType</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>SaveType</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>MDUop</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>we_HI</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>we_LO</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<h2 id="I-cal">I_cal</h2>
-<table>
-<thead>
-<tr>
-<th>控制信号\指令</th>
-<th>addi</th>
-<th>andi</th>
-<th>ori</th>
-<th>lui</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RegWrite</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>aluControlSel</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-</tr>
-<tr>
-<td>ALUop</td>
-<td>0000</td>
-<td>0010</td>
-<td>0011</td>
-<td>0100</td>
-</tr>
-<tr>
-<td>MemWrite</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>MemRead</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>EXTop</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>RegDst</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-</tr>
-<tr>
-<td>WDsel</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>NPCop</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>MemWriteDataOp</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>ifB</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>ifJ</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>BranchOp</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>useRt</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>islink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isConditionalLink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isLikely</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>LoadType</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>SaveType</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>MDUop</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>we_HI</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>we_LO</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<h2 id="MD相关">MD相关</h2>
-<table>
-<thead>
-<tr>
-<th>控制信号\指令</th>
-<th>mult</th>
-<th>multu</th>
-<th>div</th>
-<th>divu</th>
-<th>mfhi</th>
-<th>mflo</th>
-<th>mthi</th>
-<th>mtlo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RegWrite</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>aluControlSel</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>ALUop</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td></td>
-</tr>
-<tr>
-<td>MemWrite</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>MemRead</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>EXTop</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>RegDst</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>WDsel</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>011</td>
-<td>100</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>NPCop</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>MemWriteDataOp</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>ifB</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>ifJ</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>BranchOp</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>useRt</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>islink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isConditionalLink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isLikely</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>LoadType</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>SaveType</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>MDUop</td>
-<td>001</td>
-<td>010</td>
-<td>011</td>
-<td>100</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>we_HI</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>we_LO</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Load-Save">Load &amp; Save</h2>
-<table>
-<thead>
-<tr>
-<th>控制信号\指令</th>
-<th>lb</th>
-<th>lh</th>
-<th>lw</th>
-<th>sb</th>
-<th>sh</th>
-<th>sw</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RegWrite</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>aluControlSel</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-</tr>
-<tr>
-<td>ALUop</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-</tr>
-<tr>
-<td>MemWrite</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>MemRead</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>EXTop</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>RegDst</td>
-<td>001</td>
-<td>001</td>
-<td>001</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>WDsel</td>
-<td>01</td>
-<td>01</td>
-<td>01</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>NPCop</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>MemWriteDataOp</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>ifB</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>ifJ</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>BranchOp</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>useRt</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>islink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isConditionalLink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isLikely</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>LoadType</td>
-<td>010</td>
-<td>100</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>SaveType</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0010</td>
-<td>0001</td>
-<td>0000</td>
-</tr>
-<tr>
-<td>MDUop</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>we_HI</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>we_LO</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Branch-Jump">Branch &amp; Jump</h2>
-<table>
-<thead>
-<tr>
-<th>控制信号\指令</th>
-<th>beq</th>
-<th>jal</th>
-<th>jr</th>
-<th>bne</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RegWrite</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>aluControlSel</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>ALUop</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-</tr>
-<tr>
-<td>MemWrite</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>MemRead</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>EXTop</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>RegDst</td>
-<td>000</td>
-<td>011</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>WDsel</td>
-<td>00</td>
-<td>10</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>NPCop</td>
-<td>001</td>
-<td>010</td>
-<td>011</td>
-<td>001</td>
-</tr>
-<tr>
-<td>MemWriteDataOp</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-<td>00</td>
-</tr>
-<tr>
-<td>ifB</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>ifJ</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>BranchOp</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>001</td>
-</tr>
-<tr>
-<td>useRt</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>islink</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isConditionalLink</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>isLikely</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>LoadType</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>SaveType</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-<td>0000</td>
-</tr>
-<tr>
-<td>MDUop</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-<td>000</td>
-</tr>
-<tr>
-<td>we_HI</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>we_LO</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
+<h2 id="选择评测cpu">选择评测cpu</h2>
+<p>如下图，直接链接到cpu所在文件夹即可，评测机不会修改cpu内容。
+<img src="/images/CO/COT/image.png" alt="cpu地址设置"></p>
 ]]></content>
       <categories>
         <category>CO</category>
@@ -7537,9 +7577,9 @@ MEM stage：|不存在|RtData|不存在|不存在</p>
 <li>Req = 外部中断|内部异常</li>
 <li>外部中断（Interrupt）：
 能处理中断(<code>SR.IE</code>) &amp; 未在处理异常(<code>!SR.EXL</code>) &amp; 存在外部中断源且该中断源可以被处理(<code>SR.IM&amp;HWInt</code>)
-    <span id="mjx-31fbaa1">
+    <span id="mjx-d786e9c">
       <style>
-      #mjx-31fbaa1{
+      #mjx-d786e9c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7704,9 +7744,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>内部异常（Execption）：
 未在处理异常(<code>!SR.EXL</code>) &amp; 存在内部异常(ExcCodeIn)
-    <span id="mjx-3b4387b">
+    <span id="mjx-55496928">
       <style>
-      #mjx-3b4387b{
+      #mjx-55496928{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7874,9 +7914,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>CP0何时被写？
 
-    <span id="mjx-30f682a">
+    <span id="mjx-50a7c35">
       <style>
-      #mjx-30f682a{
+      #mjx-50a7c35{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8396,9 +8436,9 @@ g[data-mml-node="xypic"] path {
 <li>Timer0: <code>0x0000_7F00 ~ 0x0000_7F0B</code>   （长度 12 字节 = 3 个 4 字节寄存器）</li>
 <li>Timer:``define count  mem[2]`</li>
 <li>
-    <span id="mjx-fa3a4098">
+    <span id="mjx-fafa4e6">
       <style>
-      #mjx-fa3a4098{
+      #mjx-fafa4e6{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8569,9 +8609,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>BDin
 
-    <span id="mjx-63a1f61">
+    <span id="mjx-bf5faa48">
       <style>
-      #mjx-63a1f61{
+      #mjx-bf5faa48{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8731,9 +8771,9 @@ g[data-mml-node="xypic"] path {
     </span>
    异常发生的这条指令是否位于延迟槽（B/J - 延迟槽（该指令））
 
-    <span id="mjx-c2b3caa8">
+    <span id="mjx-b830d8f8">
       <style>
-      #mjx-c2b3caa8{
+      #mjx-b830d8f8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9025,46 +9065,6 @@ g[data-mml-node="xypic"] path {
       </categories>
   </entry>
   <entry>
-    <title>BUAA-COT 使用手册</title>
-    <url>/2025/11/24/COT%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<h1 id="声明">声明</h1>
-<p>本文所介绍的工具 <code>COT</code> 来自开源项目，其源代码与详细信息可见：
-<a href="https://github.com/Kie-Chi/COT">COT</a></p>
-<p>该项目版权归原作者所有，并遵循其仓库中所标注的开源许可证。本文仅对其使用方法进行学习性说明，所有原始代码与设计均由原作者贡献。若本文中引用了项目中的代码或截图，均仅用于技术交流目的。</p>
-<h1 id="配置问题">配置问题</h1>
-<h2 id="问题1">问题1</h2>
-<p>我按说明执行<code>start.exe</code>之后出现如下报错：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Mars: Start dumping datas...</span><br><span class="line">arth_test.asm: Mars is dumping data...</span><br><span class="line">ERROR: UnicodeDecodeError&quot;&#x27;utf-8&#x27; codec can&#x27;t decode byte 0xd4 in position 4: invalid continuation byte&quot;</span><br><span class="line">Detailed Stacktree:</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File &quot;start.py&quot;, line 187, in test</span><br><span class="line">    self.machine.start_test()</span><br><span class="line">File &quot;Machine.py&quot;, line 38, in start_test</span><br><span class="line">    self.__get_std_mars()</span><br><span class="line">File &quot;Machine.py&quot;, line 206, in __get_std_mars</span><br><span class="line">    self.__runner.run_mars(src, hex_dst, out_log)</span><br><span class="line">File &quot;Runner.py&quot;, line 142, in run_mars</span><br><span class="line">    self.dump_hex(src, hex_dst)</span><br><span class="line">File &quot;Runner.py&quot;, line 63, in dump_hex</span><br><span class="line">    contents = safe_read(os.path.join(self._dir, &quot;info.txt&quot;))</span><br><span class="line">File &quot;Runner.py&quot;, line 640, in safe_read</span><br><span class="line">    contents = file.readlines()</span><br><span class="line">File &quot;codecs.py&quot;, line 322, in decode</span><br><span class="line">UnicodeDecodeError: &#x27;utf-8&#x27; codec can&#x27;t decode byte 0xd4 in position 4: invalid continuation byte</span><br></pre></td></tr></table></figure>
-<h3 id="解决方法">解决方法</h3>
-<p>把 Windows 的“语言用于非 Unicode 程序”改成 English
-<code>控制面板 → 区域 → 管理 → 非 Unicode 程序语言 → 改为 English(United States) </code></p>
-<h3 id="原理">原理</h3>
-<p><code>MARS/Java</code> 输出用的是系统默认编码（ACP），中文是 <code>GBK</code>，会产生 <code>UTF-8</code> 不能解码的字节；切成英文后输出主要是 ASCII，不再产生非法字节，UTF-8 读取自然不报错。</p>
-<h2 id="问题2">问题2</h2>
-<p>运行cot发现输出永远为空</p>
-<h3 id="解决方法-2">解决方法</h3>
-<p>修改系统<strong>环境变量</strong></p>
-<ol>
-<li>添加<code>系统变量</code>
-变量名：<code>XILINX</code>
-变量值：<code>D:\Xilinx\14.7\ISE_DS\ISE</code>（ISE位置）</li>
-<li>新增PATH
-系统变量中选中PATH - 编辑 - 新建
-<ul>
-<li><code>D:\Xilinx\14.7\ISE_DS\ISE\lib\nt64</code></li>
-<li><code>D:\Xilinx\14.7\ISE_DS\ISE\bin\nt64</code></li>
-</ul>
-</li>
-</ol>
-<h2 id="选择评测cpu">选择评测cpu</h2>
-<p>如下图，直接链接到cpu所在文件夹即可，评测机不会修改cpu内容。
-<img src="/images/CO/COT/image.png" alt="cpu地址设置"></p>
-]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-  </entry>
-  <entry>
     <title>2025-BUAA-OOPre学习心得</title>
     <url>/2025/11/06/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</url>
     <content><![CDATA[<h1 id="整体架构">整体架构</h1>
@@ -9130,6 +9130,615 @@ g[data-mml-node="xypic"] path {
 ]]></content>
       <categories>
         <category>OO</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>linux操作</title>
+    <url>/2026/03/01/linux%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="Linux">Linux</h1>
+<h2 id="What-is-Linux？">What is Linux？</h2>
+<ul>
+<li>一个Linux发行版（例如Ubuntu）：
+<ul>
+<li>Linux内核</li>
+<li>GNU项目：一个自由软件集合</li>
+<li>其它软件和库</li>
+</ul>
+</li>
+</ul>
+<h2 id="Linux基础操作">Linux基础操作</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">命令名 [选项][参数]...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>[ ]:意为可选0~n个</li>
+<li>可通过<code>man</code>命令来查看具体命令的使用说明  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">man [选项] 命令</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="目录操作">目录操作</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd directory</span><br></pre></td></tr></table></figure>
+<p>在需要键入文件名或目录名时:
+可以使用 <code>Tab</code> 自动补足全名，<code>双击 Tab</code> 可以显示所有可能选项</p>
+<ul>
+<li><code>/</code>:根目录</li>
+<li><code>~</code>:当前用户主目录
+<ul>
+<li>普通用户($):<code>/home/username</code></li>
+<li>root(系统管理员)用户(#):<code>/root</code></li>
+</ul>
+</li>
+<li><code>.</code>:当前目录</li>
+<li><code>..</code>:上一级目录</li>
+<li><code>-</code>:上一次访问的目录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls [选项] [目录]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>选项（常用）：
+<ul>
+<li><code>-a</code>              显示隐藏的文件</li>
+<li><code>-l</code>              每行只列出一个文件</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir [选项] 目录</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pwd [选项]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：输出当前目录的绝对路径</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rmdir [选项] 目录</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：删除<strong>空</strong>目录</li>
+</ul>
+<h3 id="文件操作">文件操作</h3>
+<p>支持对多个文件的操作，例如使用<code>*</code>来匹配任意长度的字符串</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">touch [选项] 文件名</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：当文件存在时更新文件的时间戳，当文件不存在时创建新文件。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm [选项] 文件</span><br></pre></td></tr></table></figure>
+<ul>
+<li>选项：
+<ul>
+<li><code>-r</code>:递归删除目录及其内容，删除非空目录必须有此选项，否则无法删除</li>
+<li><code>-f</code>:强制删除，不提示用户确认，忽略不存在的目录</li>
+<li><code>-i</code>:逐一提示用户确认每个将要被删除的文件</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp [选项] 源文件 目标路径</span><br></pre></td></tr></table></figure>
+<ul>
+<li>选项：
+<ul>
+<li><code>-r</code>:递归复制目录及其子目录内的所有内容</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mv [选项] 源文件 目标路径</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：
+<ul>
+<li>move</li>
+<li>==rename==：例如<code>mv test.txt test2.txt</code></li>
+</ul>
+</li>
+<li>选项：
+<ul>
+<li><code>-v</code>:显示详细的操作信息</li>
+<li><code>-i</code>:覆盖前询问</li>
+<li><code>-u</code>:(仅在有必要时移动)仅在源文件较新，或目标文件不存在时，才执行移动操作</li>
+</ul>
+</li>
+<li>多源移动；当有多个源时，最后一个参数必须是目录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">diff [选项] 文件1 文件2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：比较</li>
+<li>选项：
+<ul>
+<li><code>-b</code>:不检查空白字符的不同</li>
+<li><code>-B</code>:不检查空行</li>
+<li><code>-1</code>:仅显示有无差异，不显示详细信息</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat 文件</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：将文件内容输出到标准输出</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &lt;text&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：print</li>
+<li>默认添加换行符，所以即使echo ''并非空（需要 -n去除）</li>
+</ul>
+<h3 id="查找操作">查找操作</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find [路径] &lt;选项&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：在给定路径/当前目录下查找</li>
+<li>选项：
+<ul>
+<li><code>-name &lt;文件名&gt;</code>:指定需要查找的文件名</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">grep [选项] PATTERN FILE</span><br></pre></td></tr></table></figure>
+<p>（PATTERN是匹配字符串，FILE是文件或目录的路径）</p>
+<ul>
+<li>作用：输出匹配PATTERN的文件和相关的行。</li>
+<li>选项：
+<ul>
+<li><code>-a</code>:不忽略二进制数据进行搜索。</li>
+<li><code>-i</code>:忽略大小写差异。</li>
+<li><code>-r</code>:从目录中递归查找。</li>
+<li><code>-n</code>:显示行号。</li>
+<li><code>-v</code>:反向过滤</li>
+<li><code>-w</code>:按独立单词匹配</li>
+<li><code>-o</code>:只输出匹配到的部分</li>
+</ul>
+</li>
+<li>例如：<code>grep hello a.txt</code></li>
+<li>可使用正则表达式作匹配
+<ul>
+<li><code>'^a'</code>：匹配行首为a的行</li>
+<li><code>'end$'</code>：匹配行尾为end的行</li>
+<li><code>'[0-9]'</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tree [选项] [目录名]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：输出一个目录下的文件树。</li>
+<li>选项：
+<ul>
+<li><code>-a</code>:列出全部文件（包含隐藏文件）</li>
+<li><code>-d</code>:只列出目录</li>
+</ul>
+</li>
+</ul>
+<h3 id="快捷键">快捷键</h3>
+<ul>
+<li><code>ctrl + c</code>：终止程序执行</li>
+<li><code>ctrl + z</code>：挂起当前程序</li>
+<li><code>ctrl + d</code>：终止输入（相当于输入一个EOF）</li>
+<li><code>ctrl + l</code>：清屏</li>
+<li><code>ctrl + s</code>/<code>ctrl + q</code>：暂停/启动终端</li>
+</ul>
+<h2 id="GNU工具">GNU工具</h2>
+<h3 id="GCC">GCC</h3>
+<p>即GNU编译器套件。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc [选项] 源代码文件</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作用：编译源代码文件</li>
+<li>选项:<code>-o example</code></li>
+<li>若编译成功，同目录下出现<code>a.out</code>可执行文件
+<ul>
+<li>执行<code>./a.out</code>即可输出</li>
+<li>需要传参？可类比：<code>./casegen.out add 100 &gt; case_add</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="make">make</h3>
+<p><a href="https://www.ruanyifeng.com/blog/2015/02/make.html">make学习博客</a></p>
+<ul>
+<li>make工具：根据Makefile中规则，<strong>自动化</strong>编译和构建项目</li>
+<li><code>Makeflie</code>
+<ul>
+<li>由一系列rules构成，每条rule形式如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;target&gt; : &lt;prerequisites&gt; </span><br><span class="line">[tab]  &lt;commands&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li>target
+<ul>
+<li>通常是文件名：指明Make命令所要构建的对象</li>
+<li>也可以是某个操作的名字，这称为phony ，例如：  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.PHONY: clean</span><br><span class="line">clean:</span><br><span class="line">rm *.o temp</span><br></pre></td></tr></table></figure>
+</li>
+<li>若Make命令没有指定目标，默认会执行Makefile文件的第一个目标</li>
+</ul>
+</li>
+<li>prerequisites(前置条件)
+<ul>
+<li>通常是一组文件名，之间用==空格==分隔</li>
+<li>用法：生成多个文件<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/1.png" alt="alt text"></li>
+<li>本质：若某个文件变化，会导致目标过期，则当前目标依赖该文件
+<ul>
+<li>注意区分与伪目标（调用就执行，不关心过期）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>commands(命令)
+<ul>
+<li>注意：需要注意的是，每行命令在一个<strong>单独的shell</strong>中执行。这些Shell之间<strong>没有继承关系</strong>。<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/2.png" alt="alt text">
+<ul>
+<li>这种“独立”只反映在shell变量上，而不影响磁盘上文件的改变</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多级Makefile：
+<ul>
+<li>调用下级Makefile：
+<ul>
+<li><code>make -C subfile xxx</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Grammar
+<ol>
+<li><code>#</code></li>
+<li>echoing回声</li>
+</ol>
+<ul>
+<li>正常情况下，make会打印每条命令，然后再执行，这就叫做回声</li>
+<li>在命令的前面加上<code>@</code>，就可以关闭回声</li>
+</ul>
+<ol start="3">
+<li>wildcard通配符<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/3.png" alt="alt text"></li>
+<li>模式匹配：<code>%</code></li>
+<li>变量和赋值符
+<ol>
+<li>调用时，要把变量放在<code>$()</code>中</li>
+<li>赋值运算符:常用<code>:=</code>
+<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/4.png" alt="alt text"></li>
+</ol>
+</li>
+<li>内置变量</li>
+</ol>
+<ul>
+<li><code>$(CC)</code>:指向当前使用的编译器</li>
+</ul>
+<ol start="7">
+<li>自动变量
+<ol>
+<li><code>$@</code>:代指当前target</li>
+<li><code>$&lt;</code>:代指第一个前置条件</li>
+<li><code>$？</code>:代指比目标更新的所有前置条件</li>
+<li><code>$^</code>:代指所有前置条件，之间以空格分隔</li>
+<li><code>$*</code>:指代匹配符<code>%</code>匹配的部分</li>
+</ol>
+</li>
+<li>循环和判断：遵循bash语法</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="ctags">ctags</h3>
+<p>在<code>~/.vimrc</code>中添加配置:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set tags=tags</span><br><span class="line">set autochdir</span><br></pre></td></tr></table></figure>
+<ul>
+<li>功能：代码跳转
+<ul>
+<li><code>ctrl+]</code>跳转至相关定义文件位置</li>
+<li><code>ctrl+o</code>返回跳转前位置</li>
+</ul>
+</li>
+</ul>
+<h3 id="tmux">tmux</h3>
+<p>终端复用工具
+输入<code>tmux</code>进入tmux新对话</p>
+<ul>
+<li>重要快捷键：<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/5.png" alt="alt text"></li>
+</ul>
+<h1 id="Git">Git</h1>
+<p><img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/6.png" alt="alt text"></p>
+<ul>
+<li>工作区</li>
+<li>暂存区</li>
+<li>版本库
+<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/7.png" alt="S"></li>
+<li>untracked：未跟踪，未被git跟踪的状态</li>
+<li>unmodified：未修改，版本库版本和工作区版本一致</li>
+<li>modified：已修改，版本库版本和工作区版本不一致</li>
+<li>staged：已暂存，修改版本已提交至暂存区，但尚未上传</li>
+</ul>
+<h2 id="Git常用指令">Git常用指令</h2>
+<h3 id="基本提交">基本提交</h3>
+<p><code>git init</code>
+<code>git clone &lt;URL&gt;</code>:“克隆”一个已有的储存库到当前目录下
+<code>git status</code>:查看当前分支状态
+<code>git add</code>：将新文件/已修改文件加入暂存区</p>
+<ul>
+<li><code>git add .</code>:add所有修改进入暂存区</li>
+<li><code>git add &lt;filename&gt;</code></li>
+</ul>
+<p><code>git checkout</code>:切换分支（需要保证当前所有文件状态为<code>未修改</code>）
+<code>git commit</code>:<code>git commit -m &lt;message&gt;</code></p>
+<ul>
+<li>将暂存区的修改提交到储存库中</li>
+</ul>
+<p><code>git log</code>:查询提交记录</p>
+<h3 id="撤销指令">撤销指令</h3>
+<ul>
+<li>工作区撤销
+<code>git restore &lt;file&gt;</code>
+把工作区文件恢复到暂存区版本</li>
+<li>暂存区撤销
+<code>git restore --staged &lt;file&gt;</code>
+把文件从暂存区取出，但还保留工作区文件</li>
+<li>删除未跟踪文件
+<code>git clean -f</code></li>
+</ul>
+<h3 id="版本回退">版本回退</h3>
+<ul>
+<li>版本库回到上一个提交
+<code>git reset --hard HEAD^</code></li>
+<li>版本库回到指定提交
+<code>git reset --hard &lt;hash&gt;</code>
+<ul>
+<li>hash: 对应提交的hash值，可用git log获取</li>
+</ul>
+</li>
+</ul>
+<h3 id="远程本地同步">远程本地同步</h3>
+<ul>
+<li>远程-&gt;本地：<code>git pull [远程仓库名] [远程仓库分支]:[本地仓库分支]</code></li>
+<li>本地-&gt;远程：<code>git push [远程仓库名] [本地仓库分支]:[远程仓库分支]</code>
+<code>git restore</code>：取消修改</li>
+<li>未add入暂存区时：<code>git restore &lt;filename&gt;</code> 来撤销对这个文件的修改，使其退回到上一个 commit 的状态</li>
+<li>已add入暂存区后：<code>git restore --staged &lt;filename&gt;</code>将文件移除暂存区，<strong>再次restore</strong></li>
+</ul>
+<h1 id="Shell">Shell</h1>
+<p>Shell，即操作系统的“外壳”（相对“内核”而言），是用于访问操作系统服务的用户界面</p>
+<h2 id="分类">分类</h2>
+<h3 id="GUI-Shell">GUI Shell</h3>
+<ul>
+<li>GUI：
+<ul>
+<li>Graphical User Interface</li>
+</ul>
+</li>
+</ul>
+<h3 id="CLI-Shell">CLI Shell</h3>
+<ul>
+<li>CLI：
+<ul>
+<li>Command Line Interface：命令行界面</li>
+</ul>
+</li>
+</ul>
+<h2 id="Shell脚本语言">Shell脚本语言</h2>
+<h3 id="Shell脚本的执行">Shell脚本的执行</h3>
+<ul>
+<li>约定脚本文件的文件名以<code>.sh</code>结尾</li>
+<li>执行Shell脚本：<code>./文件名</code>
+<ul>
+<li>前提：脚本文件有“执行”权限</li>
+<li>用<code>chmod +x filename</code>添加执行权限</li>
+</ul>
+</li>
+</ul>
+<h3 id="Bash-Shell语法基础">Bash Shell语法基础</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#My first Shell script!</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Hello, world!&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/8.png" alt="alt text"></p>
+<ol>
+<li>变量：无需指定类型，但是等号两边==不允许空格==</li>
+</ol>
+<ul>
+<li>使用<code>${var_name}</code>/<code>$var_name</code>可以获取变量的值</li>
+<li>数组：<code>i=(1 2 3 4)</code></li>
+</ul>
+<ol start="2">
+<li>脚本参数<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/9.png" alt="alt text">
+特殊变量：
+<ul>
+<li><code>$#</code>:传递的参数个数</li>
+<li><code>$*</code>:一个字符串，内容是传递的全部参数</li>
+<li><code>$?</code>:函数返回值</li>
+<li><code>$N</code>:当<code>N&gt;=10</code>时，需使用<code>${N}</code>
+使用特殊变量时，尽量加上双引号<code>&quot;&quot;</code>，防止解析错误</li>
+</ul>
+</li>
+<li>条件: <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> condition1</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    command11</span><br><span class="line">    command12</span><br><span class="line">    ......</span><br><span class="line"><span class="keyword">elif</span> condition2</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    command21</span><br><span class="line">    command22</span><br><span class="line">    ......</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    command31</span><br><span class="line">    command32</span><br><span class="line">    ......</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>整数比较方法：<code>((condition))</code></li>
+</ul>
+<ol start="4">
+<li>循环</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> condition</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"> <span class="built_in">command</span></span><br><span class="line"> ...</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>计算
+<ul>
+<li>以下等价：
+<ul>
+<li><code>let i=i+1</code></li>
+<li><code>i=$((i+1))</code></li>
+</ul>
+</li>
+<li>运算符：
+<ul>
+<li><code>(())</code>:结果非零时返回0（真）</li>
+<li><code>$(())</code>：直接返回计算数值结果</li>
+<li><code>[]</code>:条件为真时返回0
+<ul>
+<li>[ -s &lt; file&gt; ]：文件非空</li>
+</ul>
+</li>
+<li><code>[[]]</code>:支持<code>&amp;&amp;</code>等逻辑符</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>函数</li>
+</ol>
+<ul>
+<li>定义：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">fun_name</span></span>() &#123;</span><br><span class="line">  body...</span><br><span class="line">  <span class="built_in">return</span> int_value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+(如果要返回值，必须返回一个[0,255]之间的整数)</li>
+<li>调用：
+<code>fun_name param1 param2 ... paramN</code></li>
+</ul>
+<ol start="3">
+<li>变量字符串分割<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$&#123;name:1:3&#125; //$&#123;变量:起始位置:长度&#125;</span><br><span class="line">$&#123;name:0:(-3) &#125;//去掉末尾3个字符</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="sed">sed</h2>
+<p>通过命令编辑和输出文本的工具</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed [选项] &#x27;命令&#x27; 文件</span><br></pre></td></tr></table></figure>
+<ul>
+<li>选项
+<ul>
+<li><code>-n</code>：安静模式，只显示经过sed处理的内容。否则显示输入文本的所有内容。</li>
+<li><code>-i</code>：直接修改读取的档案内容，而不是输出到屏幕。<strong>否则，只输出不编辑</strong>。</li>
+<li><code>-e</code>: 允许在同一行里执行多条命令,例如<code>sed -e '4astr ' -e 's/str/aaa/' my.txt</code></li>
+</ul>
+</li>
+<li>命令：
+<ul>
+<li>&lt;行号&gt;a&lt;内容&gt;： 新增，在行号后新增一行相应内容。行号可以是“数字”，在这一行之后新增，也可以是“起始行，终止行”，在其中的每一行后新增。当不写行号时，在每一行之后新增。使用$表示最后一行。后面的命令同理。</li>
+<li>&lt;行号&gt;c&lt;内容&gt;：取代。用内容取代相应行的文本。</li>
+<li>&lt;行号&gt;i&lt;内容&gt;：插入。在当前行的上面插入一行文本。</li>
+<li>&lt;行号&gt;d：删除当前行的内容。</li>
+<li>&lt;行号&gt;p：输出选择的内容。通常与选项-n一起使用。
+<ul>
+<li>‘n,mp’:输出<code>[n,m]</code>行</li>
+</ul>
+</li>
+<li>s/<re>/<string>：将<re>（正则表达式）匹配的内容替换为<string>
+<ul>
+<li>默认只作用于每一行的第一个匹配项</li>
+<li>末尾标识符<code>g</code>：作用于所有，e.g.<code>sed -i &quot;s/char/int/g&quot; file</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="awk">awk</h2>
+<p>文本处理工具
+<code>awk '条件 { 动作 }' 文件名</code></p>
+<ul>
+<li>
+<p>awk默认：</p>
+<ul>
+<li>一次读取1行</li>
+<li>把这一行拆成若干字段，用空白字符分割每一列</li>
+<li>执行规则</li>
+</ul>
+</li>
+<li>
+<p>常用内置变量</p>
+<ul>
+<li><code>$0</code>:整行</li>
+<li><code>$n</code>:第n列</li>
+<li><code>NF</code>:当前行的字段数</li>
+<li><code>NR</code>:当前是第几行</li>
+<li><code>OFS</code>:输出字符分隔符</li>
+</ul>
+</li>
+<li>
+<p>例如：</p>
+<ul>
+<li><code>awk '$2 &gt; 80 {print $0}' score.txt</code>：当第二列大于80时，输出一整行</li>
+<li><code>awk -F ',' '{print $1, $3}' test.csv</code>：输入分隔符为<code>,</code></li>
+</ul>
+</li>
+<li>
+<p>一定要注意用<code>''</code>包裹条件&amp;动作，防止解析错误</p>
+</li>
+</ul>
+<h2 id="重定向">重定向</h2>
+<p>在命令后添加</p>
+<ul>
+<li><code>&gt; output.txt</code>：覆盖原有内容，若不存在则新建</li>
+<li><code>&gt;&gt; output.txt</code>：追加内容
+即可将输出重定向到文件中，而非原本的控制台上</li>
+<li><code>&lt;</code>:输入重定向</li>
+<li>标准流：<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/10.png" alt="alt text">
+<ul>
+<li><code>&gt;</code> 是 <code>1&gt;</code> 的简写
+tips:</li>
+<li>重定向<strong>不能创建目录</strong>，只能创建文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="管道">管道</h2>
+<p>管道符号<code>|</code>可以对命令进行连接
+<img src="/images/OS/Linux%E6%93%8D%E4%BD%9C/11.png" alt="alt text">
+e.g.+</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep -n <span class="string">&quot;key&quot;</span> file1.txt | <span class="built_in">cut</span> -d <span class="string">&quot;:&quot;</span> -f 1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>cut：
+<ul>
+<li><code>-d &quot;:&quot;</code>:以&quot;:&quot;作为分隔符</li>
+<li><code>-f n</code>:取第n块
+<ul>
+<li><code>-f n、m</code></li>
+<li><code>-f n-m</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>OS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>vim</title>
+    <url>/2026/03/01/vim/</url>
+    <content><![CDATA[<p><a href="https://coolshell.cn/articles/5426.html">vim学习</a></p>
+<h1 id="Vim">Vim</h1>
+<p>Linux系统下的开源文本编辑器</p>
+<ul>
+<li>基本输入操作
+<ul>
+<li>创建文件（touch）</li>
+<li>打开文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim helloworld.c</span><br></pre></td></tr></table></figure>
+</li>
+<li>输入内容：按<code>I</code>进入输入模式</li>
+<li>保存并退出vim
+<ol>
+<li>按<code>esc</code>回到命令模式</li>
+<li>按<code>shift+;</code>进入底线命令模式</li>
+<li>输入<code>w</code>并<code>enter</code>，保存文件</li>
+<li>再进入底线命令模式，输入<code>q</code>即可关闭文件回到CLI shell
+（3、4可合并为<code>wq</code>）</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="配置">配置</h2>
+<ul>
+<li>配置文件：<code>.vimrc</code>,位于用户主目录下</li>
+<li><a href="https://www.ruanyifeng.com/blog/2018/09/vimrc.html">.vimrc配置</a></li>
+</ul>
+<h2 id="Normal模式">Normal模式</h2>
+<h3 id="复制粘贴">复制粘贴</h3>
+<p>如何复制选中内容到系统剪切板？</p>
+<ul>
+<li><a href="https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/">https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/</a></li>
+<li>粗暴：先cat file，直接打印到shell，再复制</li>
+</ul>
+<h3 id="Undo-Redo">Undo/Redo</h3>
+<ul>
+<li><code>u</code>:undo</li>
+<li><code>&lt;C-r&gt;</code>:redo</li>
+</ul>
+<h3 id="delete">delete</h3>
+<ul>
+<li><code>x</code>:删当前光标所在的一个字符</li>
+<li><code>dd</code>:删除当前行，并把删除的行存到剪贴板里</li>
+</ul>
+<h3 id="移动光标">移动光标</h3>
+<ul>
+<li><code>0</code>:到行头</li>
+<li><code>^</code>:到行首第一个非空字符</li>
+<li><code>:&lt;n&gt;</code>:移动到第n行</li>
+<li><code>gg</code>：移动到第一行</li>
+<li><code>&lt;C-f&gt;</code>/<code>&lt;C-b&gt;</code>：前后翻整页</li>
+</ul>
+<h2 id="可视模式">可视模式</h2>
+<p>输入<code>v</code>进入</p>
+<h3 id="复制粘贴-2">复制粘贴</h3>
+<p>以下仅限于vim内部操作</p>
+<ul>
+<li><code>d</code>:剪切选中的文本段</li>
+<li><code>y</code>:复制</li>
+<li><code>p</code>:粘贴</li>
+</ul>
+]]></content>
+      <categories>
+        <category>OS</category>
       </categories>
   </entry>
   <entry>
@@ -9233,6 +9842,45 @@ g[data-mml-node="xypic"] path {
 <p>“你是蠢货吗，呵呵……听不懂话也没关系，来了梦之森，总要留下点什么来滋养它吧，睡不着觉的你连梦境都没法提供，我就替可怜的它主持一下公道吧。”</p>
 <p>好想睡觉。</p>
 <p>总之，先解决眼前的挑衅吧，说不定，这次打累了可以睡个好觉呢。</p>
+]]></content>
+      <categories>
+        <category>产出</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Tears</title>
+    <url>/2026/07/31/Tears/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>基于活动剧情《紅蓮の大地で遊ぶ愛し子》展开的往事。</p>
+<p>小头作祟产物烦请多多包涵。</p>
+<h1 id="正文">正文</h1>
+<p>那个西国的哲学家这几天总不厌其烦地找我搭话，自顾自地说起它收集全魔法舍眼泪的宏大计划。据它所说，魔法使留下的泪有强化魔法科学装置的力量，这是个已经得到实验验证的结论，虽然暂时原理不明，但战备时期特殊对待，难道我不想见证奇迹的发生吗？</p>
+<p>“奥兹给了你眼泪吗？我可不想在这上面输给它啊。”</p>
+<p>西国魔法使总是这么烦人，我避开它的眼神，试图打发走讨厌的野猫。</p>
+<p>奥兹当然不会把体液遗留在外，或者说，但凡是对咒术略知一二的人，都不会留下这种把柄啊，这是有多不把我当回事。</p>
+<p>说到底，我们这样的人，根本就不会流泪吧。</p>
+<p>我只看过切雷塔的眼泪，约定成立的那个瞬间，我看见了泪光在它眼里闪烁。定下约定的明明是我自己，为什么是它坐在草地上又哭又笑的呢？就好像又在提醒我，自己和切雷塔毕竟已经不是一样的人了。</p>
+<p>那它的眼泪还会和我眼眶里打转的液体是同一种味道吗？</p>
+<p>天哪，我那个时候怎么没想过要尝一下它的眼泪，再也没有解答的机会了。或者当时应该直接问切雷塔的，那滴泪明明顺着它的脸颊流到了嘴角，况且之前那次，这个霸道的人真的吃过我的泪液来着。</p>
+<p>在红莲炎山给贤者它们讲的故事，到封印就戛然而止了，多亏 diaugur 那家伙没有透视封印之力，千百年来只记得复读切雷塔叫我名字而已。</p>
+<p>其实我早体会过贤者口中的桑拿，切雷塔结束故事的时候，我可是就趴在火山口旁边，眼睁睁看着自己的对手被强制暂停动静。不安恼怒的精灵把岩浆舞得到处都是，火山灰遮天蔽日，本就炎热的火山口被彻底闷成蒸笼，那热气，可不是姆鲁用魔法装置能模拟出来的呢。</p>
+<p>巨大的 diaugur 就这样消失在眼前，我侧着脸，盯着只剩嘶嘶白气的岩床，不知道该摆出什么表情。那是沙子从手中滑落的感觉，我多想站起来，却发现竟然控制不了自己的魔力——我还没悟出精灵、支配与力量的关系，也没把此地精灵的暴躁真正看进眼里。</p>
+<p>好烦躁，好想把大家伙揪回来，好想撑起身来继续作战，明明还没有决出胜负不是吗，为什么站不起来，大腿被咬穿而已，这样的伤我早受过无数遍了啊。</p>
+<p>我咬着牙，试图控制残破的四肢，死命瞪着火山口，想往那边爬过去。可是，一双手轻飘飘地按住了我。</p>
+<p>那个我一直假装忽略的人，把我翻过身来，用魔法定住我。我看见它凑过来，一脸笑意，胡乱拨弄着我的脸。</p>
+<p>“哭了吗，密斯拉，因为被夺走了猎物？”</p>
+<p>我不想理这个人，它也不在意没有回应，自顾自地念叨着什么“果然还是小孩子”，又俯下身来。我没法再去看消失的魔兽了，切雷塔占领了我的视线，越来越近，清晰的人像逐渐变成色块的交织。金色长发散落在我身上，和伤口黏在一起，又随着它的动作把血肉磨开。好痛，好热，气息还在靠近，瞳孔一直在放大，什么都看不清了，直到有什么湿答答的东西彻底触碰到它。</p>
+<p>它想尝我眼球的味道吗？</p>
+<p>炙热的软体挑衅着眼白，眼皮被手拉开，就这样直瞪瞪地被侵犯，一下，又一下。分泌的泪液下一瞬间就被刮去，好像一切液体都被眼前的炽热蒸发干净。</p>
+<p>眼球又麻又干，只是每每在被触碰的瞬间微微跳动。</p>
+<p>好想眨眼。为什么我耳边只余眼球起跳的声音。</p>
+<p>“这下真的哭了呀，密斯拉。”</p>
+<p>突然传来杂糅着惊讶的调笑，它在说什么，不对，它怎么在说话？我试着眨动眼皮，一滴泪从另一只被冷落的眼眶滑出。再眨，试着聚焦视线，用手撑起身躯，我瞪着这个讨厌的人。</p>
+<p>“总算冷静下来了，你看，现在可以控制四肢了呢。”</p>
+<p>完全没有被我的眼神吓到！</p>
+<p>“切雷塔，我会回来找我的猎物的。”</p>
+<p>脸上早已糊成一片，我用力抹了抹，却赶不走那种黏腻感，血迹也好，涎液也罢，早就在热气的蒸腾下凝固了，或许还混合着那滴泪。它看着我脏兮兮的样子，笑着应了声，挽住我的手带着我往死之湖飞去。</p>
+<p>哈，切雷塔这副不称职的老师模样，现在只有我知道了。眼泪的味道，再也不会有人为我解答了。</p>
 ]]></content>
       <categories>
         <category>产出</category>
@@ -9351,42 +9999,41 @@ g[data-mml-node="xypic"] path {
       </categories>
   </entry>
   <entry>
-    <title>Tears</title>
-    <url>/2026/07/31/Tears/</url>
-    <content><![CDATA[<h1 id="前言">前言</h1>
-<p>基于活动剧情《紅蓮の大地で遊ぶ愛し子》展开的往事。</p>
-<p>小头作祟产物烦请多多包涵。</p>
-<h1 id="正文">正文</h1>
-<p>那个西国的哲学家这几天总不厌其烦地找我搭话，自顾自地说起它收集全魔法舍眼泪的宏大计划。据它所说，魔法使留下的泪有强化魔法科学装置的力量，这是个已经得到实验验证的结论，虽然暂时原理不明，但战备时期特殊对待，难道我不想见证奇迹的发生吗？</p>
-<p>“奥兹给了你眼泪吗？我可不想在这上面输给它啊。”</p>
-<p>西国魔法使总是这么烦人，我避开它的眼神，试图打发走讨厌的野猫。</p>
-<p>奥兹当然不会把体液遗留在外，或者说，但凡是对咒术略知一二的人，都不会留下这种把柄啊，这是有多不把我当回事。</p>
-<p>说到底，我们这样的人，根本就不会流泪吧。</p>
-<p>我只看过切雷塔的眼泪，约定成立的那个瞬间，我看见了泪光在它眼里闪烁。定下约定的明明是我自己，为什么是它坐在草地上又哭又笑的呢？就好像又在提醒我，自己和切雷塔毕竟已经不是一样的人了。</p>
-<p>那它的眼泪还会和我眼眶里打转的液体是同一种味道吗？</p>
-<p>天哪，我那个时候怎么没想过要尝一下它的眼泪，再也没有解答的机会了。或者当时应该直接问切雷塔的，那滴泪明明顺着它的脸颊流到了嘴角，况且之前那次，这个霸道的人真的吃过我的泪液来着。</p>
-<p>在红莲炎山给贤者它们讲的故事，到封印就戛然而止了，多亏 diaugur 那家伙没有透视封印之力，千百年来只记得复读切雷塔叫我名字而已。</p>
-<p>其实我早体会过贤者口中的桑拿，切雷塔结束故事的时候，我可是就趴在火山口旁边，眼睁睁看着自己的对手被强制暂停动静。不安恼怒的精灵把岩浆舞得到处都是，火山灰遮天蔽日，本就炎热的火山口被彻底闷成蒸笼，那热气，可不是姆鲁用魔法装置能模拟出来的呢。</p>
-<p>巨大的 diaugur 就这样消失在眼前，我侧着脸，盯着只剩嘶嘶白气的岩床，不知道该摆出什么表情。那是沙子从手中滑落的感觉，我多想站起来，却发现竟然控制不了自己的魔力——我还没悟出精灵、支配与力量的关系，也没把此地精灵的暴躁真正看进眼里。</p>
-<p>好烦躁，好想把大家伙揪回来，好想撑起身来继续作战，明明还没有决出胜负不是吗，为什么站不起来，大腿被咬穿而已，这样的伤我早受过无数遍了啊。</p>
-<p>我咬着牙，试图控制残破的四肢，死命瞪着火山口，想往那边爬过去。可是，一双手轻飘飘地按住了我。</p>
-<p>那个我一直假装忽略的人，把我翻过身来，用魔法定住我。我看见它凑过来，一脸笑意，胡乱拨弄着我的脸。</p>
-<p>“哭了吗，密斯拉，因为被夺走了猎物？”</p>
-<p>我不想理这个人，它也不在意没有回应，自顾自地念叨着什么“果然还是小孩子”，又俯下身来。我没法再去看消失的魔兽了，切雷塔占领了我的视线，越来越近，清晰的人像逐渐变成色块的交织。金色长发散落在我身上，和伤口黏在一起，又随着它的动作把血肉磨开。好痛，好热，气息还在靠近，瞳孔一直在放大，什么都看不清了，直到有什么湿答答的东西彻底触碰到它。</p>
-<p>它想尝我眼球的味道吗？</p>
-<p>炙热的软体挑衅着眼白，眼皮被手拉开，就这样直瞪瞪地被侵犯，一下，又一下。分泌的泪液下一瞬间就被刮去，好像一切液体都被眼前的炽热蒸发干净。</p>
-<p>眼球又麻又干，只是每每在被触碰的瞬间微微跳动。</p>
-<p>好想眨眼。为什么我耳边只余眼球起跳的声音。</p>
-<p>“这下真的哭了呀，密斯拉。”</p>
-<p>突然传来杂糅着惊讶的调笑，它在说什么，不对，它怎么在说话？我试着眨动眼皮，一滴泪从另一只被冷落的眼眶滑出。再眨，试着聚焦视线，用手撑起身躯，我瞪着这个讨厌的人。</p>
-<p>“总算冷静下来了，你看，现在可以控制四肢了呢。”</p>
-<p>完全没有被我的眼神吓到！</p>
-<p>“切雷塔，我会回来找我的猎物的。”</p>
-<p>脸上早已糊成一片，我用力抹了抹，却赶不走那种黏腻感，血迹也好，涎液也罢，早就在热气的蒸腾下凝固了，或许还混合着那滴泪。它看着我脏兮兮的样子，笑着应了声，挽住我的手带着我往死之湖飞去。</p>
-<p>哈，切雷塔这副不称职的老师模样，现在只有我知道了。眼泪的味道，再也不会有人为我解答了。</p>
-]]></content>
+    <title>Crossover使用说明</title>
+    <url>/2026/08/11/crossover%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<h1 id="安装普通-exe-程序">安装普通 <code>.exe</code> 程序</h1>
+<h2 id="单独创建瓶子">单独创建瓶子</h2>
+<ol>
+<li>点击安装后，点击右上角的安装未列出应用</li>
+<li>选择下载好的 <code>.exe</code> 安装文件；</li>
+<li>选择容器：
+<ul>
+<li><strong>Bottle Name</strong>：随意，例如软件名称；</li>
+<li><strong>Bottle Type</strong>：选择合适的 Windows 版本即可；</li>
+</ul>
+</li>
+<li>安装。接下来会弹出 Windows 软件自己的安装界面，像在 Windows 上一样正常执行安装即可。</li>
+</ol>
+<p>安装结束后，CrossOver 通常会自动生成软件图标，之后直接从对应瓶子中启动即可。</p>
+<h2 id="安装进已有瓶子">安装进已有瓶子</h2>
+<p>例如某个 <code>.exe</code> 是 Steam 游戏需要的补丁、组件或附加程序：</p>
+<ol>
+<li>选中目标瓶子，例如 Steam；</li>
+<li>选择 Install Application into Bottle；</li>
+<li>后续同上</li>
+</ol>
+<p>这样安装程序所写入的文件、注册表和 Windows 组件都会进入这个 Steam 瓶子。</p>
+<h1 id="文件管理">文件管理</h1>
+<p>以steam中游戏的文件替换为例：</p>
+<ol>
+<li>打开 <strong>CrossOver 主界面</strong>；</li>
+<li>左侧选中安装 Steam 的瓶子；</li>
+<li>点击 <strong>Open C: Drive</strong>。</li>
+</ol>
+<p>Finder 打开后，进入steam，按以下路径选择即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Program Files (x86)</span><br><span class="line">└── Steam</span><br><span class="line">    └── steamapps</span><br><span class="line">        └── common</span><br><span class="line">            └── 游戏名称</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>产出</category>
+        <category>杂项</category>
       </categories>
   </entry>
   <entry>
@@ -9552,9 +10199,9 @@ e.g. <code>``` bash</code> xxx <code>```</code></li>
 <ul>
 <li><code>\sin</code></li>
 <li><code>\sqrt[n]{expression}</code> 
-    <span id="mjx-9be37fd8">
+    <span id="mjx-7d5134c8">
       <style>
-      #mjx-9be37fd8{
+      #mjx-7d5134c8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9714,9 +10361,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\times</code> 
-    <span id="mjx-1c6db43">
+    <span id="mjx-2bf41818">
       <style>
-      #mjx-1c6db43{
+      #mjx-2bf41818{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9875,9 +10522,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0.02ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>×</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\div</code> 
-    <span id="mjx-483588e">
+    <span id="mjx-3aace538">
       <style>
-      #mjx-483588e{
+      #mjx-3aace538{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10036,9 +10683,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.081ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.296ex" role="img" focusable="false" viewBox="0 -537 778 573" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="F7" d="M318 466Q318 500 339 518T386 537Q418 537 438 517T458 466Q458 438 440 417T388 396Q355 396 337 417T318 466ZM56 237T56 250T70 270H706Q721 262 721 250T706 230H70Q56 237 56 250ZM318 34Q318 68 339 86T386 105Q418 105 438 85T458 34Q458 6 440 -15T388 -36Q355 -36 337 -15T318 34Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>÷</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\cdot</code> 
-    <span id="mjx-450f7f88">
+    <span id="mjx-a9ce2dd8">
       <style>
-      #mjx-450f7f88{
+      #mjx-a9ce2dd8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10198,9 +10845,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\sum</code> 
-    <span id="mjx-584f00e8">
+    <span id="mjx-441aeaf8">
       <style>
-      #mjx-584f00e8{
+      #mjx-441aeaf8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10359,9 +11006,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="2.389ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 1056 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2211" d="M61 748Q64 750 489 750H913L954 640Q965 609 976 579T993 533T999 516H979L959 517Q936 579 886 621T777 682Q724 700 655 705T436 710H319Q183 710 183 709Q186 706 348 484T511 259Q517 250 513 244L490 216Q466 188 420 134T330 27L149 -187Q149 -188 362 -188Q388 -188 436 -188T506 -189Q679 -189 778 -162T936 -43Q946 -27 959 6H999L913 -249L489 -250Q65 -250 62 -248Q56 -246 56 -239Q56 -234 118 -161Q186 -81 245 -11L428 206Q428 207 242 462L57 717L56 728Q56 744 61 748Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∑</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\int</code> 
-    <span id="mjx-2aeb974">
+    <span id="mjx-3d6b5708">
       <style>
-      #mjx-2aeb974{
+      #mjx-3d6b5708{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10520,9 +11167,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.691ex;" xmlns="http://www.w3.org/2000/svg" width="1.38ex" height="2.514ex" role="img" focusable="false" viewBox="0 -805.5 610 1111" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo" transform="translate(0 0.5)"><path data-c="222B" d="M113 -244Q113 -246 119 -251T139 -263T167 -269Q186 -269 199 -260Q220 -247 232 -218T251 -133T262 -15T276 155T297 367Q300 390 305 438T314 512T325 580T340 647T361 703T390 751T428 784T479 804Q481 804 488 804T501 805Q552 802 581 769T610 695Q610 669 594 657T561 645Q542 645 527 658T512 694Q512 705 516 714T526 729T538 737T548 742L552 743Q552 745 545 751T525 762T498 768Q475 768 460 756T434 716T418 652T407 559T398 444T387 300T369 133Q349 -38 337 -102T303 -207Q256 -306 169 -306Q119 -306 87 -272T55 -196Q55 -170 71 -158T104 -146Q123 -146 138 -159T153 -195Q153 -206 149 -215T139 -230T127 -238T117 -242L113 -244Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∫</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\lim</code> 
-    <span id="mjx-7d5b9db8">
+    <span id="mjx-52015bf8">
       <style>
-      #mjx-7d5b9db8{
+      #mjx-52015bf8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10682,9 +11329,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\infty</code> 
-    <span id="mjx-f2e7c0e">
+    <span id="mjx-9673579">
       <style>
-      #mjx-f2e7c0e{
+      #mjx-9673579{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10851,9 +11498,9 @@ g[data-mml-node="xypic"] path {
  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A = \begin&#123;pmatrix&#125;</span><br><span class="line">a &amp; b \\\\</span><br><span class="line">c &amp; d</span><br><span class="line">\end&#123;pmatrix&#125;</span><br></pre></td></tr></table></figure>
 <p>效果：</p>
 
-    <span id="mjx-47d5fc3">
+    <span id="mjx-31056f7">
       <style>
-      #mjx-47d5fc3{
+      #mjx-31056f7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;

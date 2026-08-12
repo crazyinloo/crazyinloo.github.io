@@ -106,6 +106,4296 @@
 <div class="index-outer">
   <section class="index-main">
     
+      <article id="post-COT使用手册" class="h-entry article article-type-post"
+  itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <p class="article-date">
+  <time class="dt-published" datetime="2025-11-24T12:56:00.000Z" itemprop="datePublished">2025-11-24</time>
+</p>
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CO/">CO</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/11/24/COT%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">BUAA-COT 使用手册</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="声明">声明</h1>
+<p>本文所介绍的工具 <code>COT</code> 来自开源项目，其源代码与详细信息可见：
+<a target="_blank" rel="noopener" href="https://github.com/Kie-Chi/COT">COT</a></p>
+<p>该项目版权归原作者所有，并遵循其仓库中所标注的开源许可证。本文仅对其使用方法进行学习性说明，所有原始代码与设计均由原作者贡献。若本文中引用了项目中的代码或截图，均仅用于技术交流目的。</p>
+<h1 id="配置问题">配置问题</h1>
+<h2 id="问题1">问题1</h2>
+<p>我按说明执行<code>start.exe</code>之后出现如下报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Mars: Start dumping datas...</span><br><span class="line">arth_test.asm: Mars is dumping data...</span><br><span class="line">ERROR: UnicodeDecodeError&quot;&#x27;utf-8&#x27; codec can&#x27;t decode byte 0xd4 in position 4: invalid continuation byte&quot;</span><br><span class="line">Detailed Stacktree:</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">File &quot;start.py&quot;, line 187, in test</span><br><span class="line">    self.machine.start_test()</span><br><span class="line">File &quot;Machine.py&quot;, line 38, in start_test</span><br><span class="line">    self.__get_std_mars()</span><br><span class="line">File &quot;Machine.py&quot;, line 206, in __get_std_mars</span><br><span class="line">    self.__runner.run_mars(src, hex_dst, out_log)</span><br><span class="line">File &quot;Runner.py&quot;, line 142, in run_mars</span><br><span class="line">    self.dump_hex(src, hex_dst)</span><br><span class="line">File &quot;Runner.py&quot;, line 63, in dump_hex</span><br><span class="line">    contents = safe_read(os.path.join(self._dir, &quot;info.txt&quot;))</span><br><span class="line">File &quot;Runner.py&quot;, line 640, in safe_read</span><br><span class="line">    contents = file.readlines()</span><br><span class="line">File &quot;codecs.py&quot;, line 322, in decode</span><br><span class="line">UnicodeDecodeError: &#x27;utf-8&#x27; codec can&#x27;t decode byte 0xd4 in position 4: invalid continuation byte</span><br></pre></td></tr></table></figure>
+<h3 id="解决方法">解决方法</h3>
+<p>把 Windows 的“语言用于非 Unicode 程序”改成 English
+<code>控制面板 → 区域 → 管理 → 非 Unicode 程序语言 → 改为 English(United States) </code></p>
+<h3 id="原理">原理</h3>
+<p><code>MARS/Java</code> 输出用的是系统默认编码（ACP），中文是 <code>GBK</code>，会产生 <code>UTF-8</code> 不能解码的字节；切成英文后输出主要是 ASCII，不再产生非法字节，UTF-8 读取自然不报错。</p>
+<h2 id="问题2">问题2</h2>
+<p>运行cot发现输出永远为空</p>
+<h3 id="解决方法-2">解决方法</h3>
+<p>修改系统<strong>环境变量</strong></p>
+<ol>
+<li>添加<code>系统变量</code>
+变量名：<code>XILINX</code>
+变量值：<code>D:\Xilinx\14.7\ISE_DS\ISE</code>（ISE位置）</li>
+<li>新增PATH
+系统变量中选中PATH - 编辑 - 新建
+<ul>
+<li><code>D:\Xilinx\14.7\ISE_DS\ISE\lib\nt64</code></li>
+<li><code>D:\Xilinx\14.7\ISE_DS\ISE\bin\nt64</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="选择评测cpu">选择评测cpu</h2>
+<p>如下图，直接链接到cpu所在文件夹即可，评测机不会修改cpu内容。
+<img src="/images/CO/COT/image.png" alt="cpu地址设置"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+    
+      <article id="post-CO-P5" class="h-entry article article-type-post"
+  itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <p class="article-date">
+  <time class="dt-published" datetime="2025-11-24T12:54:00.000Z" itemprop="datePublished">2025-11-24</time>
+</p>
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CO/">CO</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/11/24/CO-P5/">BUAA-CO-P5 基于verilog的流水线MIPS架构CPU（1）</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="要求">要求</h1>
+<ul>
+<li>全力转发！</li>
+<li>支持指令集：{add,sub,ori,lui,lw,sw,beq,jr,jal,nop}</li>
+</ul>
+<h1 id="需要重构的地方">需要重构的地方</h1>
+<h2 id="译码方式">译码方式</h2>
+<pre><code>选择集中式译码 &amp; 控制信号驱动型译码
+</code></pre>
+<p>e.g.</p>
+   <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">//宏定义</span></span><br><span class="line">   <span class="meta">`<span class="keyword">define</span> ADDU 6&#x27;b100001</span></span><br><span class="line">   <span class="meta">`<span class="keyword">define</span> RTYPE  6&#x27;b000000;</span></span><br><span class="line">   <span class="comment">//定义信号</span></span><br><span class="line">   <span class="keyword">wire</span> Rtype,addu;</span><br><span class="line">   <span class="keyword">wire</span> [<span class="number">1</span>:<span class="number">0</span>]NPCOp;</span><br><span class="line">   <span class="keyword">wire</span> RFWr;</span><br><span class="line">   <span class="comment">//decode</span></span><br><span class="line">   <span class="keyword">assign</span> RType = (opcode == RTYPE);</span><br><span class="line"><span class="keyword">assign</span> addu  =  RType&amp;(funct == ADDU);</span><br><span class="line">   <span class="comment">//生成控制信号</span></span><br><span class="line">   <span class="keyword">assign</span> NPCOp[<span class="number">0</span>] = beq | jr | jalr;</span><br><span class="line"><span class="keyword">assign</span> NPCOp[<span class="number">1</span>] = jal | jr | jalr | j;</span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> RFWr = addu | subu | ori | lw | jal | lui | lb | lh | addi | jalr ;</span><br></pre></td></tr></table></figure>
+<h2 id="Splitter">Splitter</h2>
+<p>要取代的：</p>
+<ol>
+<li>ControlSplitter</li>
+<li>InstrSplitter</li>
+</ol>
+<ul>
+<li>核心思想：用<strong>宏定义</strong>代替splitter
+<ul>
+<li>各种控制信号在D级生成后打包成controlbus向后传</li>
+<li>instruction和controlbus都直接完整向后传，如果要用再利用宏定义在对应阶段取出即可</li>
+</ul>
+</li>
+</ul>
+<h2 id="宏">宏</h2>
+<p>专门建立一个<code>define.v</code>,在里面进行宏定义</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// constants.v</span></span><br><span class="line"><span class="meta">`<span class="keyword">ifndef</span> DEFINES_V</span></span><br><span class="line"><span class="meta">`<span class="keyword">define</span> DEFINES_V</span></span><br><span class="line">    <span class="comment">//宏定义</span></span><br><span class="line"><span class="meta">`<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>这样可以保证不重复宏定义</p>
+<h2 id="命名方式">命名方式</h2>
+<p><code>E_xx</code>:来自E Register的 xx 值/在E stage产生的 xx 值</p>
+<h2 id="添加BranchControl模块">添加BranchControl模块</h2>
+<p>把<code>原alu输出equal等跳转判断信号</code>和<code>原npc使用equal等信号判断是否跳转</code>的功能集成到BranchControl模块中。</p>
+<ul>
+<li>实现分支判断提前到ID</li>
+</ul>
+<h2 id="拆分P4中的grfSel模块">拆分P4中的grfSel模块</h2>
+<p>grfSel = WASel + WDSel</p>
+<ul>
+<li>WASel：放在ID中实现，然后一路传递</li>
+<li>WDSel：WB中实现</li>
+</ul>
+<h2 id="GRF内部转发">GRF内部转发</h2>
+<ul>
+<li>
+<p>当GRF同时在WB被写入，在ID被读出，且存在读写寄存器冲突，读出的寄存器值应为新写入的值</p>
+  <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> RD1 = (RA1 != <span class="number">0</span> &amp;&amp; RA1 == WA &amp;&amp; RegWrite) ? WD : register[RA1];</span><br><span class="line"><span class="keyword">assign</span> RD2 = (RA2 != <span class="number">0</span> &amp;&amp; RA2 == WA &amp;&amp; RegWrite) ? WD : register[RA2];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="前置知识">前置知识</h1>
+<h2 id="延迟槽">延迟槽</h2>
+<p>
+    <span id="mjx-d5e65738">
+      <style>
+      #mjx-d5e65738{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.054ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.242ex" role="img" focusable="false" viewBox="0 -525 1000 549" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">⇒</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+   跳转指令的下一条指令必执行一次（下一条指令已经在IF被取出）</p>
+<h2 id="时序相关">时序相关</h2>
+<p><img src="/images/CO/P5/%E6%97%B6%E5%BA%8F.png" alt="时序"></p>
+<ul>
+<li>==规定==：<code>CCn的上升沿</code> 指的是 <code>CCn开始的上升沿</code></li>
+<li>初始状态：第0个周期，实际上已经预加载了第一条指令的IF阶段。也就是说，<code>CC1上升沿</code>第一条指令实际上是<code>进入ID阶段。</code></li>
+</ul>
+<h2 id="冒险">冒险</h2>
+<h3 id="数据冒险">数据冒险</h3>
+<ul>
+<li>
+<p>转发/旁路:</p>
+<ul>
+<li>概念：将尚<code>未写入RF</code>但==已经暂存==在流水线寄存器中的<code>计算结果</code>传递给相关功能部件(或流水线寄存器)的技术</li>
+<li>基本要点：
+<ol>
+<li>前递：将M（后级）==保存的==ALUresult向EX stage（前级）的ALU传递</li>
+<li>选择：
+<ol>
+<li>有依赖才转发</li>
+<li>不依赖不转发，就直接用grf读出的数据参与计算</li>
+</ol>
+</li>
+<li>转发的数据一定是==已经锁存过==的数据，而不能从正在计算的组合逻辑里拉线！！！</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>完备性</p>
+<table>
+<thead>
+<tr>
+<th>转发到/数据来源</th>
+<th>M锁存的ALUresult</th>
+<th>W_WD</th>
+<th>M_PC8</th>
+<th>E_PC8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID stage</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+</tr>
+<tr>
+<td>EX stage</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>不存在</td>
+</tr>
+<tr>
+<td>MEM stage</td>
+<td>不存在</td>
+<td>RtData</td>
+<td>不存在</td>
+<td>不存在</td>
+</tr>
+</tbody>
+</table>
+<p>例如：</p>
+<ul>
+<li>lw - R：
+<ul>
+<li>lw处于ME时插入空拍，R指令仍处于ID stage，PC冻结；</li>
+<li>lw处于WB时，R型指令进入EX stage，将W_reg暂存的计算结果转发到ALU输入端（<code>代替operand1/operand2</code>）</li>
+</ul>
+</li>
+<li>lw - xxx - R：
+<ul>
+<li>R型指令处于ID stage时，将W_reg暂存的计算结果转发进E_reg（<code>代替RsData/RtData</code>）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>阻塞的实现</p>
+<ul>
+<li>冻结PC</li>
+<li>冻结D_reg</li>
+<li>清零E_reg （本质上是向EX stage插入nop指令）</li>
+</ul>
+</li>
+</ul>
+<h3 id="控制冒险">控制冒险</h3>
+<ul>
+<li>提前分支判断：在D级就完成分支判断（已经用D级 BranchControl模块实现）</li>
+<li>延迟槽：即使判断跳转，也至少让紧接着的那条指令执行（<strong>不用舍弃</strong>IF已经取到的指令）</li>
+</ul>
+<h1 id="加指令思路">加指令思路</h1>
+<h2 id="分析指令RTL">分析指令RTL</h2>
+<p>==严格按照指令说明来！！！==</p>
+<ol>
+<li>branch类</li>
+</ol>
+<ul>
+<li>修改<code>BranchControl</code>对<code>ifLink</code>、<code>D_flush</code>和<code>BranchEn</code>的输出逻辑</li>
+<li>清空延迟槽（<code>NullifyCurrentInstruction()</code>） = <code>D_flush</code>（清空延迟槽）</li>
+</ul>
+<ol start="2">
+<li>是否为条件写寄存器？
+改造类似<code>条件link</code>：<code>ControlBus</code>添加<code>isConditionalWrite</code>，在能确定是否写入的阶段设置<code>ifConditionalWrite</code>并随流水线向后传递，参与<code>TrueRegWrite</code>的选择实现。
+<ol>
+<li>涉及访存的条件写：在MEM阶段才能确定是否要写入（M_TrueRegWrite\W_TrueRegWrite)</li>
+<li>不涉及访存的条件写：在ID阶段就可以确定是否要写入</li>
+</ol>
+</li>
+<li>是否为条件选择写入寄存器数据？
+<ol>
+<li>不涉及到访存：增加ALU逻辑即可，在MEM阶段确定写入的数据</li>
+<li>涉及到访存：增加ALU逻辑 &amp; 增加WDsel逻辑，在WB阶段确定写入的数据（本质：lw）</li>
+</ol>
+</li>
+</ol>
+<h2 id="易错点">易错点</h2>
+<ol>
+<li>STALL时不能清空延迟槽（因为此时D级还没有取到正确的data，分支判断无法进行，输出的D_flush不对）
+<ul>
+<li>STALL &gt; D_flush</li>
+</ul>
+</li>
+</ol>
+<h2 id="计算用组合逻辑积累">计算用组合逻辑积累</h2>
+<ol>
+<li>
+<p>rtData是否为rsData相反数？
+<code>wire isNegPair =  (rsData + rtData == 0) &amp;&amp; (rsData != 32'h8000_0000);</code>
+<img src="/images/CO/P5/%E7%9B%B8%E5%8F%8D%E6%95%B0.png" alt="相反数"></p>
+</li>
+<li>
+<p>取部分信号
+<code>data[i*4 +:4]</code>等价于<code>data[i*4+3:i*4]</code></p>
+</li>
+<li>
+<p>对比有无符号</p>
+<ul>
+<li>默认无符号</li>
+<li><code>$signed()</code></li>
+</ul>
+</li>
+<li>
+<p>判断奇偶
+wire isOdd  = rsData[0];
+wire isEven = ~rsData[0];</p>
+</li>
+<li>
+<p>判断是否是2^n
+
+    <span id="mjx-c3ae99c8">
+      <style>
+      #mjx-c3ae99c8{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.054ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.242ex" role="img" focusable="false" viewBox="0 -525 1000 549" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">⇒</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+   只有一个 bit 是 1</p>
+</li>
+<li>
+<p>是否为 rs 的绝对值比 rt 大</p>
+</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wire absgt =</span><br><span class="line"> ($signed(rsData[31] ? -rsData : rsData)) &gt;</span><br><span class="line"> ($signed(rtData[31] ? -rtData : rtData));</span><br></pre></td></tr></table></figure>
+<h1 id="模块设计">模块设计</h1>
+<h2 id="顶层设计">顶层设计</h2>
+<p><img src="/images/CO/P5/P5%E9%A1%B6%E5%B1%82%E8%AE%BE%E8%AE%A1.png" alt="mips.v"></p>
+<h2 id="数据通路">数据通路</h2>
+<ul>
+<li>
+<p>五个转发去处(D_NewRsData/D_NewRtData/E_NewRsData/E_NewRtData/M_NewRtData)：</p>
+</li>
+<li>
+<p>本质上是两种转发来源</p>
+<ul>
+<li>来自M级：ALUresult、PC+4</li>
+<li>来自W级：WD</li>
+</ul>
+</li>
+<li>
+<p>以D_NewRsData为例:
+<img src="/images/CO/P5/D_RsData%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90.png" alt="D_RsData数据来源"></p>
+</li>
+</ul>
+<h2 id="IF">IF</h2>
+<h3 id="IFU">IFU</h3>
+<ul>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>同步复位信号</td>
+</tr>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>NPC</td>
+<td>I</td>
+<td>32</td>
+<td>pc更新值</td>
+</tr>
+<tr>
+<td>stall</td>
+<td>I</td>
+<td>32</td>
+<td>冻住</td>
+</tr>
+<tr>
+<td>instruction</td>
+<td>O</td>
+<td>32</td>
+<td>指令机器码</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>O</td>
+<td>32</td>
+<td>当前PC</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="D">D</h2>
+<h3 id="Reg-D">Reg_D</h3>
+<ul>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>clock</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>同步复位信号</td>
+</tr>
+<tr>
+<td>F_instruction</td>
+<td>I</td>
+<td>32</td>
+<td>F_instruction</td>
+</tr>
+<tr>
+<td>F_PC</td>
+<td>I</td>
+<td>32</td>
+<td>F_PC</td>
+</tr>
+<tr>
+<td>stall</td>
+<td>I</td>
+<td>1</td>
+<td>冻住</td>
+</tr>
+<tr>
+<td>D_flush</td>
+<td>I</td>
+<td>1</td>
+<td>是否清空延迟槽</td>
+</tr>
+<tr>
+<td>E_instruction</td>
+<td>O</td>
+<td>32</td>
+<td>E_instruction</td>
+</tr>
+<tr>
+<td>E_PC</td>
+<td>O</td>
+<td>32</td>
+<td>E_PC</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="ID">ID</h2>
+<h3 id="Control">Control</h3>
+<ul>
+<li>
+<p>控制信号表;</p>
+<table>
+<thead>
+<tr>
+<th>控制信号\指令</th>
+<th>add</th>
+<th>sub</th>
+<th>ori</th>
+<th>lw</th>
+<th>sw</th>
+<th>beq</th>
+<th>lui</th>
+<th>jal</th>
+<th>jr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegWrite</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+<td>000</td>
+<td>001</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>0000</td>
+<td>0001</td>
+<td>0011</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0100</td>
+<td>0000</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+<td>001</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+<td>011</td>
+<td>000</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>01</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>10</td>
+<td>00</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+<td>000</td>
+<td>010</td>
+<td>011</td>
+</tr>
+<tr>
+<td>MemWriteDataOp</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+</tr>
+<tr>
+<td>ifB</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ifJ</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>BranchOp</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>useRt</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>islink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isConditionalLink</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>isLikely</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>T模型时间表</p>
+<ul>
+<li>
+<p>
+    <span id="mjx-21ccc3f">
+      <style>
+      #mjx-21ccc3f{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="3.92ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 1732.6 834.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(572,0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(1041,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>T</mi><mrow data-mjx-texclass="ORD"><mi>u</mi><mi>s</mi><mi>e</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
+    </span>
+  ：这条指令位于 D 级的时候，再经过多少个时钟周期就必须要使用相应的数据</p>
+</li>
+<li>
+<p>
+    <span id="mjx-4888f25">
+      <style>
+      #mjx-4888f25{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.36ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 1927.1 834.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1066,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>T</mi><mrow data-mjx-texclass="ORD"><mi>n</mi><mi>e</mi><mi>w</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
+    </span>
+  ：位于某个流水级的某个指令，它经过
+    <span id="mjx-ea75c678">
+      <style>
+      #mjx-ea75c678{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.36ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 1927.1 834.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1066,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>T</mi><mrow data-mjx-texclass="ORD"><mi>n</mi><mi>e</mi><mi>w</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
+    </span>
+  个时钟周期,该指令的结果（即最终要<code>写回 GRF 的值</code>）才会被计算出来，并<code>存入</code>对应的流水级寄存器中，从而可以被后续指令安全使用或转发。</p>
+<ul>
+<li>
+    <span id="mjx-dc76d94">
+      <style>
+      #mjx-dc76d94{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="24.005ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 10610.2 950" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1066,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g></g></g><g data-mml-node="mo" transform="translate(2204.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(3260.6,0)"><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></g><g data-mml-node="mo" transform="translate(4038.4,0)"><path data-c="21D2" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path></g><g data-mml-node="mi" transform="translate(5316.2,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">不</text></g><g data-mml-node="mi" transform="translate(6316.2,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">写</text></g><g data-mml-node="mi" transform="translate(7316.2,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">入</text></g><g data-mml-node="mi" transform="translate(8316.2,0)"><path data-c="1D43A" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q492 659 471 656T418 643T357 615T294 567T236 496T189 394T158 260Q156 242 156 221Q156 173 170 136T206 79T256 45T308 28T353 24Q407 24 452 47T514 106Q517 114 529 161T541 214Q541 222 528 224T468 227H431Q425 233 425 235T427 254Q431 267 437 273H454Q494 271 594 271Q634 271 659 271T695 272T707 272Q721 272 721 263Q721 261 719 249Q714 230 709 228Q706 227 694 227Q674 227 653 224Q646 221 643 215T629 164Q620 131 614 108Q589 6 586 3Q584 1 581 1Q571 1 553 21T530 52Q530 53 528 52T522 47Q448 -22 322 -22Q201 -22 126 55T50 252Z"></path></g><g data-mml-node="mi" transform="translate(9102.2,0)"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mi" transform="translate(9861.2,0)"><path data-c="1D439" d="M48 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H742Q749 676 749 669Q749 664 736 557T722 447Q720 440 702 440H690Q683 445 683 453Q683 454 686 477T689 530Q689 560 682 579T663 610T626 626T575 633T503 634H480Q398 633 393 631Q388 629 386 623Q385 622 352 492L320 363H375Q378 363 398 363T426 364T448 367T472 374T489 386Q502 398 511 419T524 457T529 475Q532 480 548 480H560Q567 475 567 470Q567 467 536 339T502 207Q500 200 482 200H470Q463 206 463 212Q463 215 468 234T473 274Q473 303 453 310T364 317H309L277 190Q245 66 245 60Q245 46 334 46H359Q365 40 365 39T363 19Q359 6 353 0H336Q295 2 185 2Q120 2 86 2T48 1Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>T</mi><mrow data-mjx-texclass="ORD"><mi>n</mi><mi>e</mi><mi>w</mi></mrow></msub><mo>=</mo><mn>0</mn><mo stretchy="false">⇒</mo><mi mathvariant="normal">不</mi><mi mathvariant="normal">写</mi><mi mathvariant="normal">入</mi><mi>G</mi><mi>R</mi><mi>F</mi></math></mjx-assistive-mml></mjx-container>
+    </span>
+  </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>指令\T</th>
+<th>RsTuse</th>
+<th>RtTuse</th>
+<th>D_Tnew</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R_cal</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>Rs、Rt在E级送入ALU，结果在E级产生</td>
+</tr>
+<tr>
+<td>I_cal</td>
+<td>1</td>
+<td>\</td>
+<td>2</td>
+<td>只用Rs，结果在E级产生</td>
+</tr>
+<tr>
+<td>lw(及所有涉及到<code>读内存</code>的指令）</td>
+<td>1</td>
+<td>\</td>
+<td>3</td>
+<td>Rs(base)在E级用于算地址,结果在M级（访存后）产生</td>
+</tr>
+<tr>
+<td>sw</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>Rs（地址）在E级，Rt（要写入内存的数据）在M级，无需写回GRF</td>
+</tr>
+<tr>
+<td>j</td>
+<td>\</td>
+<td>\</td>
+<td>0</td>
+<td>不读寄存器、不写寄存器</td>
+</tr>
+<tr>
+<td>jal</td>
+<td>\</td>
+<td>\</td>
+<td>1</td>
+<td>不读寄存器，要写入寄存器的值在D级生成（PC + 4）</td>
+</tr>
+<tr>
+<td>jr</td>
+<td>0</td>
+<td>\</td>
+<td>0</td>
+<td>Rs在D级作为跳转目标被使用，不写寄存器</td>
+</tr>
+<tr>
+<td>beq</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>Rs\Rt在D级参与跳转判断；不写入寄存器</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>
+<p>模块规格</p>
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>opcode</td>
+<td>I</td>
+<td>6</td>
+<td>指令[31:26]位</td>
+</tr>
+<tr>
+<td>funct</td>
+<td>I</td>
+<td>6</td>
+<td>指令[5:0]位</td>
+</tr>
+<tr>
+<td>RegWrite</td>
+<td>O</td>
+<td>1</td>
+<td>GRF写使能信号</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>O</td>
+<td>3</td>
+<td>alu操作数选择信号<br>000:rs/rt<br>001:rs/imm</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>O</td>
+<td>4</td>
+<td>ALU运算模式选择信号</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>O</td>
+<td>1</td>
+<td>DM写使能信号</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>O</td>
+<td>1</td>
+<td>DM读使能信号</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>O</td>
+<td>1</td>
+<td>EXT扩展模式选择信号</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>O</td>
+<td>3</td>
+<td>GRF写回地址选择信号：<br>001:rt<br>000:rd<br>010:rs<br>011:GPR[31]</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>O</td>
+<td>2</td>
+<td>GRF写入数据选择信号：<br>00:ALU运算结果<br>01:DM读出的数据（lw）<br>10:PC + 8（延迟槽）</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>O</td>
+<td>3</td>
+<td>PC更新模式选择信号:<br>000:顺序执行<br>001:beq分支跳转<br>010:j/jal跳转<BR>011:jr跳转</td>
+</tr>
+<tr>
+<td>MemWriteDataOp</td>
+<td>O</td>
+<td>2</td>
+<td>写入DM数据选择信号<br>00:RtData</td>
+</tr>
+<tr>
+<td>ifB</td>
+<td>O</td>
+<td>1</td>
+<td>是否为B类指令</td>
+</tr>
+<tr>
+<td>ifJ</td>
+<td>O</td>
+<td>1</td>
+<td>是否为J类指令</td>
+</tr>
+<tr>
+<td>BranchOp</td>
+<td>O</td>
+<td>3</td>
+<td><code>判断是否跳转的规则</code>的选择信号<br>3’b000:if(rsData == rtData) 跳转</td>
+</tr>
+<tr>
+<td>useRt</td>
+<td>O</td>
+<td>1</td>
+<td>判断该指令是否涉及到读Rt</td>
+</tr>
+<tr>
+<td>islink</td>
+<td>O</td>
+<td>1</td>
+<td>判断该指令是否要link（<strong>将PC + 8写入<code>$31</code></strong>）</td>
+</tr>
+<tr>
+<td>isConditionalLink</td>
+<td>O</td>
+<td>1</td>
+<td>判断该指令是否是条件link</td>
+</tr>
+<tr>
+<td>isLikely</td>
+<td>O</td>
+<td>1</td>
+<td>判断该指令是否涉及分支清空延迟槽</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="HCU-冒险控制单元">HCU(冒险控制单元)</h3>
+<ul>
+<li>
+<p>核心任务：(按优先级实现)</p>
+<ol>
+<li>顶层是否空拍一周期？</li>
+<li>是否需要转发？转发路径？</li>
+<li>维持原数据</li>
+</ol>
+</li>
+<li>
+<p>模块规格</p>
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D_Rs</td>
+<td>I</td>
+<td>5</td>
+<td>ID中指令对应的Rs地址</td>
+</tr>
+<tr>
+<td>D_Rt</td>
+<td>I</td>
+<td>5</td>
+<td>ID中指令对应的Rt地址</td>
+</tr>
+<tr>
+<td>E_Rs</td>
+<td>I</td>
+<td>5</td>
+<td>EX中指令对应的Rs地址</td>
+</tr>
+<tr>
+<td>E_Rt</td>
+<td>I</td>
+<td>5</td>
+<td>EX中指令对应的Rt地址</td>
+</tr>
+<tr>
+<td>M_Rt</td>
+<td>I</td>
+<td>5</td>
+<td>MEM中指令对应的Rt地址</td>
+</tr>
+<tr>
+<td>E_WA</td>
+<td>I</td>
+<td>5</td>
+<td>“上一条”指令（EX中指令）最终要写入的寄存器地址</td>
+</tr>
+<tr>
+<td>M_WA</td>
+<td>I</td>
+<td>5</td>
+<td>“上上条”指令（MEM中指令）最终要写入的寄存器地址</td>
+</tr>
+<tr>
+<td>W_WA</td>
+<td>I</td>
+<td>5</td>
+<td>（WB中指令）最终要写入的寄存器地址</td>
+</tr>
+<tr>
+<td>E_RegWrite</td>
+<td>I</td>
+<td>1</td>
+<td>EX中指令是否涉及写寄存器</td>
+</tr>
+<tr>
+<td>M_RegWrite</td>
+<td>I</td>
+<td>1</td>
+<td>MEM中指令是否涉及写寄存器</td>
+</tr>
+<tr>
+<td>W_RegWrite</td>
+<td>I</td>
+<td>1</td>
+<td>WB中指令是否涉及写寄存器</td>
+</tr>
+<tr>
+<td>D_useRt</td>
+<td>I</td>
+<td>1</td>
+<td>ID中指令是否涉及到读Rt</td>
+</tr>
+<tr>
+<td>M_ifLink</td>
+<td>I</td>
+<td>1</td>
+<td>M中指令是否要link</td>
+</tr>
+<tr>
+<td>stall</td>
+<td>O</td>
+<td>1</td>
+<td>是否空拍一次</td>
+</tr>
+<tr>
+<td>D_RsData_Sel</td>
+<td>O</td>
+<td>3</td>
+<td>实际写入E_reg\NPC的数据选择信号<br>000：原RsData <br>001：M_ALUresult <br>010:W_WD<br>011:M_PC8<br>100:EPC8<br>tip：必须先判断是否涉及写入<code>$0</code>,再判断001&amp;011，最后判断011（即是否涉及从<strong>最近的一条</strong>在<strong>MEM</strong>的指令跳转）</td>
+</tr>
+<tr>
+<td>D_RtData_Sel</td>
+<td>O</td>
+<td>3</td>
+<td>实际写入E_reg的数据选择信号<br>000：原RtData <br>001：M_ALUresult <br>010:W_WD<br>011:M_PC8<br>100:EPC8</td>
+</tr>
+<tr>
+<td>E_RsData_Sel</td>
+<td>O</td>
+<td>3</td>
+<td>实际写入ALUControl的数据选择信号<br>000：原RsData <br>001：M_ALUresult <br>010: W_WD<br>011: M_PC8<br>100:EPC8</td>
+</tr>
+<tr>
+<td>E_RtData_Sel</td>
+<td>O</td>
+<td>3</td>
+<td>实际写入ALUControl的数据选择信号<br>000：原RtData <br>001：M_ALUresult <br>010: W_WD<br>011: M_PC8<br>100:EPC8</td>
+</tr>
+<tr>
+<td>M_RtData_Sel</td>
+<td>O</td>
+<td>3</td>
+<td>实际写入MemWriteDataSel的数据选择信号<br>000: 原RtData <br>001: W_WD</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="BranchControl">BranchControl</h3>
+<ul>
+<li>核心任务：
+判断是否需要跳转</li>
+<li>整体设计：</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rsData</td>
+<td>I</td>
+<td>32</td>
+<td>rs data</td>
+</tr>
+<tr>
+<td>rtData</td>
+<td>I</td>
+<td>32</td>
+<td>rt data</td>
+</tr>
+<tr>
+<td>ifB</td>
+<td>I</td>
+<td>1</td>
+<td>是否是B类指令</td>
+</tr>
+<tr>
+<td>ifJ</td>
+<td>I</td>
+<td>1</td>
+<td>是否为J类指令</td>
+</tr>
+<tr>
+<td>islink</td>
+<td>I</td>
+<td>1</td>
+<td>判断该指令是否要link（<strong>将PC + 8写入<code>$31</code></strong>）</td>
+</tr>
+<tr>
+<td>isConditionalLink</td>
+<td>I</td>
+<td>1</td>
+<td>判断该指令是否是条件link</td>
+</tr>
+<tr>
+<td>isLikely</td>
+<td>I</td>
+<td>1</td>
+<td>判断该指令是否涉及分支清空延迟槽</td>
+</tr>
+<tr>
+<td>BranchOp</td>
+<td>I</td>
+<td>3</td>
+<td><code>跳转规则</code>的选择信号<br>3’b000:beq</td>
+</tr>
+<tr>
+<td>BranchEn</td>
+<td>O</td>
+<td>1</td>
+<td>是否跳转</td>
+</tr>
+<tr>
+<td>ifLink</td>
+<td>O</td>
+<td>1</td>
+<td>是否真正要link</td>
+</tr>
+<tr>
+<td>D_flush</td>
+<td>O</td>
+<td>1</td>
+<td>是否清空延迟槽</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="NPC">NPC</h3>
+<ul>
+<li>
+<p>核心任务
+计算下一周期PC应更新成的值</p>
+</li>
+<li>
+<p>整体设计
+==所有分支/跳转目标地址必须基于 D_PC==</p>
+<ul>
+<li>顺序执行： <code>NPC = PC + 4</code></li>
+<li>分支跳转：<code>NPC = (PC + 4) + (SignExtend(offset))</code></li>
+<li>j跳转：<code>NPC = (PC + 4)31...28||instr_index||00</code></li>
+<li>jr跳转：<code>NPC = GPR[rs]</code></li>
+</ul>
+</li>
+<li>
+<p>模块规格</p>
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>immEXT</td>
+<td>I</td>
+<td>32</td>
+<td>拓展后的立即数（offset）</td>
+</tr>
+<tr>
+<td>instr_index</td>
+<td>I</td>
+<td>26</td>
+<td>instr_index</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>I</td>
+<td>3</td>
+<td>000:NPC = PC + 4<br>001:分支跳转<br>010:j<br>011:jr</td>
+</tr>
+<tr>
+<td>rd1OrRs</td>
+<td>I</td>
+<td>32</td>
+<td>rs储存的值</td>
+</tr>
+<tr>
+<td>BranchEn</td>
+<td>I</td>
+<td>1</td>
+<td><code>B</code>型指令是否跳转</td>
+</tr>
+<tr>
+<td>F_PC</td>
+<td>I</td>
+<td>32</td>
+<td>刚进入流水线（IF阶段取出）的指令地址</td>
+</tr>
+<tr>
+<td>D_PC</td>
+<td>I</td>
+<td>32</td>
+<td>D_PC</td>
+</tr>
+<tr>
+<td>NPC</td>
+<td>O</td>
+<td>32</td>
+<td>IFU中PC更新值</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="GRF">GRF</h3>
+<ul>
+<li>整体设计
+<ul>
+<li>读数据：指令最多需要同时读取<code>两个</code>不同地址的数据 - <code>两个读端口</code></li>
+<li>写数据</li>
+<li>
+<blockquote>
+<p>0 号寄存器的值始终保持为 0。其他寄存器初始值（复位后）均为 0，无需专门设置</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>模块规格：
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>异步复位信号</td>
+</tr>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>RA1</td>
+<td>I</td>
+<td>5</td>
+<td>读地址1</td>
+</tr>
+<tr>
+<td>RA2</td>
+<td>I</td>
+<td>5</td>
+<td>读地址2</td>
+</tr>
+<tr>
+<td>WA</td>
+<td>I</td>
+<td>5</td>
+<td>写地址</td>
+</tr>
+<tr>
+<td>WD</td>
+<td>I</td>
+<td>32</td>
+<td>写数据</td>
+</tr>
+<tr>
+<td>RegWrite</td>
+<td>I</td>
+<td>1</td>
+<td>写使能信号</td>
+</tr>
+<tr>
+<td>RD1</td>
+<td>O</td>
+<td>32</td>
+<td>读数据1</td>
+</tr>
+<tr>
+<td>RD2</td>
+<td>O</td>
+<td>32</td>
+<td>读数据2</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="WASel">WASel</h3>
+<ul>
+<li>整体设计
+选择存入GRF的地址</li>
+<li>模块规格：
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegDst</td>
+<td>I</td>
+<td>3</td>
+<td>GRF写回地址选择信号：<br>001:rt<br>000:rd<br>010:rs<br>011:GPR[31]</td>
+</tr>
+<tr>
+<td>rs</td>
+<td>I</td>
+<td>5</td>
+<td>rs</td>
+</tr>
+<tr>
+<td>rt</td>
+<td>I</td>
+<td>5</td>
+<td>rt</td>
+</tr>
+<tr>
+<td>rd</td>
+<td>I</td>
+<td>5</td>
+<td>rd</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="EXT">EXT</h3>
+<ul>
+<li>核心任务
+把16位立即数扩展到32位</li>
+<li>整体设计
+能够对立即数进行<code>零扩展/符号扩展</code></li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>immOrOffset</td>
+<td>I</td>
+<td>16</td>
+<td>待扩展的立即数</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>I</td>
+<td>1</td>
+<td>扩展方式选择信号：<br>1 - 符号扩展 <br>0 - 零扩展</td>
+</tr>
+<tr>
+<td>immEXT</td>
+<td>O</td>
+<td>32</td>
+<td>扩展后的立即数</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="E">E</h2>
+<h3 id="Reg-E">Reg_E</h3>
+<ul>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>clock</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>同步复位信号</td>
+</tr>
+<tr>
+<td>stall</td>
+<td>I</td>
+<td>1</td>
+<td>清零信号</td>
+</tr>
+<tr>
+<td>D_ControlBus</td>
+<td>I</td>
+<td><code>CTL_BUS_WIDTH</code></td>
+<td>D_ControlBus</td>
+</tr>
+<tr>
+<td>D_instruction</td>
+<td>I</td>
+<td>32</td>
+<td>D_instruction</td>
+</tr>
+<tr>
+<td>D_RD1</td>
+<td>I</td>
+<td>32</td>
+<td>D_RD1</td>
+</tr>
+<tr>
+<td>D_RD2</td>
+<td>I</td>
+<td>32</td>
+<td>D_RD2</td>
+</tr>
+<tr>
+<td>D_immEXT</td>
+<td>I</td>
+<td>32</td>
+<td>D_immEXT</td>
+</tr>
+<tr>
+<td>D_PC</td>
+<td>I</td>
+<td>32</td>
+<td>D_PC</td>
+</tr>
+<tr>
+<td>D_WA</td>
+<td>I</td>
+<td>5</td>
+<td>D_WA</td>
+</tr>
+<tr>
+<td>D_ifLink</td>
+<td>I</td>
+<td>1</td>
+<td>D_ifLink</td>
+</tr>
+<tr>
+<td>E_ControlBus</td>
+<td>O</td>
+<td><code>CTL_BUS_WIDTH</code></td>
+<td>E_ControlBus</td>
+</tr>
+<tr>
+<td>E_instruction</td>
+<td>O</td>
+<td>32</td>
+<td>E_instruction</td>
+</tr>
+<tr>
+<td>E_RD1</td>
+<td>O</td>
+<td>32</td>
+<td>E_RD1</td>
+</tr>
+<tr>
+<td>E_RD2</td>
+<td>O</td>
+<td>32</td>
+<td>E_RD2</td>
+</tr>
+<tr>
+<td>E_immEXT</td>
+<td>O</td>
+<td>32</td>
+<td>E_immEXT</td>
+</tr>
+<tr>
+<td>E_PC</td>
+<td>O</td>
+<td>32</td>
+<td>E_PC</td>
+</tr>
+<tr>
+<td>E_WA</td>
+<td>O</td>
+<td>5</td>
+<td>E_WA</td>
+</tr>
+<tr>
+<td>E_ifLink</td>
+<td>O</td>
+<td>1</td>
+<td>E_ifLInk</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="EX">EX</h2>
+<h3 id="ALUControl">ALUControl</h3>
+<ul>
+<li>整体设计
+为alu选择operand1，operand2</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RsData</td>
+<td>I</td>
+<td>32</td>
+<td>RsData</td>
+</tr>
+<tr>
+<td>RtData</td>
+<td>I</td>
+<td>32</td>
+<td>RtData</td>
+</tr>
+<tr>
+<td>immEXT</td>
+<td>I</td>
+<td>32</td>
+<td>扩展后的立即数</td>
+</tr>
+<tr>
+<td>shamt</td>
+<td>I</td>
+<td>5</td>
+<td>shamt</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>I</td>
+<td>3</td>
+<td>选择信号<br>000:rs/rt<br>001:rs/imm</td>
+</tr>
+<tr>
+<td>operand1</td>
+<td>O</td>
+<td>32</td>
+<td>operand1</td>
+</tr>
+<tr>
+<td>operand2</td>
+<td>O</td>
+<td>32</td>
+<td>operand2</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="ALU">ALU</h3>
+<ul>
+<li>整体设计
+<ul>
+<li>能够实现多种运算功能，并根据ALUop选择对应功能
+<table>
+<thead>
+<tr>
+<th>ALUop</th>
+<th>运算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0000</td>
+<td>无符号<code>op1 + op2</code></td>
+</tr>
+<tr>
+<td>0001</td>
+<td>无符号<code>op1 - op2</code></td>
+</tr>
+<tr>
+<td>0010</td>
+<td><code>op1 &amp; op2</code></td>
+</tr>
+<tr>
+<td>0011</td>
+<td><code>op1 | op2</code></td>
+</tr>
+<tr>
+<td>0100</td>
+<td>op2低16位加载至高位，低位补0</td>
+</tr>
+<tr>
+<td>0101</td>
+<td><code>$signed(operand1)&lt;$signed(operand2) ? 1:0</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ALUop</td>
+<td>I</td>
+<td>4</td>
+<td>选择运算功能</td>
+</tr>
+<tr>
+<td>operand1</td>
+<td>I</td>
+<td>32</td>
+<td>operand1</td>
+</tr>
+<tr>
+<td>operand2</td>
+<td>I</td>
+<td>32</td>
+<td>operand2</td>
+</tr>
+<tr>
+<td>ALUresult</td>
+<td>O</td>
+<td>32</td>
+<td>运算结果</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="M">M</h2>
+<h3 id="Reg-M">Reg_M</h3>
+<ul>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>clock</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>同步复位信号</td>
+</tr>
+<tr>
+<td>E_ControlBus</td>
+<td>I</td>
+<td><code>CTL_BUS_WIDTH+1</code></td>
+<td>来自 E 级的控制信号</td>
+</tr>
+<tr>
+<td>E_instruction</td>
+<td>I</td>
+<td>32</td>
+<td>E_instruction</td>
+</tr>
+<tr>
+<td>E_ALUresult</td>
+<td>I</td>
+<td>32</td>
+<td>E_ALUresult</td>
+</tr>
+<tr>
+<td>E_RD1</td>
+<td>I</td>
+<td>32</td>
+<td>E_RD1</td>
+</tr>
+<tr>
+<td>E_RD2</td>
+<td>I</td>
+<td>32</td>
+<td>E_RD2</td>
+</tr>
+<tr>
+<td>E_immEXT</td>
+<td>I</td>
+<td>32</td>
+<td>E_immEXT</td>
+</tr>
+<tr>
+<td>E_MemWriteData</td>
+<td>I</td>
+<td>32</td>
+<td>E_MemWriteData</td>
+</tr>
+<tr>
+<td>E_PC</td>
+<td>I</td>
+<td>32</td>
+<td>E_PC</td>
+</tr>
+<tr>
+<td>E_WA</td>
+<td>I</td>
+<td>5</td>
+<td>E_WA</td>
+</tr>
+<tr>
+<td>E_ifLink</td>
+<td>I</td>
+<td>1</td>
+<td>E_ifLInk</td>
+</tr>
+<tr>
+<td>M_ControlBus</td>
+<td>O</td>
+<td><code>CTL_BUS_WIDTH+1</code></td>
+<td>M_ControlBus</td>
+</tr>
+<tr>
+<td>M_instruction</td>
+<td>O</td>
+<td>32</td>
+<td>M_instruction</td>
+</tr>
+<tr>
+<td>M_ALUresult</td>
+<td>O</td>
+<td>32</td>
+<td>M_ALUresult</td>
+</tr>
+<tr>
+<td>M_RD1</td>
+<td>O</td>
+<td>32</td>
+<td>M_RD1</td>
+</tr>
+<tr>
+<td>M_RD2</td>
+<td>O</td>
+<td>32</td>
+<td>M_RD2</td>
+</tr>
+<tr>
+<td>M_immEXT</td>
+<td>O</td>
+<td>32</td>
+<td>M_immEXT</td>
+</tr>
+<tr>
+<td>M_MemWriteData</td>
+<td>O</td>
+<td>32</td>
+<td>M_MemWriteData</td>
+</tr>
+<tr>
+<td>M_PC</td>
+<td>O</td>
+<td>32</td>
+<td>M_PC</td>
+</tr>
+<tr>
+<td>M_WA</td>
+<td>O</td>
+<td>5</td>
+<td>M_WA</td>
+</tr>
+<tr>
+<td>M_ifLink</td>
+<td>O</td>
+<td>1</td>
+<td>M_ifLInk</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="MEM">MEM</h2>
+<h3 id="MemWriteDataSel">MemWriteDataSel</h3>
+<ul>
+<li>整体设计
+选择写入内存的数据</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MemWriteDataOp</td>
+<td>I</td>
+<td>2</td>
+<td>写入DM数据选择信号<br>00:RtData</td>
+</tr>
+<tr>
+<td>RtData</td>
+<td>I</td>
+<td>32</td>
+<td>rt data</td>
+</tr>
+<tr>
+<td>MemWriteData</td>
+<td>O</td>
+<td>32</td>
+<td>写入DM的数据</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="DM">DM</h3>
+<ul>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Address</td>
+<td>I</td>
+<td>32</td>
+<td>读/写地址，==<strong>默认是ALUresult</strong>==</td>
+</tr>
+<tr>
+<td>WriteData</td>
+<td>I</td>
+<td>32</td>
+<td>要写入的数据</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>I</td>
+<td>1</td>
+<td>写使能信号</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>I</td>
+<td>1</td>
+<td>读使能信号</td>
+</tr>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>异步复位信号</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>I</td>
+<td>32</td>
+<td>当前指令的地址</td>
+</tr>
+<tr>
+<td>LoadType</td>
+<td>I</td>
+<td>2</td>
+<td>load模式选择信号<br>2’b00:lw<br>2’b01:lh</td>
+</tr>
+<tr>
+<td>SaveType</td>
+<td>I</td>
+<td>2</td>
+<td>Save模式选择信号<br>2’b00:sw<br>2’b01:sh</td>
+</tr>
+<tr>
+<td>MemReadData</td>
+<td>O</td>
+<td>32</td>
+<td>读出的数据</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="W">W</h2>
+<h3 id="Reg-W">Reg_W</h3>
+<ul>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>clock</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>同步复位信号</td>
+</tr>
+<tr>
+<td>M_ControlBus</td>
+<td>I</td>
+<td><code>CTL_BUS_WIDTH+1</code></td>
+<td>来自 M 级的控制信号</td>
+</tr>
+<tr>
+<td>M_instruction</td>
+<td>I</td>
+<td>32</td>
+<td>M_instruction</td>
+</tr>
+<tr>
+<td>M_ALUresult</td>
+<td>I</td>
+<td>32</td>
+<td>M_ALUresult</td>
+</tr>
+<tr>
+<td>M_RD1</td>
+<td>I</td>
+<td>32</td>
+<td>M_RD1</td>
+</tr>
+<tr>
+<td>M_RD2</td>
+<td>I</td>
+<td>32</td>
+<td>M_RD2</td>
+</tr>
+<tr>
+<td>M_immEXT</td>
+<td>I</td>
+<td>32</td>
+<td>M_immEXT</td>
+</tr>
+<tr>
+<td>M_MemReadData</td>
+<td>I</td>
+<td>32</td>
+<td>M_MemReadData</td>
+</tr>
+<tr>
+<td>M_PC</td>
+<td>I</td>
+<td>32</td>
+<td>M_PC</td>
+</tr>
+<tr>
+<td>M_WA</td>
+<td>I</td>
+<td>5</td>
+<td>M_WA</td>
+</tr>
+<tr>
+<td>M_ifLink</td>
+<td>I</td>
+<td>1</td>
+<td>M_ifLInk</td>
+</tr>
+<tr>
+<td>W_ControlBus</td>
+<td>O</td>
+<td><code>CTL_BUS_WIDTH+1</code></td>
+<td>W_ControlBus</td>
+</tr>
+<tr>
+<td>W_instruction</td>
+<td>O</td>
+<td>32</td>
+<td>W_instruction</td>
+</tr>
+<tr>
+<td>W_ALUresult</td>
+<td>O</td>
+<td>32</td>
+<td>W_ALUresult</td>
+</tr>
+<tr>
+<td>W_RD1</td>
+<td>O</td>
+<td>32</td>
+<td>W_RD1</td>
+</tr>
+<tr>
+<td>W_RD2</td>
+<td>O</td>
+<td>32</td>
+<td>W_RD2</td>
+</tr>
+<tr>
+<td>W_immEXT</td>
+<td>O</td>
+<td>32</td>
+<td>W_immEXT</td>
+</tr>
+<tr>
+<td>W_MemReadData</td>
+<td>O</td>
+<td>32</td>
+<td>W_MemReadData</td>
+</tr>
+<tr>
+<td>W_PC</td>
+<td>O</td>
+<td>32</td>
+<td>W_PC</td>
+</tr>
+<tr>
+<td>W_WA</td>
+<td>O</td>
+<td>5</td>
+<td>W_WA</td>
+</tr>
+<tr>
+<td>W_ifLink</td>
+<td>O</td>
+<td>1</td>
+<td>W_ifLInk</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="WB">WB</h2>
+<h3 id="WDSel">WDSel</h3>
+<ul>
+<li>整体思路
+选择写回GRF的数据</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDsel</td>
+<td>I</td>
+<td>2</td>
+<td>GRF写入数据选择信号：<br>00:ALU运算结果<br>01:DM读出的数据（lw）<br>10:PC + 8（延迟槽）</td>
+</tr>
+<tr>
+<td>ALUresult</td>
+<td>I</td>
+<td>32</td>
+<td>ALU运算结果</td>
+</tr>
+<tr>
+<td>MemData</td>
+<td>I</td>
+<td>32</td>
+<td>DM读出的数据</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>I</td>
+<td>32</td>
+<td>PC</td>
+</tr>
+<tr>
+<td>WD</td>
+<td>O</td>
+<td>32</td>
+<td>WD</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h1 id="测试">测试</h1>
+<h2 id="测试覆盖">测试覆盖</h2>
+<ol>
+<li>基本指令功能</li>
+<li>转发测试</li>
+<li>暂停测试</li>
+</ol>
+<h2 id="基本指令功能测试">基本指令功能测试</h2>
+<p>略</p>
+<h2 id="转发测试">转发测试</h2>
+<p>按照完备性表格分类测试</p>
+<table>
+<thead>
+<tr>
+<th>转发到/数据来源</th>
+<th>M锁存的ALUresult</th>
+<th>W_WD</th>
+<th>M_PC8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID stage</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+</tr>
+<tr>
+<td>EX stage</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+<td>RtData/RsData</td>
+</tr>
+<tr>
+<td>MEM stage</td>
+<td>不存在</td>
+<td>RtData</td>
+<td>不存在</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>（1，1）：ID ← M_ALUresult</p>
+<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ori </span>$<span class="number">3</span>, $<span class="number">0</span>, <span class="number">1</span></span><br><span class="line"><span class="keyword">ori </span>$<span class="number">4</span>, $<span class="number">0</span>, <span class="number">2</span></span><br><span class="line"><span class="keyword">beq </span>$<span class="number">5</span>, $<span class="number">3</span>, label </span><br><span class="line"><span class="symbol">label:</span></span><br><span class="line"><span class="keyword">nop</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>（1，2）：ID ← W_WD</p>
+<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">ori </span>$<span class="number">3</span>, $<span class="number">0</span>, <span class="number">1</span></span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">4</span>, $<span class="number">0</span>, <span class="number">2</span></span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">6</span>, $<span class="number">0</span>, <span class="number">2</span></span><br><span class="line">  <span class="keyword">beq </span>$<span class="number">5</span>, $<span class="number">3</span>, label </span><br><span class="line"><span class="symbol">  label:</span></span><br><span class="line">  <span class="keyword">nop</span></span><br><span class="line"><span class="keyword"></span>  ```  </span><br><span class="line">- （<span class="number">1</span>，<span class="number">3</span>）：ID ← M_PC + <span class="number">8</span></span><br><span class="line"></span><br><span class="line">  ```mips</span><br><span class="line">  <span class="keyword">jal </span>return</span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">4</span>, $<span class="number">0</span>, <span class="number">2</span></span><br><span class="line">  <span class="keyword">beq </span>$<span class="number">5</span>, $<span class="number">31</span>, label </span><br><span class="line"><span class="symbol">  return:</span></span><br><span class="line">  <span class="keyword">jr </span>$<span class="number">31</span></span><br><span class="line"><span class="symbol">  label:</span></span><br><span class="line">  <span class="keyword">nop</span></span><br><span class="line"><span class="keyword"></span>  ```  </span><br><span class="line">- （<span class="number">2</span>，<span class="number">1</span>）：EX ← M_ALUresult</span><br><span class="line"></span><br><span class="line">  ```mips</span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">3</span>, $<span class="number">0</span>, <span class="number">1</span></span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">4</span>, $<span class="number">3</span>, <span class="number">2</span></span><br><span class="line">  ```  </span><br><span class="line">- （<span class="number">2</span>，<span class="number">2</span>）：EX ← W_WD</span><br><span class="line"></span><br><span class="line">  ```mips</span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">3</span>, $<span class="number">0</span>, <span class="number">1</span></span><br><span class="line">  <span class="keyword">add </span>$<span class="number">5</span>, $<span class="number">3</span>, $<span class="number">3</span></span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">4</span>, $<span class="number">3</span>, <span class="number">2</span></span><br><span class="line">  ```  </span><br><span class="line">- （<span class="number">2</span>，<span class="number">3</span>）：EX ← M_PC + <span class="number">8</span></span><br><span class="line"></span><br><span class="line">  ```mips</span><br><span class="line">  <span class="keyword">jal </span>return</span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">4</span>, $<span class="number">31</span>, <span class="number">2</span></span><br><span class="line"><span class="symbol">  return:</span></span><br><span class="line">  <span class="keyword">jr </span>$<span class="number">31</span></span><br><span class="line"><span class="symbol">  label:</span></span><br><span class="line">  <span class="keyword">nop</span></span><br><span class="line"><span class="keyword"></span>  ```  </span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">- （<span class="number">3</span>，<span class="number">2</span>）：MEM ← W_WD</span><br><span class="line"></span><br><span class="line">  ```mips</span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">3</span>, $<span class="number">0</span>, <span class="number">5</span>   </span><br><span class="line">  <span class="keyword">sw </span> $<span class="number">3</span>, <span class="number">0</span>($<span class="number">0</span>)   </span><br><span class="line">  ```  </span><br><span class="line"></span><br><span class="line"><span class="comment">## 暂停测试</span></span><br><span class="line">- E_Conflict：</span><br><span class="line">  ```mips</span><br><span class="line">  <span class="keyword">ori </span>$<span class="number">1</span>,$<span class="number">0</span>,<span class="number">3</span></span><br><span class="line">  <span class="keyword">beq </span>$<span class="number">1</span>,$<span class="number">0</span>,label</span><br><span class="line"><span class="symbol">  label:</span></span><br><span class="line">  <span class="keyword">nop</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>M_Conflict：</p>
+<figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lw </span>$<span class="number">1</span>, <span class="number">0</span>($<span class="number">0</span>)      </span><br><span class="line"><span class="keyword">nop </span>                </span><br><span class="line"><span class="keyword">beq </span>$<span class="number">1</span>, $<span class="number">0</span>, label  </span><br><span class="line"><span class="symbol">label:</span></span><br><span class="line"><span class="keyword">nop</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="测试出来的问题">测试出来的问题</h1>
+<h2 id="link类">link类</h2>
+<ul>
+<li>问题
+<ul>
+<li>我默认传递的PC值不会被覆盖，所以在WB阶段直接写入W_PC + 4。但实际上由于stall、D_flush的存在，PC值在中间是可能被覆盖的。
+<ul>
+<li>所以为了保证link的正确性，我们应该额外设置数据通路，将实际要写回的<code>D_PC + 4</code>往后传。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="What-is-FLUSH-？">What is FLUSH ？</h2>
+<ul>
+<li>D_flush（likely导致的）：在D级注入一条nop（本质：==REPLACEMENT==）
+<ul>
+<li>清空instruction</li>
+<li>PC保持原值</li>
+</ul>
+</li>
+<li>E_flush(stall导致的)：在E级注入一条nop（本质：==INSERTION==）
+<ul>
+<li>清空instruction</li>
+<li>PC保持原值（该nop是凭空加在两条指令之间的，没有对应的PC）</li>
+</ul>
+</li>
+</ul>
+<h1 id="思考题">思考题</h1>
+<ol>
+<li>
+<p>我们使用提前分支判断的方法尽早产生结果来减少因不确定而带来的开销，但实际上这种方法并非总能提高效率，请从流水线冒险的角度思考其原因并给出一个指令序列的例子。</p>
+<ul>
+<li>原因：提前判断需要RsData和RtData，而这两个数据可能需要转发。如果HCU判断需要stall，那么提前判断节省的一个T和stall延迟的一个T就抵消了，并没有提高效率。</li>
+<li>例如：  <figure class="highlight mips"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lw </span>  $<span class="built_in">t0</span>, <span class="number">0</span>($<span class="built_in">t1</span>)    </span><br><span class="line"><span class="keyword">beq </span> $<span class="built_in">t0</span>, $<span class="built_in">zero</span>, L  </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>因为延迟槽的存在，对于 jal 等需要将指令地址写入寄存器的指令，要写回 PC + 8，请思考为什么这样设计？</p>
+<ul>
+<li>jal把下一条“应该执行”的指令地址写入<code>$ra</code>（<code>$31</code>）,但由于延迟槽的存在，下一条要执行的指令实际上是<code>PC + 8</code>处的（<strong>下下条</strong>）指令。</li>
+</ul>
+</li>
+<li>
+<p>我们要求大家所有转发数据都来源于流水寄存器而不能是功能部件（如 DM 、 ALU ），请思考为什么？</p>
+<ul>
+<li>功能部件在同一周期内输出还不稳定，但来自流水寄存器的数据已经进行过一次锁存，是稳定的数据</li>
+<li>运用其它阶段正在计算的中间值本质上破坏了流水线的时序结构，相当于又类似单周期CPU一样形成了横跨各阶段的巨大组合逻辑</li>
+</ul>
+</li>
+<li>
+<p>我们为什么要使用 GPR 内部转发？该如何实现？</p>
+<ul>
+<li>内部转发本质：当GRF同时在WB被写入，在ID被读出，且存在读写寄存器冲突，读出的寄存器值应为新写入的值</li>
+<li>如果不实现内部转发，就会引发<code>同周期</code>的WD-ID数据冒险</li>
+<li>实现：   <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> RD1 = (RA1 != <span class="number">0</span> &amp;&amp; RA1 == WA &amp;&amp; RegWrite) ? WD : register[RA1];</span><br><span class="line"><span class="keyword">assign</span> RD2 = (RA2 != <span class="number">0</span> &amp;&amp; RA2 == WA &amp;&amp; RegWrite) ? WD : register[RA2];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>我们转发时数据的需求者和供给者可能来源于哪些位置？共有哪些转发数据通路？
+需求者\供给者|M锁存的ALUresult|W_WD|M_PC8|E_PC8
+—|—|—|—
+ID stage：|RtData/RsData|RtData/RsData|RtData/RsData|RtData/RsData
+EX stage：|RtData/RsData|RtData/RsData|RtData/RsData|不存在
+MEM stage：|不存在|RtData|不存在|不存在</p>
+</li>
+<li>
+<p>在课上测试时，我们需要你现场实现新的指令，对于这些新的指令，你可能需要在原有的数据通路上做哪些扩展或修改？提示：你可以对指令进行分类，思考每一类指令可能修改或扩展哪些位置。</p>
+<ul>
+<li>对指令进行分类
+<ul>
+<li>R_cal</li>
+<li>I_cal</li>
+<li>B</li>
+<li>J
+<ul>
+<li>B&amp;J可能有以下属性
+<ul>
+<li>Link</li>
+<li>Likely</li>
+<li>ConditionalLink</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Load：所有涉及到读dm的指令</li>
+<li>Save</li>
+</ul>
+</li>
+<li>具体见上“加指令思路”</li>
+</ul>
+</li>
+<li>
+<p>确定你的译码方式，简要描述你的译码器架构，并思考该架构的优势以及不足。</p>
+<ul>
+<li>选择集中式译码 &amp; 控制信号驱动型译码</li>
+<li>优势：
+<ul>
+<li>集中式译码：只用设置一个Control单元，译码之后把ControlBus一直往后传即可</li>
+<li>控制信号驱动型译码：代码简洁，拓展性好</li>
+</ul>
+</li>
+<li>不足：
+<ul>
+<li>集中式译码：ControlBus位宽大（即数据通路过宽）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+    
+      <article id="post-CO-P4" class="h-entry article article-type-post"
+  itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <p class="article-date">
+  <time class="dt-published" datetime="2025-11-17T14:05:02.000Z" itemprop="datePublished">2025-11-17</time>
+</p>
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CO/">CO</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/11/17/CO-P4/">BUAA-CO-P4 基于verilog的单周期MIPS架构CPU</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="改动">改动</h1>
+<p>相比P3，需要增加的：</p>
+<ol>
+<li>自行实现ROM、RAM</li>
+<li>实例化&amp;端口映射</li>
+<li>改为同步复位</li>
+<li>用initial对reg赋初值</li>
+<li>对P3中集成alu进行拆分：增加<code>aluControl</code>来进行operand1、operand2的选择</li>
+<li>对grf的修改
+<ul>
+<li>现在默认RA1接rs，RA2接rt</li>
+<li>若需读取二者以外的寄存器，可临时为grf添加<code>RA3</code>、<code>RD3</code>，为<code>aluControl</code>添加<code>rd3</code></li>
+</ul>
+</li>
+<li>DM添加LoadType\SaveType,为lh、sh、lb、sb等指令的添加预留可扩展性</li>
+</ol>
+<h1 id="注意项">注意项</h1>
+<ol>
+<li>case语句要写default</li>
+<li>用综合的check syntax检查</li>
+<li>verilog默认数字为<code>十进制32位数</code>:除了明确十进制数，一定带上格式</li>
+<li>避免任何可能产生锁存器的地方</li>
+<li>缩减异或：
+对于一个 n 位的向量 <code>A[n-1:0]</code>，表达式 <code>^A</code> 在逻辑上等价于：<code>A[n-1] ^ A[n-2] ^ ... ^ A[1] ^ A[0]</code></li>
+<li>到底是要用<code>rs</code>还是<code>RsData</code>？
+<ul>
+<li>需要在命名和顶层连线时注意区分。</li>
+</ul>
+</li>
+</ol>
+<h1 id="实例化">实例化</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 格式: module_name instance_name ( .port_name(wire_name), ... );</span><br><span class="line">control ctrl_unit (</span><br><span class="line">    .opcode(opcode),</span><br><span class="line">    .reg_write(reg_write),</span><br><span class="line">    .mem_to_reg(mem_to_reg)</span><br><span class="line">    // ... connect other ports</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h1 id="可拓展">可拓展</h1>
+<ol>
+<li>dm相关
+<ul>
+<li>可增加<code>dmSel</code>模块来模拟MUX对写入dm的地址和数据进行选择</li>
+<li>lb/sb的实现</li>
+</ul>
+</li>
+</ol>
+<h1 id="层次设计">层次设计</h1>
+<h2 id="EXT（扩展单元）">EXT（扩展单元）</h2>
+<ul>
+<li>核心任务
+把16位立即数扩展到32位</li>
+<li>整体设计
+能够对立即数进行<code>零扩展/符号扩展</code></li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>immOrOffset</td>
+<td>I</td>
+<td>16</td>
+<td>待扩展的立即数</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>I</td>
+<td>1</td>
+<td>扩展方式选择信号：<br>1 - 符号扩展 <br>0 - 零扩展</td>
+</tr>
+<tr>
+<td>immEXT</td>
+<td>O</td>
+<td>32</td>
+<td>扩展后的立即数</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="aluControl">aluControl</h2>
+<ul>
+<li>整体设计
+为alu选择operand1，operand2</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rs</td>
+<td>I</td>
+<td>32</td>
+<td>rs value</td>
+</tr>
+<tr>
+<td>rt</td>
+<td>I</td>
+<td>32</td>
+<td>rt value</td>
+</tr>
+<tr>
+<td>immEXT</td>
+<td>I</td>
+<td>32</td>
+<td>扩展后的立即数</td>
+</tr>
+<tr>
+<td>shamt</td>
+<td>I</td>
+<td>5</td>
+<td>shamt</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>I</td>
+<td>3</td>
+<td>选择信号<br>000:rs/rt<br>001:rs/imm</td>
+</tr>
+<tr>
+<td>operand1</td>
+<td>O</td>
+<td>32</td>
+<td>operand1</td>
+</tr>
+<tr>
+<td>operand2</td>
+<td>O</td>
+<td>32</td>
+<td>operand2</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="ALU">ALU</h2>
+<ul>
+<li>整体设计
+<ul>
+<li>能够实现多种运算功能，并根据op选择对应功能
+<table>
+<thead>
+<tr>
+<th>op</th>
+<th>运算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0000</td>
+<td>无符号<code>op1 + op2</code></td>
+</tr>
+<tr>
+<td>0001</td>
+<td>无符号<code>op1 - op2</code></td>
+</tr>
+<tr>
+<td>0010</td>
+<td><code>op1 &amp; op2</code></td>
+</tr>
+<tr>
+<td>0011</td>
+<td><code>op1 | op2</code></td>
+</tr>
+<tr>
+<td>0100</td>
+<td>op2低16位加载至高位，低位补0</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>op</td>
+<td>I</td>
+<td>4</td>
+<td>选择运算功能</td>
+</tr>
+<tr>
+<td>operand1</td>
+<td>I</td>
+<td>32</td>
+<td>operand1</td>
+</tr>
+<tr>
+<td>operand2</td>
+<td>I</td>
+<td>32</td>
+<td>operand2</td>
+</tr>
+<tr>
+<td>result</td>
+<td>O</td>
+<td>32</td>
+<td>运算结果</td>
+</tr>
+<tr>
+<td>equal</td>
+<td>O</td>
+<td>1</td>
+<td>判断是否相等</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="NPC">NPC</h2>
+<ul>
+<li>
+<p>核心任务
+计算下一周期PC应更新成的值</p>
+</li>
+<li>
+<p>整体设计
+- 顺序执行： <code>NPC = PC + 4</code>
+- 分支跳转：<code>NPC = (PC + 4) + (SignExtend(offset))</code>
+- j跳转：NPC = PC31…28||instr_index||00
+- jr跳转：NPC = GPR[rs]</p>
+</li>
+<li>
+<p>模块规格</p>
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>equal</td>
+<td>I</td>
+<td>1</td>
+<td>判断reg rs、rt所存值是否相同</td>
+</tr>
+<tr>
+<td>immEXT</td>
+<td>I</td>
+<td>32</td>
+<td>拓展后的立即数（offset）</td>
+</tr>
+<tr>
+<td>instr_index</td>
+<td>I</td>
+<td>26</td>
+<td>instr_index</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>I</td>
+<td>3</td>
+<td>000:NPC = PC + 4<br>001:分支跳转<br>010:j<br>011:jr</td>
+</tr>
+<tr>
+<td>rd1OrRs</td>
+<td>I</td>
+<td>32</td>
+<td>rs储存的值</td>
+</tr>
+<tr>
+<td>pc</td>
+<td>I</td>
+<td>32</td>
+<td>当前指令地址</td>
+</tr>
+<tr>
+<td>npc</td>
+<td>O</td>
+<td>32</td>
+<td>pc更新值</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="IFU">IFU</h2>
+<ul>
+<li>核心任务：根据PC中的地址，从ROM中读出指令输出，同时更新PC</li>
+<li>整体设计
+<ul>
+<li>
+<p><strong>地址转换逻辑</strong>：</p>
+<ul>
+<li>地址偏移：pc - 0x00003000</li>
+<li>将PC的字节地址转换为ROM的字地址</li>
+</ul>
+</li>
+<li>
+<p>ROM：用1024个[31:0]reg来构建ROM</p>
+</li>
+<li>
+<p>载入数据？</p>
+  <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">    <span class="built_in">$readmemh</span>(<span class="string">&quot;code.txt&quot;</span>, imem);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>同步复位信号</td>
+</tr>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>npc</td>
+<td>I</td>
+<td>32</td>
+<td>pc更新值</td>
+</tr>
+<tr>
+<td>Instruction</td>
+<td>O</td>
+<td>32</td>
+<td>指令机器码</td>
+</tr>
+<tr>
+<td>pc</td>
+<td>O</td>
+<td>32</td>
+<td>当前pc</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="GRF（通用寄存器组）">GRF（通用寄存器组）</h2>
+<ul>
+<li>
+<p>核心任务：为ALU提供快速的数据源，并接收计算结果</p>
+</li>
+<li>
+<p>整体设计</p>
+<ul>
+<li>读数据：指令最多需要同时读取<code>两个</code>不同地址的数据 - <code>两个读端口</code></li>
+<li>写数据</li>
+<li>
+<blockquote>
+<p>0 号寄存器的值始终保持为 0。其他寄存器初始值（复位后）均为 0，无需专门设置</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>模块规格：</p>
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>异步复位信号</td>
+</tr>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>RA1</td>
+<td>I</td>
+<td>5</td>
+<td>读地址1</td>
+</tr>
+<tr>
+<td>RA2</td>
+<td>I</td>
+<td>5</td>
+<td>读地址2</td>
+</tr>
+<tr>
+<td>WA</td>
+<td>I</td>
+<td>5</td>
+<td>写地址</td>
+</tr>
+<tr>
+<td>WD</td>
+<td>I</td>
+<td>32</td>
+<td>写数据</td>
+</tr>
+<tr>
+<td>RegWrite</td>
+<td>I</td>
+<td>1</td>
+<td>写使能信号</td>
+</tr>
+<tr>
+<td>RD1</td>
+<td>O</td>
+<td>32</td>
+<td>读数据1</td>
+</tr>
+<tr>
+<td>RD2</td>
+<td>O</td>
+<td>32</td>
+<td>读数据2</td>
+</tr>
+</tbody>
+</table>
+<p>注：这里的“地址”指的是GRF中的第n个reg</p>
+</li>
+</ul>
+<h2 id="DM（数据存储器）">DM（数据存储器）</h2>
+<ul>
+<li>核心任务
+根据 <code>CPU</code> 提供的地址，进行<code>读或写操作</code>。它连接了 CPU 的核心与外部数据存储。</li>
+<li>整体设计
+<ul>
+<li>
+<p>使用 <code>RAM</code> 实现，容量为 <code>3072 × 32bit</code>，应具有异步复位功能，<strong>复位值</strong>为 <code>0x00000000</code>。</p>
+</li>
+<li>
+<p><strong>起始地址</strong>：<code>0x00000000</code>。<strong>地址范围</strong>：<code>0x00000000 ~ 0x00002FFF</code>。</p>
+</li>
+<li>
+<p>RAM 应使用<code>双端口模式</code>，即设置 RAM 的 <code>Data Interface</code> 属性为 <code>Separate load and store ports</code>。</p>
+</li>
+</ul>
+</li>
+<li>模块规格
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Address</td>
+<td>I</td>
+<td>32</td>
+<td>读/写地址</td>
+</tr>
+<tr>
+<td>WriteData</td>
+<td>I</td>
+<td>32</td>
+<td>要写入的数据</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>I</td>
+<td>1</td>
+<td>写使能信号</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>I</td>
+<td>1</td>
+<td>读使能信号</td>
+</tr>
+<tr>
+<td>clk</td>
+<td>I</td>
+<td>1</td>
+<td>时钟信号</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>I</td>
+<td>1</td>
+<td>异步复位信号</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>I</td>
+<td>32</td>
+<td>当前指令的地址</td>
+</tr>
+<tr>
+<td>LoadType</td>
+<td>I</td>
+<td>2</td>
+<td>load模式选择信号<br>2’b00:lw<br>2’b01:lh</td>
+</tr>
+<tr>
+<td>SaveType</td>
+<td>I</td>
+<td>2</td>
+<td>Save模式选择信号<br>2’b00:sw<br>2’b01:sh</td>
+</tr>
+<tr>
+<td>MemData</td>
+<td>O</td>
+<td>32</td>
+<td>读出的数据</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="grfSel">grfSel</h2>
+<ul>
+<li>核心任务
+决定写入grf的地址和数据</li>
+<li>模块设计
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegDst</td>
+<td>I</td>
+<td>3</td>
+<td>GRF写回地址选择信号：<br>001:rt<br>000:rd<br>010:rs<br>011:GPR[31]</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>I</td>
+<td>2</td>
+<td>GRF写入数据选择信号：<br>00:ALU运算结果<br>01:DM读出的数据（lw）<br>10:PC + 4</td>
+</tr>
+<tr>
+<td>rs</td>
+<td>I</td>
+<td>5</td>
+<td>rs</td>
+</tr>
+<tr>
+<td>rt</td>
+<td>I</td>
+<td>5</td>
+<td>rt</td>
+</tr>
+<tr>
+<td>rd</td>
+<td>I</td>
+<td>5</td>
+<td>rd</td>
+</tr>
+<tr>
+<td>ALUresult</td>
+<td>I</td>
+<td>32</td>
+<td>ALU运算结果</td>
+</tr>
+<tr>
+<td>MemData</td>
+<td>I</td>
+<td>32</td>
+<td>DM读出的数据</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>I</td>
+<td>32</td>
+<td>PC</td>
+</tr>
+<tr>
+<td>WA</td>
+<td>O</td>
+<td>5</td>
+<td>WA</td>
+</tr>
+<tr>
+<td>WD</td>
+<td>O</td>
+<td>32</td>
+<td>WD</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="instrSplitter">instrSplitter</h2>
+<ul>
+<li>核心任务
+对指令机器码进行拆分</li>
+<li>模块设计
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Instruction</td>
+<td>I</td>
+<td>32</td>
+<td>指令</td>
+</tr>
+<tr>
+<td>opcode</td>
+<td>O</td>
+<td>6</td>
+<td>instr[31:26]</td>
+</tr>
+<tr>
+<td>rs</td>
+<td>O</td>
+<td>5</td>
+<td>instr[25:21]</td>
+</tr>
+<tr>
+<td>rt</td>
+<td>O</td>
+<td>5</td>
+<td>instr[20:16]</td>
+</tr>
+<tr>
+<td>rd</td>
+<td>O</td>
+<td>5</td>
+<td>instr[15:11]</td>
+</tr>
+<tr>
+<td>shamt</td>
+<td>O</td>
+<td>5</td>
+<td>instr[10:6]</td>
+</tr>
+<tr>
+<td>funct</td>
+<td>O</td>
+<td>6</td>
+<td>instr[5:0]</td>
+</tr>
+<tr>
+<td>instr_index</td>
+<td>I</td>
+<td>26</td>
+<td>instr[25:0]</td>
+</tr>
+<tr>
+<td>immOrOffset</td>
+<td>I</td>
+<td>16</td>
+<td>instr[15:0]</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="Controller">Controller</h2>
+<ul>
+<li>
+<p>核心任务：根据当前正在执行的<code>指令</code>输出对应控制信号</p>
+</li>
+<li>
+<p>整体设计
+解码逻辑 = 和逻辑 + 或逻辑</p>
+<ul>
+<li>
+<p>和逻辑：<strong>识别</strong></p>
+<ul>
+<li>将输入的机器码识别为相应指令</li>
+</ul>
+</li>
+<li>
+<p>或逻辑：<strong>生成</strong></p>
+<ul>
+<li>根据输入指令生成对应的控制信号</li>
+<li>控制信号表;
+<table>
+<thead>
+<tr>
+<th>控制信号\指令</th>
+<th>add</th>
+<th>sub</th>
+<th>ori</th>
+<th>lw</th>
+<th>sw</th>
+<th>beq</th>
+<th>lui</th>
+<th>jal</th>
+<th>jr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegWrite</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+<td>001</td>
+<td>001</td>
+<td>000</td>
+<td>001</td>
+<td>000</td>
+<td>000</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>0000</td>
+<td>0001</td>
+<td>0011</td>
+<td>0000</td>
+<td>0000</td>
+<td>0000</td>
+<td>0100</td>
+<td>0000</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+<td>001</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+<td>011</td>
+<td>000</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>01</td>
+<td>00</td>
+<td>00</td>
+<td>00</td>
+<td>10</td>
+<td>00</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>000</td>
+<td>001</td>
+<td>000</td>
+<td>010</td>
+<td>011</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>模块规格</p>
+<table>
+<thead>
+<tr>
+<th>信号名</th>
+<th>方向</th>
+<th>位宽</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>opcode</td>
+<td>I</td>
+<td>6</td>
+<td>指令[31:26]位</td>
+</tr>
+<tr>
+<td>funct</td>
+<td>I</td>
+<td>6</td>
+<td>指令[5:0]位</td>
+</tr>
+<tr>
+<td>RegWrite</td>
+<td>O</td>
+<td>1</td>
+<td>GRF写使能信号</td>
+</tr>
+<tr>
+<td>aluControlSel</td>
+<td>O</td>
+<td>3</td>
+<td>alu操作数选择信号<br>000:rs/rt<br>001:rs/imm</td>
+</tr>
+<tr>
+<td>ALUop</td>
+<td>O</td>
+<td>4</td>
+<td>ALU运算模式选择信号</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>O</td>
+<td>1</td>
+<td>DM写使能信号</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>O</td>
+<td>1</td>
+<td>DM读使能信号</td>
+</tr>
+<tr>
+<td>EXTop</td>
+<td>O</td>
+<td>1</td>
+<td>EXT扩展模式选择信号</td>
+</tr>
+<tr>
+<td>RegDst</td>
+<td>O</td>
+<td>3</td>
+<td>GRF写回地址选择信号：<br>001:rt<br>000:rd<br>010:rs<br>011:GPR[31]</td>
+</tr>
+<tr>
+<td>WDsel</td>
+<td>O</td>
+<td>2</td>
+<td>GRF写入数据选择信号：<br>00:ALU运算结果<br>01:DM读出的数据（lw）<br>10:PC + 4</td>
+</tr>
+<tr>
+<td>NPCop</td>
+<td>O</td>
+<td>3</td>
+<td>PC更新模式选择信号:<br>000:顺序执行<br>001:beq分支跳转<br>010:j/jal跳转<BR>011:jr跳转</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h1 id="测试方案">测试方案</h1>
+<h2 id="工具">工具</h2>
+<p>借用Mars_CO.jar进行检查。</p>
+<h3 id="使用">使用</h3>
+<ol>
+<li>命令行进入Mars_CO.jar所在目录</li>
+<li>测试文件也放在这个目录下</li>
+<li>在命令行运行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar Mars_CO.jar test.asm mc CompactLargeText coL1</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="思考题">思考题</h1>
+<ol>
+<li>
+<p>阅读下面给出的 DM 的输入示例中（示例 DM 容量为 4KB，即 32bit × 1024字），根据你的理解回答，这个 addr 信号又是从哪里来的？地址信号 addr 位数为什么是 [11:2] 而不是 [9:0] ？</p>
+<p><img src="/images/CO/P4/dm%E6%8E%A5%E5%8F%A3.png" alt="DM示意图"></p>
+<ul>
+<li>这个addr由alu给出（alu对<code>gpr(base)</code>和<code>(sign_ext)offset</code>做加运算）</li>
+<li>addr以字节为单位，对应到以字为单位的DM，故应除以4，即取[11:2]</li>
+</ul>
+</li>
+<li>
+<p>思考上述两种控制器设计的译码方式，给出代码示例，并尝试对比各方式的优劣。</p>
+<ul>
+<li>记录<code>指令对应的控制信号</code>如何取值:
+<ul>
+<li>优点：思考流畅，一次模拟一整条指令的运行过程即可；便于调试，找到出错指令对应分支进行检查即可</li>
+<li>缺点：controll模块繁杂</li>
+</ul>
+</li>
+<li>记录<code>控制信号</code>每种取值所<code>对应的指令</code>:
+<ul>
+<li>优点：每个信号利用一个assign表达式描述即可，代码冗余少；</li>
+<li>缺点：可读性差，较难找出错误在哪儿</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>在相应的部件中，复位信号的设计都是同步复位，这与 P3 中的设计要求不同。请对比同步复位与异步复位这两种方式的 reset 信号与 clk 信号优先级的关系。</p>
+<ul>
+<li>同步复位：clk优先</li>
+<li>异步复位：reset优先</li>
+</ul>
+</li>
+<li>
+<p>C 语言是一种弱类型程序设计语言。C 语言中不对计算结果溢出进行处理，这意味着 C 语言要求程序员必须很清楚计算结果是否会导致溢出。因此，如果仅仅支持 C 语言，MIPS 指令的所有计算指令均可以忽略溢出。 请说明为什么在忽略溢出的前提下，addi 与 addiu 是等价的，add 与 addu 是等价的。</p>
+<ul>
+<li>
+<p><code>add</code>和<code>addu</code> 执行的加法计算是完全一样的,唯一的区别在于<code>add</code>指令多了一个<code>溢出检测</code>和<code>异常处理</code>的步骤:</p>
+<pre><code>   if temp32 ≠ temp31 then
+   SignalException(IntegerOverflow)
+   else
+   GPR[rd] ← temp31..0
+   endif
+</code></pre>
+<p>故==忽略溢出==时add与addu等价。</p>
+</li>
+<li>
+<p><code>addi</code>和<code>addiu</code>同理</p>
+</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+    
       <article id="post-CO-P3" class="h-entry article article-type-post"
   itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -146,9 +4436,9 @@
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-a6d6ecc8">
+    <span id="mjx-eb825b98">
       <style>
-      #mjx-a6d6ecc8{
+      #mjx-eb825b98{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -309,9 +4599,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-c6382e5">
+    <span id="mjx-86032898">
       <style>
-      #mjx-c6382e5{
+      #mjx-86032898{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -478,9 +4768,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-b7df41f8">
+    <span id="mjx-d916d9e">
       <style>
-      #mjx-b7df41f8{
+      #mjx-d916d9e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -686,9 +4976,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-dbed5e48">
+    <span id="mjx-258fdb1">
       <style>
-      #mjx-dbed5e48{
+      #mjx-258fdb1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -866,9 +5156,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-ba91a368">
+    <span id="mjx-86360d3">
       <style>
-      #mjx-ba91a368{
+      #mjx-86360d3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2147,9 +6437,9 @@ e.g. <code>``` bash</code> xxx <code>```</code></li>
 <ul>
 <li><code>\sin</code></li>
 <li><code>\sqrt[n]{expression}</code> 
-    <span id="mjx-9be37fd8">
+    <span id="mjx-7d5134c8">
       <style>
-      #mjx-9be37fd8{
+      #mjx-7d5134c8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2309,9 +6599,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\times</code> 
-    <span id="mjx-1c6db43">
+    <span id="mjx-2bf41818">
       <style>
-      #mjx-1c6db43{
+      #mjx-2bf41818{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2470,9 +6760,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0.02ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>×</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\div</code> 
-    <span id="mjx-483588e">
+    <span id="mjx-3aace538">
       <style>
-      #mjx-483588e{
+      #mjx-3aace538{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2631,9 +6921,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.081ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.296ex" role="img" focusable="false" viewBox="0 -537 778 573" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="F7" d="M318 466Q318 500 339 518T386 537Q418 537 438 517T458 466Q458 438 440 417T388 396Q355 396 337 417T318 466ZM56 237T56 250T70 270H706Q721 262 721 250T706 230H70Q56 237 56 250ZM318 34Q318 68 339 86T386 105Q418 105 438 85T458 34Q458 6 440 -15T388 -36Q355 -36 337 -15T318 34Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>÷</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\cdot</code> 
-    <span id="mjx-450f7f88">
+    <span id="mjx-a9ce2dd8">
       <style>
-      #mjx-450f7f88{
+      #mjx-a9ce2dd8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2793,9 +7083,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\sum</code> 
-    <span id="mjx-584f00e8">
+    <span id="mjx-441aeaf8">
       <style>
-      #mjx-584f00e8{
+      #mjx-441aeaf8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2954,9 +7244,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="2.389ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 1056 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2211" d="M61 748Q64 750 489 750H913L954 640Q965 609 976 579T993 533T999 516H979L959 517Q936 579 886 621T777 682Q724 700 655 705T436 710H319Q183 710 183 709Q186 706 348 484T511 259Q517 250 513 244L490 216Q466 188 420 134T330 27L149 -187Q149 -188 362 -188Q388 -188 436 -188T506 -189Q679 -189 778 -162T936 -43Q946 -27 959 6H999L913 -249L489 -250Q65 -250 62 -248Q56 -246 56 -239Q56 -234 118 -161Q186 -81 245 -11L428 206Q428 207 242 462L57 717L56 728Q56 744 61 748Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∑</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\int</code> 
-    <span id="mjx-2aeb974">
+    <span id="mjx-3d6b5708">
       <style>
-      #mjx-2aeb974{
+      #mjx-3d6b5708{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3115,9 +7405,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.691ex;" xmlns="http://www.w3.org/2000/svg" width="1.38ex" height="2.514ex" role="img" focusable="false" viewBox="0 -805.5 610 1111" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo" transform="translate(0 0.5)"><path data-c="222B" d="M113 -244Q113 -246 119 -251T139 -263T167 -269Q186 -269 199 -260Q220 -247 232 -218T251 -133T262 -15T276 155T297 367Q300 390 305 438T314 512T325 580T340 647T361 703T390 751T428 784T479 804Q481 804 488 804T501 805Q552 802 581 769T610 695Q610 669 594 657T561 645Q542 645 527 658T512 694Q512 705 516 714T526 729T538 737T548 742L552 743Q552 745 545 751T525 762T498 768Q475 768 460 756T434 716T418 652T407 559T398 444T387 300T369 133Q349 -38 337 -102T303 -207Q256 -306 169 -306Q119 -306 87 -272T55 -196Q55 -170 71 -158T104 -146Q123 -146 138 -159T153 -195Q153 -206 149 -215T139 -230T127 -238T117 -242L113 -244Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∫</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\lim</code> 
-    <span id="mjx-7d5b9db8">
+    <span id="mjx-52015bf8">
       <style>
-      #mjx-7d5b9db8{
+      #mjx-52015bf8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3277,9 +7567,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\infty</code> 
-    <span id="mjx-f2e7c0e">
+    <span id="mjx-9673579">
       <style>
-      #mjx-f2e7c0e{
+      #mjx-9673579{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3446,9 +7736,9 @@ g[data-mml-node="xypic"] path {
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A = \begin&#123;pmatrix&#125;</span><br><span class="line">a &amp; b \\\\</span><br><span class="line">c &amp; d</span><br><span class="line">\end&#123;pmatrix&#125;</span><br></pre></td></tr></table></figure>
 <p>效果：</p>
 
-    <span id="mjx-47d5fc3">
+    <span id="mjx-31056f7">
       <style>
-      #mjx-47d5fc3{
+      #mjx-31056f7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3649,6 +7939,10 @@ g[data-mml-node="xypic"] path {
       <ul>
         
           <li>
+            <a href="/2026/08/11/crossover%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">Crossover使用说明</a>
+          </li>
+        
+          <li>
             <a href="/2026/08/08/At%20the%20End%20of%20the%20World/">At the End of the World</a>
           </li>
         
@@ -3662,10 +7956,6 @@ g[data-mml-node="xypic"] path {
         
           <li>
             <a href="/2026/07/07/I'm%20Only%20Sleeping/">I&#39;m Only Sleeping</a>
-          </li>
-        
-          <li>
-            <a href="/2026/07/04/Both%20Sides,%20Now/">Both Sides, Now</a>
           </li>
         
       </ul>
