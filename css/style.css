@@ -1851,6 +1851,7 @@ pre .javascript .function {
 .profile .basic .info .emoji {
   width: 100%;
   height: auto;
+  margin-top: 4px;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.5;
