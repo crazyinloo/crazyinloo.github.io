@@ -51,9 +51,7 @@
   
   
   
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
 
 <body>
@@ -266,9 +264,9 @@
 <h1 id="前置知识">前置知识</h1>
 <h2 id="延迟槽">延迟槽</h2>
 <p>
-    <span id="mjx-d5e65738">
+    <span id="mjx-072f4728">
       <style>
-      #mjx-d5e65738{
+      #mjx-072f4728{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -430,7 +428,7 @@ g[data-mml-node="xypic"] path {
 <h2 id="时序相关">时序相关</h2>
 <p><img src="/images/CO/P5/%E6%97%B6%E5%BA%8F.png" alt="时序"></p>
 <ul>
-<li>==规定==：<code>CCn的上升沿</code> 指的是 <code>CCn开始的上升沿</code></li>
+<li><mark>规定</mark>：<code>CCn的上升沿</code> 指的是 <code>CCn开始的上升沿</code></li>
 <li>初始状态：第0个周期，实际上已经预加载了第一条指令的IF阶段。也就是说，<code>CC1上升沿</code>第一条指令实际上是<code>进入ID阶段。</code></li>
 </ul>
 <h2 id="冒险">冒险</h2>
@@ -439,17 +437,17 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>转发/旁路:</p>
 <ul>
-<li>概念：将尚<code>未写入RF</code>但==已经暂存==在流水线寄存器中的<code>计算结果</code>传递给相关功能部件(或流水线寄存器)的技术</li>
+<li>概念：将尚<code>未写入RF</code>但<mark>已经暂存</mark>在流水线寄存器中的<code>计算结果</code>传递给相关功能部件(或流水线寄存器)的技术</li>
 <li>基本要点：
 <ol>
-<li>前递：将M（后级）==保存的==ALUresult向EX stage（前级）的ALU传递</li>
+<li>前递：将M（后级）<mark>保存的</mark>ALUresult向EX stage（前级）的ALU传递</li>
 <li>选择：
 <ol>
 <li>有依赖才转发</li>
 <li>不依赖不转发，就直接用grf读出的数据参与计算</li>
 </ol>
 </li>
-<li>转发的数据一定是==已经锁存过==的数据，而不能从正在计算的组合逻辑里拉线！！！</li>
+<li>转发的数据一定是<mark>已经锁存过</mark>的数据，而不能从正在计算的组合逻辑里拉线！！！</li>
 </ol>
 </li>
 </ul>
@@ -521,7 +519,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 <h1 id="加指令思路">加指令思路</h1>
 <h2 id="分析指令RTL">分析指令RTL</h2>
-<p>==严格按照指令说明来！！！==</p>
+<p><mark>严格按照指令说明来！！！</mark></p>
 <ol>
 <li>branch类</li>
 </ol>
@@ -578,9 +576,9 @@ wire isEven = ~rsData[0];</p>
 <li>
 <p>判断是否是2^n
 
-    <span id="mjx-c3ae99c8">
+    <span id="mjx-f4804a48">
       <style>
-      #mjx-c3ae99c8{
+      #mjx-f4804a48{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1118,9 +1116,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p>
-    <span id="mjx-21ccc3f">
+    <span id="mjx-9f645e5">
       <style>
-      #mjx-21ccc3f{
+      #mjx-9f645e5{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1282,9 +1280,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p>
-    <span id="mjx-4888f25">
+    <span id="mjx-3eb6b9d">
       <style>
-      #mjx-4888f25{
+      #mjx-3eb6b9d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1443,9 +1441,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.36ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 1927.1 834.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1066,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>T</mi><mrow data-mjx-texclass="ORD"><mi>n</mi><mi>e</mi><mi>w</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ：位于某个流水级的某个指令，它经过
-    <span id="mjx-ea75c678">
+    <span id="mjx-d424f52">
       <style>
-      #mjx-ea75c678{
+      #mjx-d424f52{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1606,9 +1604,9 @@ g[data-mml-node="xypic"] path {
   个时钟周期,该指令的结果（即最终要<code>写回 GRF 的值</code>）才会被计算出来，并<code>存入</code>对应的流水级寄存器中，从而可以被后续指令安全使用或转发。</p>
 <ul>
 <li>
-    <span id="mjx-dc76d94">
+    <span id="mjx-a2c198e">
       <style>
-      #mjx-dc76d94{
+      #mjx-a2c198e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2204,7 +2202,7 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p>整体设计
-==所有分支/跳转目标地址必须基于 D_PC==</p>
+<mark>所有分支/跳转目标地址必须基于 D_PC</mark></p>
 <ul>
 <li>顺序执行： <code>NPC = PC + 4</code></li>
 <li>分支跳转：<code>NPC = (PC + 4) + (SignExtend(offset))</code></li>
@@ -2920,7 +2918,7 @@ g[data-mml-node="xypic"] path {
 <td>Address</td>
 <td>I</td>
 <td>32</td>
-<td>读/写地址，==<strong>默认是ALUresult</strong>==</td>
+<td>读/写地址，<mark><strong>默认是ALUresult</strong></mark></td>
 </tr>
 <tr>
 <td>WriteData</td>
@@ -3250,13 +3248,13 @@ g[data-mml-node="xypic"] path {
 </ul>
 <h2 id="What-is-FLUSH-？">What is FLUSH ？</h2>
 <ul>
-<li>D_flush（likely导致的）：在D级注入一条nop（本质：==REPLACEMENT==）
+<li>D_flush（likely导致的）：在D级注入一条nop（本质：<mark>REPLACEMENT</mark>）
 <ul>
 <li>清空instruction</li>
 <li>PC保持原值</li>
 </ul>
 </li>
-<li>E_flush(stall导致的)：在E级注入一条nop（本质：==INSERTION==）
+<li>E_flush(stall导致的)：在E级注入一条nop（本质：<mark>INSERTION</mark>）
 <ul>
 <li>清空instruction</li>
 <li>PC保持原值（该nop是凭空加在两条指令之间的，没有对应的PC）</li>
@@ -4374,7 +4372,7 @@ MEM stage：|不存在|RtData|不存在|不存在</p>
    GPR[rd] ← temp31..0
    endif
 </code></pre>
-<p>故==忽略溢出==时add与addu等价。</p>
+<p>故<mark>忽略溢出</mark>时add与addu等价。</p>
 </li>
 <li>
 <p><code>addi</code>和<code>addiu</code>同理</p>
@@ -4436,9 +4434,9 @@ MEM stage：|不存在|RtData|不存在|不存在</p>
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-eb825b98">
+    <span id="mjx-07543c9">
       <style>
-      #mjx-eb825b98{
+      #mjx-07543c9{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4599,9 +4597,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-86032898">
+    <span id="mjx-508ad7b">
       <style>
-      #mjx-86032898{
+      #mjx-508ad7b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4768,9 +4766,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-d916d9e">
+    <span id="mjx-dbb54f4">
       <style>
-      #mjx-d916d9e{
+      #mjx-dbb54f4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4976,9 +4974,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-258fdb1">
+    <span id="mjx-810570c">
       <style>
-      #mjx-258fdb1{
+      #mjx-810570c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5156,9 +5154,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-86360d3">
+    <span id="mjx-71b2528">
       <style>
-      #mjx-86360d3{
+      #mjx-71b2528{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6437,9 +6435,9 @@ e.g. <code>``` bash</code> xxx <code>```</code></li>
 <ul>
 <li><code>\sin</code></li>
 <li><code>\sqrt[n]{expression}</code> 
-    <span id="mjx-7d5134c8">
+    <span id="mjx-31724fd">
       <style>
-      #mjx-7d5134c8{
+      #mjx-31724fd{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6599,9 +6597,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\times</code> 
-    <span id="mjx-2bf41818">
+    <span id="mjx-d3d304f8">
       <style>
-      #mjx-2bf41818{
+      #mjx-d3d304f8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6760,9 +6758,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0.02ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>×</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\div</code> 
-    <span id="mjx-3aace538">
+    <span id="mjx-12ffb4e8">
       <style>
-      #mjx-3aace538{
+      #mjx-12ffb4e8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6921,9 +6919,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.081ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.296ex" role="img" focusable="false" viewBox="0 -537 778 573" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="F7" d="M318 466Q318 500 339 518T386 537Q418 537 438 517T458 466Q458 438 440 417T388 396Q355 396 337 417T318 466ZM56 237T56 250T70 270H706Q721 262 721 250T706 230H70Q56 237 56 250ZM318 34Q318 68 339 86T386 105Q418 105 438 85T458 34Q458 6 440 -15T388 -36Q355 -36 337 -15T318 34Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>÷</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\cdot</code> 
-    <span id="mjx-a9ce2dd8">
+    <span id="mjx-ab661f18">
       <style>
-      #mjx-a9ce2dd8{
+      #mjx-ab661f18{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7083,9 +7081,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\sum</code> 
-    <span id="mjx-441aeaf8">
+    <span id="mjx-62acbbd">
       <style>
-      #mjx-441aeaf8{
+      #mjx-62acbbd{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7244,9 +7242,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="2.389ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 1056 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2211" d="M61 748Q64 750 489 750H913L954 640Q965 609 976 579T993 533T999 516H979L959 517Q936 579 886 621T777 682Q724 700 655 705T436 710H319Q183 710 183 709Q186 706 348 484T511 259Q517 250 513 244L490 216Q466 188 420 134T330 27L149 -187Q149 -188 362 -188Q388 -188 436 -188T506 -189Q679 -189 778 -162T936 -43Q946 -27 959 6H999L913 -249L489 -250Q65 -250 62 -248Q56 -246 56 -239Q56 -234 118 -161Q186 -81 245 -11L428 206Q428 207 242 462L57 717L56 728Q56 744 61 748Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∑</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\int</code> 
-    <span id="mjx-3d6b5708">
+    <span id="mjx-77ba4c08">
       <style>
-      #mjx-3d6b5708{
+      #mjx-77ba4c08{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7405,9 +7403,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.691ex;" xmlns="http://www.w3.org/2000/svg" width="1.38ex" height="2.514ex" role="img" focusable="false" viewBox="0 -805.5 610 1111" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo" transform="translate(0 0.5)"><path data-c="222B" d="M113 -244Q113 -246 119 -251T139 -263T167 -269Q186 -269 199 -260Q220 -247 232 -218T251 -133T262 -15T276 155T297 367Q300 390 305 438T314 512T325 580T340 647T361 703T390 751T428 784T479 804Q481 804 488 804T501 805Q552 802 581 769T610 695Q610 669 594 657T561 645Q542 645 527 658T512 694Q512 705 516 714T526 729T538 737T548 742L552 743Q552 745 545 751T525 762T498 768Q475 768 460 756T434 716T418 652T407 559T398 444T387 300T369 133Q349 -38 337 -102T303 -207Q256 -306 169 -306Q119 -306 87 -272T55 -196Q55 -170 71 -158T104 -146Q123 -146 138 -159T153 -195Q153 -206 149 -215T139 -230T127 -238T117 -242L113 -244Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∫</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\lim</code> 
-    <span id="mjx-52015bf8">
+    <span id="mjx-ebb836a8">
       <style>
-      #mjx-52015bf8{
+      #mjx-ebb836a8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7567,9 +7565,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\infty</code> 
-    <span id="mjx-9673579">
+    <span id="mjx-7fc4f148">
       <style>
-      #mjx-9673579{
+      #mjx-7fc4f148{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7736,9 +7734,9 @@ g[data-mml-node="xypic"] path {
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A = \begin&#123;pmatrix&#125;</span><br><span class="line">a &amp; b \\\\</span><br><span class="line">c &amp; d</span><br><span class="line">\end&#123;pmatrix&#125;</span><br></pre></td></tr></table></figure>
 <p>效果：</p>
 
-    <span id="mjx-31056f7">
+    <span id="mjx-46b5e818">
       <style>
-      #mjx-31056f7{
+      #mjx-46b5e818{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;

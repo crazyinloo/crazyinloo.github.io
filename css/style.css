@@ -810,6 +810,14 @@ a.article-title:hover {
 .article-entry a:hover {
   text-decoration: underline;
 }
+.article-entry mark {
+  padding: 0.05em 0.2em;
+  color: inherit;
+  background: rgba(250,174,43,0.3);
+  border-radius: 0.2em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
 .article-entry ul,
 .article-entry ol,
 .article-entry dl {

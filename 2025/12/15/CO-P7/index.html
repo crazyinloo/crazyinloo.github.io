@@ -61,9 +61,7 @@
   
   
   
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
 
 <body>
@@ -193,7 +191,7 @@
 </ol>
 <h2 id="软硬件接口">软硬件接口</h2>
 <ol>
-<li>外设的接口设计——==系统桥==
+<li>外设的接口设计——<mark>系统桥</mark>
 <ul>
 <li>
 <p>连接CPU和外设的功能设备</p>
@@ -281,7 +279,7 @@
 <td>SR（State Register）</td>
 <td>IM（Interrupt Mask）</td>
 <td>15:10</td>
-<td>分别对应六个<strong>外部中断</strong>源，相应位置 1 表示允许中断，置 0 表示禁止中断。<br>==控制能处理哪些外部中断==</td>
+<td>分别对应六个<strong>外部中断</strong>源，相应位置 1 表示允许中断，置 0 表示禁止中断。<br><mark>控制能处理哪些外部中断</mark></td>
 </tr>
 <tr>
 <td>SR（State Register）</td>
@@ -305,7 +303,7 @@
 <td>Cause</td>
 <td>IP（Interrupt Pending）</td>
 <td>15:10</td>
-<td>为 6 位待决的中断位，分别对应 6 个<strong>外部中断</strong>，相应位置 1 表示有中断，置 0 表示无中断<br>==反映外部中断源==</td>
+<td>为 6 位待决的中断位，分别对应 6 个<strong>外部中断</strong>，相应位置 1 表示有中断，置 0 表示无中断<br><mark>反映外部中断源</mark></td>
 </tr>
 <tr>
 <td>Cause</td>
@@ -410,7 +408,7 @@
 </table>
 </li>
 </ul>
-<p>==tips==：</p>
+<p><mark>tips</mark>：</p>
 <ol>
 <li>
 <p><code>CP0Address</code>、<code>CP0WE</code> 是针对 CPU 执行<code> mfc0 / mtc0</code> 指令时访问 CP0 寄存器用的，而<code>异常更新</code>并不会经过CP0Address。这两条路径几乎完全分离；</p>
@@ -421,9 +419,9 @@
 <li>Req = 外部中断|内部异常</li>
 <li>外部中断（Interrupt）：
 能处理中断(<code>SR.IE</code>) &amp; 未在处理异常(<code>!SR.EXL</code>) &amp; 存在外部中断源且该中断源可以被处理(<code>SR.IM&amp;HWInt</code>)
-    <span id="mjx-d786e9c">
+    <span id="mjx-9dda404">
       <style>
-      #mjx-d786e9c{
+      #mjx-9dda404{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -588,9 +586,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>内部异常（Execption）：
 未在处理异常(<code>!SR.EXL</code>) &amp; 存在内部异常(ExcCodeIn)
-    <span id="mjx-55496928">
+    <span id="mjx-428bcc38">
       <style>
-      #mjx-55496928{
+      #mjx-428bcc38{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -758,9 +756,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>CP0何时被写？
 
-    <span id="mjx-50a7c35">
+    <span id="mjx-300affe">
       <style>
-      #mjx-50a7c35{
+      #mjx-300affe{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -947,7 +945,7 @@ g[data-mml-node="xypic"] path {
 <li>M_BDin：BranchControl生成BDin信号，向后流水，从Reg_M取出</li>
 <li>M_CP0RD：向后流水，传入WDsel</li>
 <li>Req：接入IFU/Reg_D/Reg_E/Reg_M,实现精确异常</li>
-<li>EPC：核心在于理解==eret没有延迟槽==
+<li>EPC：核心在于理解<mark>eret没有延迟槽</mark>
 <ul>
 <li>绝对不执行已经被取到F中的错误指令（eret后面紧跟的指令清空）</li>
 <li><code>eret</code>指令在D时，插入一个 nop（类似likely清空延迟槽——D_Flush）</li>
@@ -1280,9 +1278,9 @@ g[data-mml-node="xypic"] path {
 <li>Timer0: <code>0x0000_7F00 ~ 0x0000_7F0B</code>   （长度 12 字节 = 3 个 4 字节寄存器）</li>
 <li>Timer:``define count  mem[2]`</li>
 <li>
-    <span id="mjx-fafa4e6">
+    <span id="mjx-2b8a45d">
       <style>
-      #mjx-fafa4e6{
+      #mjx-2b8a45d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1453,9 +1451,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>BDin
 
-    <span id="mjx-bf5faa48">
+    <span id="mjx-a56a2038">
       <style>
-      #mjx-bf5faa48{
+      #mjx-a56a2038{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1615,9 +1613,9 @@ g[data-mml-node="xypic"] path {
     </span>
    异常发生的这条指令是否位于延迟槽（B/J - 延迟槽（该指令））
 
-    <span id="mjx-b830d8f8">
+    <span id="mjx-ae60dce">
       <style>
-      #mjx-b830d8f8{
+      #mjx-ae60dce{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
