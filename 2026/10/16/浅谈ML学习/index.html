@@ -13,7 +13,7 @@
 <meta property="og:description" content="博主曾多次尝试“学习ML”：  各种专业课（涉及到但不教的&#x2F;教但是一大半是老古董的&#x2F;…）上：一点没掌握，期末手写个反向传播，卷子一交忘得干干净净；实验是只会疯狂tab的，交完报告了事 cs231n：CV经典课，质量确实高但博主当时学的时候没开窍 同理还有cs224n（NLP） 应该还有别的但是往事不可查  现在回想当初乱跑的经历，我现在认为问题出在，自己都不知道自己到底在学一个什么东西，汲取新东西">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-16T17:32:36.501Z">
+<meta property="article:modified_time" content="2026-10-16T17:35:25.627Z">
 <meta property="article:author" content="Lee">
 <meta name="twitter:card" content="summary">
   <title>Category: ML | CRZ&#39;s Blog</title>
@@ -55,9 +55,7 @@
   
   
   
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
 
 <body>
@@ -160,16 +158,14 @@
 <p>这个问句的答案是：为了更好地找到一个function的“形状”，我们发明了ml。</p>
 <p>自然而然地就有了下面的思考：</p>
 <ol>
-<li>我们允许学出什么样的 function</li>
-</ol>
-<blockquote>
-<p>我们认为怎样的 function family 更适合描述这个问题？</p>
-</blockquote>
-<pre><code>==function框架==长什么样？哪些参数要学？为什么设计成这样？
-	e.g. MLP/Transformer/CNN/GNN
-</code></pre>
-<ol start="2">
-<li>如何学习？
+<li>
+<p>我们允许学出什么样的 function
+我们认为怎样的 function family 更适合描述这个问题？</p>
+<p>详细展开来说，<mark>function框架</mark>长什么样？哪些参数要学？为什么设计成这样？
+e.g. MLP/Transformer/CNN/GNN</p>
+</li>
+<li>
+<p>如何学习？</p>
 <ol>
 <li>
 <p>从哪里学习?</p>
