@@ -2419,11 +2419,17 @@ pre .javascript .function {
     transform 0.2s ease;
 }
 .profile-page-links a:hover,
-.profile-page-links a:focus {
+.profile-page-links a:focus-visible {
   color: #fffffe;
   background: var(--color-accent);
   text-decoration: none;
   transform: translateY(-2px);
+}
+.profile-page-links a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+.profile-page-links a:hover {
   outline: none;
 }
 .profile-page-content {
