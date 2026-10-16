@@ -12,9 +12,9 @@
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-f8b27cd8">
+    <span id="mjx-263f927">
       <style>
-      #mjx-f8b27cd8{
+      #mjx-263f927{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -175,9 +175,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-9d3f32c8">
+    <span id="mjx-ae14b4b">
       <style>
-      #mjx-9d3f32c8{
+      #mjx-ae14b4b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -344,9 +344,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-0f4fcea">
+    <span id="mjx-923b9d28">
       <style>
-      #mjx-0f4fcea{
+      #mjx-923b9d28{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -552,9 +552,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-f362da38">
+    <span id="mjx-6b8e87e8">
       <style>
-      #mjx-f362da38{
+      #mjx-6b8e87e8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -732,9 +732,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-6b92c0b8">
+    <span id="mjx-eaea264">
       <style>
-      #mjx-6b92c0b8{
+      #mjx-eaea264{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2761,9 +2761,9 @@ File - Dump Memory
 <h1 id="前置知识">前置知识</h1>
 <h2 id="延迟槽">延迟槽</h2>
 <p>
-    <span id="mjx-690fecb8">
+    <span id="mjx-dddae288">
       <style>
-      #mjx-690fecb8{
+      #mjx-dddae288{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3073,9 +3073,9 @@ wire isEven = ~rsData[0];</p>
 <li>
 <p>判断是否是2^n
 
-    <span id="mjx-163d9a78">
+    <span id="mjx-9b428fc">
       <style>
-      #mjx-163d9a78{
+      #mjx-9b428fc{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3613,9 +3613,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p>
-    <span id="mjx-7a4f3c98">
+    <span id="mjx-96eabc3">
       <style>
-      #mjx-7a4f3c98{
+      #mjx-96eabc3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3777,9 +3777,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p>
-    <span id="mjx-4bc5a618">
+    <span id="mjx-4255e3">
       <style>
-      #mjx-4bc5a618{
+      #mjx-4255e3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3938,9 +3938,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.36ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 1927.1 834.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1066,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>T</mi><mrow data-mjx-texclass="ORD"><mi>n</mi><mi>e</mi><mi>w</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ：位于某个流水级的某个指令，它经过
-    <span id="mjx-69dd94e">
+    <span id="mjx-2610e468">
       <style>
-      #mjx-69dd94e{
+      #mjx-2610e468{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4101,9 +4101,9 @@ g[data-mml-node="xypic"] path {
   个时钟周期,该指令的结果（即最终要<code>写回 GRF 的值</code>）才会被计算出来，并<code>存入</code>对应的流水级寄存器中，从而可以被后续指令安全使用或转发。</p>
 <ul>
 <li>
-    <span id="mjx-4b35f9b8">
+    <span id="mjx-92bce38">
       <style>
-      #mjx-4b35f9b8{
+      #mjx-92bce38{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7537,9 +7537,9 @@ MEM stage：|不存在|RtData|不存在|不存在</p>
 <li>Req = 外部中断|内部异常</li>
 <li>外部中断（Interrupt）：
 能处理中断(<code>SR.IE</code>) &amp; 未在处理异常(<code>!SR.EXL</code>) &amp; 存在外部中断源且该中断源可以被处理(<code>SR.IM&amp;HWInt</code>)
-    <span id="mjx-34280c78">
+    <span id="mjx-daa976a">
       <style>
-      #mjx-34280c78{
+      #mjx-daa976a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7704,9 +7704,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>内部异常（Execption）：
 未在处理异常(<code>!SR.EXL</code>) &amp; 存在内部异常(ExcCodeIn)
-    <span id="mjx-d5640b7">
+    <span id="mjx-0b086eb8">
       <style>
-      #mjx-d5640b7{
+      #mjx-0b086eb8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7874,9 +7874,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>CP0何时被写？
 
-    <span id="mjx-c47f1c48">
+    <span id="mjx-d6d5e24">
       <style>
-      #mjx-c47f1c48{
+      #mjx-d6d5e24{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8396,9 +8396,9 @@ g[data-mml-node="xypic"] path {
 <li>Timer0: <code>0x0000_7F00 ~ 0x0000_7F0B</code>   （长度 12 字节 = 3 个 4 字节寄存器）</li>
 <li>Timer:``define count  mem[2]`</li>
 <li>
-    <span id="mjx-e720f5a">
+    <span id="mjx-771aa94">
       <style>
-      #mjx-e720f5a{
+      #mjx-771aa94{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8569,9 +8569,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>BDin
 
-    <span id="mjx-1dd64408">
+    <span id="mjx-bc994388">
       <style>
-      #mjx-1dd64408{
+      #mjx-bc994388{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8731,9 +8731,9 @@ g[data-mml-node="xypic"] path {
     </span>
    异常发生的这条指令是否位于延迟槽（B/J - 延迟槽（该指令））
 
-    <span id="mjx-7820e69">
+    <span id="mjx-826216a">
       <style>
-      #mjx-7820e69{
+      #mjx-826216a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9087,14 +9087,13 @@ g[data-mml-node="xypic"] path {
 <p>我们允许学出什么样的 function</p>
 <p>我们认为怎样的 function family 更适合描述这个问题？</p>
 <p>详细展开来说，<mark>function框架</mark>长什么样？哪些参数要学？为什么设计成这样？</p>
-<pre><code> e.g. MLP/Transformer/CNN/GNN
-</code></pre>
+<p>例如：MLP / Transformer / CNN / GNN。</p>
 </li>
 <li>
 <p>如何学习？</p>
 <ol>
 <li>
-<p>从哪里学习?</p>
+<p>从哪里学习？</p>
 <ul>
 <li>有标准答案，于是可以做 supervised learning。</li>
 <li>没有逐步的标准答案，只能通过和环境交互获得 reward，于是有了 reinforcement learning。</li>
@@ -9103,9 +9102,11 @@ g[data-mml-node="xypic"] path {
 <p>我们能获得什么样的 feedback，会进一步决定该怎样构造 loss / objective / reward，以及整个 training procedure。</p>
 </li>
 <li>
-<p>怎么学我们定义的“好”的function？</p>
-<p>gradient descent、backpropagation、SGD、Adam、learning rate</p>
-<p>PPO/GRPO</p>
+<p>怎么学我们定义的“好”的 function？</p>
+<ul>
+<li>gradient descent、backpropagation、SGD、Adam、learning rate</li>
+<li>PPO / GRPO</li>
+</ul>
 </li>
 </ol>
 </li>
@@ -9730,6 +9731,217 @@ e.g.+</p>
       </categories>
   </entry>
   <entry>
+    <title>vim</title>
+    <url>/2026/03/01/vim/</url>
+    <content><![CDATA[<p><a href="https://coolshell.cn/articles/5426.html">vim学习</a></p>
+<h1 id="Vim">Vim</h1>
+<p>Linux系统下的开源文本编辑器</p>
+<ul>
+<li>基本输入操作
+<ul>
+<li>创建文件（touch）</li>
+<li>打开文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim helloworld.c</span><br></pre></td></tr></table></figure>
+</li>
+<li>输入内容：按<code>I</code>进入输入模式</li>
+<li>保存并退出vim
+<ol>
+<li>按<code>esc</code>回到命令模式</li>
+<li>按<code>shift+;</code>进入底线命令模式</li>
+<li>输入<code>w</code>并<code>enter</code>，保存文件</li>
+<li>再进入底线命令模式，输入<code>q</code>即可关闭文件回到CLI shell
+（3、4可合并为<code>wq</code>）</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="配置">配置</h2>
+<ul>
+<li>配置文件：<code>.vimrc</code>,位于用户主目录下</li>
+<li><a href="https://www.ruanyifeng.com/blog/2018/09/vimrc.html">.vimrc配置</a></li>
+</ul>
+<h2 id="Normal模式">Normal模式</h2>
+<h3 id="复制粘贴">复制粘贴</h3>
+<p>如何复制选中内容到系统剪切板？</p>
+<ul>
+<li><a href="https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/">https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/</a></li>
+<li>粗暴：先cat file，直接打印到shell，再复制</li>
+</ul>
+<h3 id="Undo-Redo">Undo/Redo</h3>
+<ul>
+<li><code>u</code>:undo</li>
+<li><code>&lt;C-r&gt;</code>:redo</li>
+</ul>
+<h3 id="delete">delete</h3>
+<ul>
+<li><code>x</code>:删当前光标所在的一个字符</li>
+<li><code>dd</code>:删除当前行，并把删除的行存到剪贴板里</li>
+</ul>
+<h3 id="移动光标">移动光标</h3>
+<ul>
+<li><code>0</code>:到行头</li>
+<li><code>^</code>:到行首第一个非空字符</li>
+<li><code>:&lt;n&gt;</code>:移动到第n行</li>
+<li><code>gg</code>：移动到第一行</li>
+<li><code>&lt;C-f&gt;</code>/<code>&lt;C-b&gt;</code>：前后翻整页</li>
+</ul>
+<h2 id="可视模式">可视模式</h2>
+<p>输入<code>v</code>进入</p>
+<h3 id="复制粘贴-2">复制粘贴</h3>
+<p>以下仅限于vim内部操作</p>
+<ul>
+<li><code>d</code>:剪切选中的文本段</li>
+<li><code>y</code>:复制</li>
+<li><code>p</code>:粘贴</li>
+</ul>
+]]></content>
+      <categories>
+        <category>OS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>How to read a paper?</title>
+    <url>/2026/10/14/HowToReadAPaper/</url>
+    <content><![CDATA[<p>目前的一些体会，基本可以概括为：保持好奇心，多八卦（！）</p>
+<p>有新想法的时候会更新。</p>
+<h1 id="调研">调研</h1>
+<p>怎么调研一个领域</p>
+<ul>
+<li>找到领域最重要最关注的问题</li>
+<li>现在有什么解决方法
+<ul>
+<li>带着上面找到的问题去读</li>
+</ul>
+</li>
+<li>现有方法还存在什么问题
+<ul>
+<li>哪些问题已经基本解决</li>
+<li>哪些问题大家还在反复解决</li>
+</ul>
+</li>
+<li>顺着这些没有解决好的问题继续往下找 idea</li>
+</ul>
+<h1 id="泛读">泛读</h1>
+<ul>
+<li>文章研究的领域</li>
+<li>现有工作要解决的是这个领域的什么问题</li>
+<li>现在的方法都是怎么做的</li>
+<li>他们存在哪些缺陷</li>
+<li>这个工作有什么样的insight
+<ul>
+<li>它从哪里考虑来解决这个问题</li>
+</ul>
+</li>
+</ul>
+<p>泛读完，应当能把<mark>最大创新点</mark>说出来。</p>
+<p>如果感兴趣，再去精读methodology。</p>
+<h1 id="精读">精读</h1>
+<h2 id="读method">读method</h2>
+<ul>
+<li>method从什么提出（observation（尤其是 empirical observation）/assumption？）</li>
+<li>一定要问自己：为什么某某操作能提升某某效果
+<ul>
+<li>解释实验现象</li>
+</ul>
+</li>
+<li>method好在哪里
+<ul>
+<li>从应用端去想：为什么要用我们改进过后的方法？
+<ul>
+<li>省时间/资源/可拓展性/generalization</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="看experiment">看experiment</h2>
+<p>evidence 是否真的 support claim</p>
+<h2 id="看citing">看citing</h2>
+<ul>
+<li>向前追：找领域SOTA和默认baseline</li>
+<li>向后索</li>
+</ul>
+<h1 id="对自己工作的启发">对自己工作的启发</h1>
+<ul>
+<li>该方法能否引入自己领域
+<ul>
+<li>X 在 A 为什么有效？</li>
+<li>B 是否满足 X 赖以成立的条件？</li>
+<li>如果不满足，是哪一个结构阻止了它？</li>
+<li><strong>这个阻碍本身能不能成为问题？</strong>
+<ul>
+<li>如果确实是个不显而易见的问题，那么完全可以尝试思考如何解决这个罪魁祸首</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>research</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>At the End of the World</title>
+    <url>/2026/08/08/At%20the%20End%20of%20the%20World/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>关于世界征服，本篇采用了一些私设：</p>
+<ol>
+<li>费加罗和奥兹在开始世界征服之前已经有了自己的住所；</li>
+<li>世界征服开始于密斯拉未满百岁之时，即约 1500—1400 年前。</li>
+</ol>
+<h1 id="正文">正文</h1>
+<p>奥兹还在世界征服。</p>
+<p>听说它最近在央国大开杀戒呢。</p>
+<p>要不要趁奥兹在外地去袭击魔王城堡？这家伙周游世界，想必又攒了不少好东西。</p>
+<p>不过，那个没品味的奥兹，说不定根本认不出来一路上遇见的宝贝，把玛那石一顿啃完，就又去赶下一个场子了。世界上最无趣旅行者的称号可以让给它。整天和奥兹作伴四处横行，光是想想都后背一凉啊，也只有费加罗这种恶趣味的家伙有心思跟着它转了。它倒是比奥兹识货些，但我宁愿去闯双子的结界，也没兴趣拜访费加罗的家，装模作样的，屋随其主，远远眺一眼就想掉头。</p>
+<p>算了，我可不像奥兹那么闲。我一要守着我的船按时上岗，二要收集散落的古籍精进咒术，三要补充高品质玛那石提升力量……天呐，怎么有这么多事等着我去做。但是为了迎战奥兹，我必须加快训练的节奏才行。</p>
+<p>世界征服，最后一站，肯定要来死之湖吧？</p>
+<p>我还没和任何人聊过这个话题，只是，没有征服过我的领土的话，算什么世界征服啊。等到奥兹走完一圈世界，最后来到死之湖，向我正式宣战，我再用早已今非昔比的魔力将它击溃。奥兹的玛那石是什么味道的呢？我一定会尝到的。啊啊，好完美的结局。</p>
+<p>在这之前，还是不去城堡找麻烦了。最好也别向切雷塔透露计划，总感觉那个人去双子家串门时会聊漏嘴。等我真的打败奥兹之后，它可再没有借口把我当小孩敷衍了。</p>
+<p>于是就这样，一个人探险，一个人历练，过了数百年。切雷塔有时会来找我玩，不过它呆不了多久就会去找下一个乐子；我也不觉得无聊，试想，有这样一个美梦近在眼前，再怎么无欲无求的人也会感到愉悦吧。</p>
+<p>在雪原里被不知名的远古巨兽按倒在地、闲来无事抱臂躺在船上望天、又一次独自吞下新鲜玛那石……有那么多契机让我完善脑海里的画面。奥兹是会推门闯进我的小屋，还是一杖敲碎我的湖面？费加罗多半会替它谋划最后一战吧，至于奥兹听不听，又是另一回事了。不理它也好，这一战，一定要只属于我们两个才圆满，奥兹嘛，堂堂正正决斗的决心总还是有的。</p>
+<p>切雷塔还是知道了我的计划，但它这次没像以前那样笑得那么过分，我觉得它是被我独自升级的效率打动了。等事成之后，分一块魔王的玛那石给它也不是不可以；不管是前世界第一的玛那石，还是前追求对象的玛那石，切雷塔肯定都感兴趣。</p>
+<p>可是，什么叫奥兹结束了世界征服？</p>
+<p>谁允许它在前来挑战我之前停止世界征服？</p>
+<p>我甚至是在梦之森和欧文玩的时候才被告知了消息。顺带一提，欧文也知道我的计划，等回来再找它算账，那副得意忘形的嘴脸，这次真是格外让人烦躁。</p>
+<p>我觉得我有必要去要个说法。连一千年都坚持不到，还有什么资格做世界第一……</p>
+<p>直接空间移动到奥兹的城堡门前。一打开传送门，厚重的风雪压着空气卷来，暗沉中，还没来得及动手闯入，倒是撞上了奥兹的帮凶。那个人，被奥兹拒之门外了啊。</p>
+<p>不管它，现在就进去。</p>
+<p>“密斯拉，别去打扰奥兹了吧。”</p>
+<p>奇了怪，费加罗今天居然主动招惹我。它要找我打，我也不是不能奉陪，但不是今天啊。</p>
+<p>我没理它，径直向大门走去。</p>
+<p>“ポッシデオ。”</p>
+<p>我闪身躲开。为什么没一件顺心事呢？几百年的余韵，仿佛一霎就被冲毁了。</p>
+<p>“费加罗，别来打扰的是你才对吧。我可不会任由自己被拒之门外。”</p>
+<p>它没说话。</p>
+<p>雪一直落，要把世界淹没似的。</p>
+<p>我明白进门前必有一战了。</p>
+<p>召唤出魔道具，骷髅眼窝中准备燃起火焰，身侧的风雪忽然一乱，另一道声音传了过来。</p>
+<p>“密斯拉，今天先回去吧。”</p>
+<p>切雷塔也来了？</p>
+<p>“你也来拦我。”</p>
+<p>“嗯。”</p>
+<p>“到底为什么？”</p>
+<p>切雷塔停了一下。</p>
+<p>“因为你现在进去，也得不到你想要的东西。”</p>
+<p>它知道我问的不是我为什么不能进去。切雷塔明明知道的。</p>
+<p>但是，好吧。</p>
+<p>纷飞的雪花劈头盖脸地砸下来，我看着紧闭的大门，又看了看这俩没出息的门神。一个不说话，一个没有笑。如果我执意进去，这两个人都不会手下留情。</p>
+<p>更重要的是，即使进了门，奥兹也不会重新开始世界征服了。我有这种感觉，就在刚刚这一瞬。</p>
+<p>骷髅眼窝里的火焰熄灭了。</p>
+<p>它怎么能放弃呢？</p>
+<p>我转身踏进传送门，临走前又回头看了一眼。风雪把城堡遮得严严实实，仿佛无人居住其中。</p>
+<p>算了。等奥兹哪天重新想起来，世界上还有一个地方没有被它征服，自然会来死之湖找我。</p>
+<p>我等着就是了。</p>
+<h1 id="后记">后记</h1>
+<p>没有人关心但是本质上是一篇世界征服压抑产物（</p>
+]]></content>
+      <categories>
+        <category>产出</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Both Sides, Now</title>
     <url>/2026/07/04/Both%20Sides,%20Now/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
@@ -9745,31 +9957,6 @@ e.g.+</p>
 <p>可我还是不懂云，尽管我已经看遍了它，从各个角度。有那么多事，我本来可以去做，却被云挡住了去路。我想去追问它的变幻莫测，不知不觉间，反倒一路跟着它来到了南国。死之湖的云厚重浓烈，飘到这里，却变得缥缈柔软。我不明白，明明一直在看着它，我还是不懂它为什么要变化。</p>
 <p>船只在第谷湖上晃晃悠悠，我躺在上面，想找回熟悉的感觉，却浑身不得劲。这里的云可以从日出逗留到日落，可以被骤雨打散又在晴时恢复如初，一点都不像我地盘上的那家伙。可真懒散啊，我才不要奉陪，你就慢慢悠悠地留在这儿散步吧。猛地坐起来，没有知会任何人，我悄悄地回去了。</p>
 <p>我好像有一点懂它了，在我不再能等到它之后。那些家伙都说它变了，我也依旧这样觉得，可或许，我曾坚信的那些也只是一场幻象呢，厚重却一吹即灭，无形却阴魂不散，这听起来，不是最荒谬的错觉吗？这家伙，真是给我留下了个大麻烦呢。</p>
-]]></content>
-      <categories>
-        <category>产出</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>I&#39;m Only Sleeping</title>
-    <url>/2026/07/07/I&#39;m%20Only%20Sleeping/</url>
-    <content><![CDATA[<h1 id="前言">前言</h1>
-<p>密密的最终幻想（</p>
-<h1 id="正文">正文</h1>
-<p>有多久没睡过完整的一觉了。</p>
-<p>白日没有运送尸体的活找上门，无聊地度过一天光阴，在困倦中逐渐失去意识，一夜无梦，第二日懒洋洋地被太阳照醒；或是历经一番大战，修复好受损的血肉，就地躺下任凭自己昏迷，醒来再回船上待业。</p>
-<p>我好想再完整地睡一觉。</p>
-<p>上好的熊皮一定要准备一张，我要裹着它睡在雪被里。剩下的肉就在一旁的篝火上烧着吧，噢，讲起这个，烤肉酱好像用完了啊，我得抽个空去森林里再煮一锅，这次双子应该没那么多废话了吧。诶，好像忘了什么，之前不是说要和布拉德利一起去搜刮双子的房间来着，后来怎么没去呢？好烦，现在奥兹晚上恢复魔力了，就算趁天黑出击，大概也会被拦下来。那对双子总是搬救兵，丧失了半身力量的下场就是这样吗，真可怜。还是直接去闯魔王的城堡吧，也该到了一决胜负的时候了，我会证明自己才是夜之帝王的。日子就该这么过才对啊，马上就想传送过去打上一架。</p>
-<p>“クーレ・メミニ。”</p>
-<p>什么动静。</p>
-<p>我睁开眼，侧身躲开，但还是被蹭掉一大块皮。</p>
-<p>“アルシム。”</p>
-<p>欧文，它怎么在这里？</p>
-<p>“密斯拉，闯进梦之森，不需要先向主人打声招呼吗？”</p>
-<p>啊，我在梦之森，大灾厄还没结束，觉也根本没睡成。做了个可笑的白日梦，现在还被吵醒了，真烦人。</p>
-<p>“你是蠢货吗，呵呵……听不懂话也没关系，来了梦之森，总要留下点什么来滋养它吧，睡不着觉的你连梦境都没法提供，我就替可怜的它主持一下公道吧。”</p>
-<p>好想睡觉。</p>
-<p>总之，先解决眼前的挑衅吧，说不定，这次打累了可以睡个好觉呢。</p>
 ]]></content>
       <categories>
         <category>产出</category>
@@ -9888,75 +10075,6 @@ e.g.+</p>
       </categories>
   </entry>
   <entry>
-    <title>vim</title>
-    <url>/2026/03/01/vim/</url>
-    <content><![CDATA[<p><a href="https://coolshell.cn/articles/5426.html">vim学习</a></p>
-<h1 id="Vim">Vim</h1>
-<p>Linux系统下的开源文本编辑器</p>
-<ul>
-<li>基本输入操作
-<ul>
-<li>创建文件（touch）</li>
-<li>打开文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim helloworld.c</span><br></pre></td></tr></table></figure>
-</li>
-<li>输入内容：按<code>I</code>进入输入模式</li>
-<li>保存并退出vim
-<ol>
-<li>按<code>esc</code>回到命令模式</li>
-<li>按<code>shift+;</code>进入底线命令模式</li>
-<li>输入<code>w</code>并<code>enter</code>，保存文件</li>
-<li>再进入底线命令模式，输入<code>q</code>即可关闭文件回到CLI shell
-（3、4可合并为<code>wq</code>）</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="配置">配置</h2>
-<ul>
-<li>配置文件：<code>.vimrc</code>,位于用户主目录下</li>
-<li><a href="https://www.ruanyifeng.com/blog/2018/09/vimrc.html">.vimrc配置</a></li>
-</ul>
-<h2 id="Normal模式">Normal模式</h2>
-<h3 id="复制粘贴">复制粘贴</h3>
-<p>如何复制选中内容到系统剪切板？</p>
-<ul>
-<li><a href="https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/">https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/</a></li>
-<li>粗暴：先cat file，直接打印到shell，再复制</li>
-</ul>
-<h3 id="Undo-Redo">Undo/Redo</h3>
-<ul>
-<li><code>u</code>:undo</li>
-<li><code>&lt;C-r&gt;</code>:redo</li>
-</ul>
-<h3 id="delete">delete</h3>
-<ul>
-<li><code>x</code>:删当前光标所在的一个字符</li>
-<li><code>dd</code>:删除当前行，并把删除的行存到剪贴板里</li>
-</ul>
-<h3 id="移动光标">移动光标</h3>
-<ul>
-<li><code>0</code>:到行头</li>
-<li><code>^</code>:到行首第一个非空字符</li>
-<li><code>:&lt;n&gt;</code>:移动到第n行</li>
-<li><code>gg</code>：移动到第一行</li>
-<li><code>&lt;C-f&gt;</code>/<code>&lt;C-b&gt;</code>：前后翻整页</li>
-</ul>
-<h2 id="可视模式">可视模式</h2>
-<p>输入<code>v</code>进入</p>
-<h3 id="复制粘贴-2">复制粘贴</h3>
-<p>以下仅限于vim内部操作</p>
-<ul>
-<li><code>d</code>:剪切选中的文本段</li>
-<li><code>y</code>:复制</li>
-<li><code>p</code>:粘贴</li>
-</ul>
-]]></content>
-      <categories>
-        <category>OS</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Tears</title>
     <url>/2026/07/31/Tears/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
@@ -9996,85 +10114,66 @@ e.g.+</p>
       </categories>
   </entry>
   <entry>
-    <title>How to read a paper?</title>
-    <url>/2026/10/14/HowToReadAPaper/</url>
-    <content><![CDATA[<p>目前的一些体会，基本可以概括为：保持好奇心，多八卦（！）</p>
-<p>有新想法的时候会更新。</p>
-<h1 id="调研">调研</h1>
-<p>怎么调研一个领域</p>
-<ul>
-<li>找到领域最重要最关注的问题</li>
-<li>现在有什么解决方法
-<ul>
-<li>带着上面找到的问题去读</li>
-</ul>
-</li>
-<li>现有方法还存在什么问题
-<ul>
-<li>哪些问题已经基本解决</li>
-<li>哪些问题大家还在反复解决</li>
-</ul>
-</li>
-<li>顺着这些没有解决好的问题继续往下找 idea</li>
-</ul>
-<h1 id="泛读">泛读</h1>
-<ul>
-<li>文章研究的领域</li>
-<li>现有工作要解决的是这个领域的什么问题</li>
-<li>现在的方法都是怎么做的</li>
-<li>他们存在哪些缺陷</li>
-<li>这个工作有什么样的insight
-<ul>
-<li>它从哪里考虑来解决这个问题</li>
-</ul>
-</li>
-</ul>
-<p>泛读完，应当能把<mark>最大创新点</mark>说出来。</p>
-<p>如果感兴趣，再去精读methodology。</p>
-<h1 id="精读">精读</h1>
-<h2 id="读method">读method</h2>
-<ul>
-<li>method从什么提出（observation（尤其是 empirical observation）/assumption？）</li>
-<li>一定要问自己：为什么某某操作能提升某某效果
-<ul>
-<li>解释实验现象</li>
-</ul>
-</li>
-<li>method好在哪里
-<ul>
-<li>从应用端去想：为什么要用我们改进过后的方法？
-<ul>
-<li>省时间/资源/可拓展性/generalization</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="看experiment">看experiment</h2>
-<p>evidence 是否真的 support claim</p>
-<h2 id="看citing">看citing</h2>
-<ul>
-<li>向前追：找领域SOTA和默认baseline</li>
-<li>向后索</li>
-</ul>
-<h1 id="对自己工作的启发">对自己工作的启发</h1>
-<ul>
-<li>该方法能否引入自己领域
-<ul>
-<li>X 在 A 为什么有效？</li>
-<li>B 是否满足 X 赖以成立的条件？</li>
-<li>如果不满足，是哪一个结构阻止了它？</li>
-<li><strong>这个阻碍本身能不能成为问题？</strong>
-<ul>
-<li>如果确实是个不显而易见的问题，那么完全可以尝试思考如何解决这个罪魁祸首</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+    <title>I&#39;m Only Sleeping</title>
+    <url>/2026/07/07/I&#39;m%20Only%20Sleeping/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>密密的最终幻想（</p>
+<h1 id="正文">正文</h1>
+<p>有多久没睡过完整的一觉了。</p>
+<p>白日没有运送尸体的活找上门，无聊地度过一天光阴，在困倦中逐渐失去意识，一夜无梦，第二日懒洋洋地被太阳照醒；或是历经一番大战，修复好受损的血肉，就地躺下任凭自己昏迷，醒来再回船上待业。</p>
+<p>我好想再完整地睡一觉。</p>
+<p>上好的熊皮一定要准备一张，我要裹着它睡在雪被里。剩下的肉就在一旁的篝火上烧着吧，噢，讲起这个，烤肉酱好像用完了啊，我得抽个空去森林里再煮一锅，这次双子应该没那么多废话了吧。诶，好像忘了什么，之前不是说要和布拉德利一起去搜刮双子的房间来着，后来怎么没去呢？好烦，现在奥兹晚上恢复魔力了，就算趁天黑出击，大概也会被拦下来。那对双子总是搬救兵，丧失了半身力量的下场就是这样吗，真可怜。还是直接去闯魔王的城堡吧，也该到了一决胜负的时候了，我会证明自己才是夜之帝王的。日子就该这么过才对啊，马上就想传送过去打上一架。</p>
+<p>“クーレ・メミニ。”</p>
+<p>什么动静。</p>
+<p>我睁开眼，侧身躲开，但还是被蹭掉一大块皮。</p>
+<p>“アルシム。”</p>
+<p>欧文，它怎么在这里？</p>
+<p>“密斯拉，闯进梦之森，不需要先向主人打声招呼吗？”</p>
+<p>啊，我在梦之森，大灾厄还没结束，觉也根本没睡成。做了个可笑的白日梦，现在还被吵醒了，真烦人。</p>
+<p>“你是蠢货吗，呵呵……听不懂话也没关系，来了梦之森，总要留下点什么来滋养它吧，睡不着觉的你连梦境都没法提供，我就替可怜的它主持一下公道吧。”</p>
+<p>好想睡觉。</p>
+<p>总之，先解决眼前的挑衅吧，说不定，这次打累了可以睡个好觉呢。</p>
 ]]></content>
       <categories>
-        <category>research</category>
+        <category>产出</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Crossover使用说明</title>
+    <url>/2026/08/11/crossover%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<h1 id="安装普通-exe-程序">安装普通 <code>.exe</code> 程序</h1>
+<h2 id="单独创建瓶子">单独创建瓶子</h2>
+<ol>
+<li>点击安装后，点击右上角的安装未列出应用</li>
+<li>选择下载好的 <code>.exe</code> 安装文件；</li>
+<li>选择容器：
+<ul>
+<li><strong>Bottle Name</strong>：随意，例如软件名称；</li>
+<li><strong>Bottle Type</strong>：选择合适的 Windows 版本即可；</li>
+</ul>
+</li>
+<li>安装。接下来会弹出 Windows 软件自己的安装界面，像在 Windows 上一样正常执行安装即可。</li>
+</ol>
+<p>安装结束后，CrossOver 通常会自动生成软件图标，之后直接从对应瓶子中启动即可。</p>
+<h2 id="安装进已有瓶子">安装进已有瓶子</h2>
+<p>例如某个 <code>.exe</code> 是 Steam 游戏需要的补丁、组件或附加程序：</p>
+<ol>
+<li>选中目标瓶子，例如 Steam；</li>
+<li>选择 Install Application into Bottle；</li>
+<li>后续同上</li>
+</ol>
+<p>这样安装程序所写入的文件、注册表和 Windows 组件都会进入这个 Steam 瓶子。</p>
+<h1 id="文件管理">文件管理</h1>
+<p>以steam中游戏的文件替换为例：</p>
+<ol>
+<li>打开 <strong>CrossOver 主界面</strong>；</li>
+<li>左侧选中安装 Steam 的瓶子；</li>
+<li>点击 <strong>Open C: Drive</strong>。</li>
+</ol>
+<p>Finder 打开后，进入steam，按以下路径选择即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Program Files (x86)</span><br><span class="line">└── Steam</span><br><span class="line">    └── steamapps</span><br><span class="line">        └── common</span><br><span class="line">            └── 游戏名称</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>杂项</category>
       </categories>
   </entry>
   <entry>
@@ -10240,9 +10339,9 @@ e.g. <code>``` bash</code> xxx <code>```</code></li>
 <ul>
 <li><code>\sin</code></li>
 <li><code>\sqrt[n]{expression}</code> 
-    <span id="mjx-3207049">
+    <span id="mjx-3c05b428">
       <style>
-      #mjx-3207049{
+      #mjx-3c05b428{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10402,9 +10501,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\times</code> 
-    <span id="mjx-206adf38">
+    <span id="mjx-65b8943">
       <style>
-      #mjx-206adf38{
+      #mjx-65b8943{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10563,9 +10662,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0.02ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>×</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\div</code> 
-    <span id="mjx-490f604">
+    <span id="mjx-fb718368">
       <style>
-      #mjx-490f604{
+      #mjx-fb718368{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10724,9 +10823,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.081ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.296ex" role="img" focusable="false" viewBox="0 -537 778 573" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="F7" d="M318 466Q318 500 339 518T386 537Q418 537 438 517T458 466Q458 438 440 417T388 396Q355 396 337 417T318 466ZM56 237T56 250T70 270H706Q721 262 721 250T706 230H70Q56 237 56 250ZM318 34Q318 68 339 86T386 105Q418 105 438 85T458 34Q458 6 440 -15T388 -36Q355 -36 337 -15T318 34Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>÷</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\cdot</code> 
-    <span id="mjx-0436bd3">
+    <span id="mjx-626e4378">
       <style>
-      #mjx-0436bd3{
+      #mjx-626e4378{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10886,9 +10985,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\sum</code> 
-    <span id="mjx-997356">
+    <span id="mjx-a2f02ba8">
       <style>
-      #mjx-997356{
+      #mjx-a2f02ba8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11047,9 +11146,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="2.389ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 1056 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2211" d="M61 748Q64 750 489 750H913L954 640Q965 609 976 579T993 533T999 516H979L959 517Q936 579 886 621T777 682Q724 700 655 705T436 710H319Q183 710 183 709Q186 706 348 484T511 259Q517 250 513 244L490 216Q466 188 420 134T330 27L149 -187Q149 -188 362 -188Q388 -188 436 -188T506 -189Q679 -189 778 -162T936 -43Q946 -27 959 6H999L913 -249L489 -250Q65 -250 62 -248Q56 -246 56 -239Q56 -234 118 -161Q186 -81 245 -11L428 206Q428 207 242 462L57 717L56 728Q56 744 61 748Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∑</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\int</code> 
-    <span id="mjx-a9a0e48">
+    <span id="mjx-3a74811">
       <style>
-      #mjx-a9a0e48{
+      #mjx-3a74811{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11208,9 +11307,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.691ex;" xmlns="http://www.w3.org/2000/svg" width="1.38ex" height="2.514ex" role="img" focusable="false" viewBox="0 -805.5 610 1111" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo" transform="translate(0 0.5)"><path data-c="222B" d="M113 -244Q113 -246 119 -251T139 -263T167 -269Q186 -269 199 -260Q220 -247 232 -218T251 -133T262 -15T276 155T297 367Q300 390 305 438T314 512T325 580T340 647T361 703T390 751T428 784T479 804Q481 804 488 804T501 805Q552 802 581 769T610 695Q610 669 594 657T561 645Q542 645 527 658T512 694Q512 705 516 714T526 729T538 737T548 742L552 743Q552 745 545 751T525 762T498 768Q475 768 460 756T434 716T418 652T407 559T398 444T387 300T369 133Q349 -38 337 -102T303 -207Q256 -306 169 -306Q119 -306 87 -272T55 -196Q55 -170 71 -158T104 -146Q123 -146 138 -159T153 -195Q153 -206 149 -215T139 -230T127 -238T117 -242L113 -244Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∫</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\lim</code> 
-    <span id="mjx-b90d6b38">
+    <span id="mjx-1b2d1e58">
       <style>
-      #mjx-b90d6b38{
+      #mjx-1b2d1e58{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11370,9 +11469,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\infty</code> 
-    <span id="mjx-666cc32">
+    <span id="mjx-4d98d0e8">
       <style>
-      #mjx-666cc32{
+      #mjx-4d98d0e8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11539,9 +11638,9 @@ g[data-mml-node="xypic"] path {
  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A = \begin&#123;pmatrix&#125;</span><br><span class="line">a &amp; b \\\\</span><br><span class="line">c &amp; d</span><br><span class="line">\end&#123;pmatrix&#125;</span><br></pre></td></tr></table></figure>
 <p>效果：</p>
 
-    <span id="mjx-91ef8d78">
+    <span id="mjx-600ba5a8">
       <style>
-      #mjx-91ef8d78{
+      #mjx-600ba5a8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11708,104 +11807,6 @@ g[data-mml-node="xypic"] path {
 ]]></content>
       <categories>
         <category>杂项</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Crossover使用说明</title>
-    <url>/2026/08/11/crossover%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
-    <content><![CDATA[<h1 id="安装普通-exe-程序">安装普通 <code>.exe</code> 程序</h1>
-<h2 id="单独创建瓶子">单独创建瓶子</h2>
-<ol>
-<li>点击安装后，点击右上角的安装未列出应用</li>
-<li>选择下载好的 <code>.exe</code> 安装文件；</li>
-<li>选择容器：
-<ul>
-<li><strong>Bottle Name</strong>：随意，例如软件名称；</li>
-<li><strong>Bottle Type</strong>：选择合适的 Windows 版本即可；</li>
-</ul>
-</li>
-<li>安装。接下来会弹出 Windows 软件自己的安装界面，像在 Windows 上一样正常执行安装即可。</li>
-</ol>
-<p>安装结束后，CrossOver 通常会自动生成软件图标，之后直接从对应瓶子中启动即可。</p>
-<h2 id="安装进已有瓶子">安装进已有瓶子</h2>
-<p>例如某个 <code>.exe</code> 是 Steam 游戏需要的补丁、组件或附加程序：</p>
-<ol>
-<li>选中目标瓶子，例如 Steam；</li>
-<li>选择 Install Application into Bottle；</li>
-<li>后续同上</li>
-</ol>
-<p>这样安装程序所写入的文件、注册表和 Windows 组件都会进入这个 Steam 瓶子。</p>
-<h1 id="文件管理">文件管理</h1>
-<p>以steam中游戏的文件替换为例：</p>
-<ol>
-<li>打开 <strong>CrossOver 主界面</strong>；</li>
-<li>左侧选中安装 Steam 的瓶子；</li>
-<li>点击 <strong>Open C: Drive</strong>。</li>
-</ol>
-<p>Finder 打开后，进入steam，按以下路径选择即可</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Program Files (x86)</span><br><span class="line">└── Steam</span><br><span class="line">    └── steamapps</span><br><span class="line">        └── common</span><br><span class="line">            └── 游戏名称</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>杂项</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>At the End of the World</title>
-    <url>/2026/08/08/At%20the%20End%20of%20the%20World/</url>
-    <content><![CDATA[<h1 id="前言">前言</h1>
-<p>关于世界征服，本篇采用了一些私设：</p>
-<ol>
-<li>费加罗和奥兹在开始世界征服之前已经有了自己的住所；</li>
-<li>世界征服开始于密斯拉未满百岁之时，即约 1500—1400 年前。</li>
-</ol>
-<h1 id="正文">正文</h1>
-<p>奥兹还在世界征服。</p>
-<p>听说它最近在央国大开杀戒呢。</p>
-<p>要不要趁奥兹在外地去袭击魔王城堡？这家伙周游世界，想必又攒了不少好东西。</p>
-<p>不过，那个没品味的奥兹，说不定根本认不出来一路上遇见的宝贝，把玛那石一顿啃完，就又去赶下一个场子了。世界上最无趣旅行者的称号可以让给它。整天和奥兹作伴四处横行，光是想想都后背一凉啊，也只有费加罗这种恶趣味的家伙有心思跟着它转了。它倒是比奥兹识货些，但我宁愿去闯双子的结界，也没兴趣拜访费加罗的家，装模作样的，屋随其主，远远眺一眼就想掉头。</p>
-<p>算了，我可不像奥兹那么闲。我一要守着我的船按时上岗，二要收集散落的古籍精进咒术，三要补充高品质玛那石提升力量……天呐，怎么有这么多事等着我去做。但是为了迎战奥兹，我必须加快训练的节奏才行。</p>
-<p>世界征服，最后一站，肯定要来死之湖吧？</p>
-<p>我还没和任何人聊过这个话题，只是，没有征服过我的领土的话，算什么世界征服啊。等到奥兹走完一圈世界，最后来到死之湖，向我正式宣战，我再用早已今非昔比的魔力将它击溃。奥兹的玛那石是什么味道的呢？我一定会尝到的。啊啊，好完美的结局。</p>
-<p>在这之前，还是不去城堡找麻烦了。最好也别向切雷塔透露计划，总感觉那个人去双子家串门时会聊漏嘴。等我真的打败奥兹之后，它可再没有借口把我当小孩敷衍了。</p>
-<p>于是就这样，一个人探险，一个人历练，过了数百年。切雷塔有时会来找我玩，不过它呆不了多久就会去找下一个乐子；我也不觉得无聊，试想，有这样一个美梦近在眼前，再怎么无欲无求的人也会感到愉悦吧。</p>
-<p>在雪原里被不知名的远古巨兽按倒在地、闲来无事抱臂躺在船上望天、又一次独自吞下新鲜玛那石……有那么多契机让我完善脑海里的画面。奥兹是会推门闯进我的小屋，还是一杖敲碎我的湖面？费加罗多半会替它谋划最后一战吧，至于奥兹听不听，又是另一回事了。不理它也好，这一战，一定要只属于我们两个才圆满，奥兹嘛，堂堂正正决斗的决心总还是有的。</p>
-<p>切雷塔还是知道了我的计划，但它这次没像以前那样笑得那么过分，我觉得它是被我独自升级的效率打动了。等事成之后，分一块魔王的玛那石给它也不是不可以；不管是前世界第一的玛那石，还是前追求对象的玛那石，切雷塔肯定都感兴趣。</p>
-<p>可是，什么叫奥兹结束了世界征服？</p>
-<p>谁允许它在前来挑战我之前停止世界征服？</p>
-<p>我甚至是在梦之森和欧文玩的时候才被告知了消息。顺带一提，欧文也知道我的计划，等回来再找它算账，那副得意忘形的嘴脸，这次真是格外让人烦躁。</p>
-<p>我觉得我有必要去要个说法。连一千年都坚持不到，还有什么资格做世界第一……</p>
-<p>直接空间移动到奥兹的城堡门前。一打开传送门，厚重的风雪压着空气卷来，暗沉中，还没来得及动手闯入，倒是撞上了奥兹的帮凶。那个人，被奥兹拒之门外了啊。</p>
-<p>不管它，现在就进去。</p>
-<p>“密斯拉，别去打扰奥兹了吧。”</p>
-<p>奇了怪，费加罗今天居然主动招惹我。它要找我打，我也不是不能奉陪，但不是今天啊。</p>
-<p>我没理它，径直向大门走去。</p>
-<p>“ポッシデオ。”</p>
-<p>我闪身躲开。为什么没一件顺心事呢？几百年的余韵，仿佛一霎就被冲毁了。</p>
-<p>“费加罗，别来打扰的是你才对吧。我可不会任由自己被拒之门外。”</p>
-<p>它没说话。</p>
-<p>雪一直落，要把世界淹没似的。</p>
-<p>我明白进门前必有一战了。</p>
-<p>召唤出魔道具，骷髅眼窝中准备燃起火焰，身侧的风雪忽然一乱，另一道声音传了过来。</p>
-<p>“密斯拉，今天先回去吧。”</p>
-<p>切雷塔也来了？</p>
-<p>“你也来拦我。”</p>
-<p>“嗯。”</p>
-<p>“到底为什么？”</p>
-<p>切雷塔停了一下。</p>
-<p>“因为你现在进去，也得不到你想要的东西。”</p>
-<p>它知道我问的不是我为什么不能进去。切雷塔明明知道的。</p>
-<p>但是，好吧。</p>
-<p>纷飞的雪花劈头盖脸地砸下来，我看着紧闭的大门，又看了看这俩没出息的门神。一个不说话，一个没有笑。如果我执意进去，这两个人都不会手下留情。</p>
-<p>更重要的是，即使进了门，奥兹也不会重新开始世界征服了。我有这种感觉，就在刚刚这一瞬。</p>
-<p>骷髅眼窝里的火焰熄灭了。</p>
-<p>它怎么能放弃呢？</p>
-<p>我转身踏进传送门，临走前又回头看了一眼。风雪把城堡遮得严严实实，仿佛无人居住其中。</p>
-<p>算了。等奥兹哪天重新想起来，世界上还有一个地方没有被它征服，自然会来死之湖找我。</p>
-<p>我等着就是了。</p>
-<h1 id="后记">后记</h1>
-<p>没有人关心但是本质上是一篇世界征服压抑产物（</p>
-]]></content>
-      <categories>
-        <category>产出</category>
       </categories>
   </entry>
 </search>
