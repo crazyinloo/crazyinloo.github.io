@@ -51,7 +51,9 @@
   
   
   
-<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="CRZ's Blog" type="application/atom+xml">
 </head>
 
 <body>
@@ -152,10 +154,11 @@
 <p>自然而然地就有了下面的思考：</p>
 <ol>
 <li>
-<p>我们允许学出什么样的 function
-我们认为怎样的 function family 更适合描述这个问题？</p>
-<p>详细展开来说，<mark>function框架</mark>长什么样？哪些参数要学？为什么设计成这样？
-e.g. MLP/Transformer/CNN/GNN</p>
+<p>我们允许学出什么样的 function</p>
+<p>我们认为怎样的 function family 更适合描述这个问题？</p>
+<p>详细展开来说，<mark>function框架</mark>长什么样？哪些参数要学？为什么设计成这样？</p>
+<pre><code> e.g. MLP/Transformer/CNN/GNN
+</code></pre>
 </li>
 <li>
 <p>如何学习？</p>
@@ -164,15 +167,15 @@ e.g. MLP/Transformer/CNN/GNN</p>
 <p>从哪里学习?</p>
 <ul>
 <li>有标准答案，于是可以做 supervised learning。</li>
-<li>没有逐步的标准答案，只能通过和环境交互获得 reward，于是有了 reinforcement learning。
-还有 self-supervised learning、unsupervised learning 等等，本质上也都在回答：learning signal 从哪里来。</li>
+<li>没有逐步的标准答案，只能通过和环境交互获得 reward，于是有了 reinforcement learning。</li>
 </ul>
+<p>还有 self-supervised learning、unsupervised learning 等等，本质上也都在回答：learning signal 从哪里来。</p>
 <p>我们能获得什么样的 feedback，会进一步决定该怎样构造 loss / objective / reward，以及整个 training procedure。</p>
 </li>
 <li>
-<p>怎么学我们定义的“好”的function？
-gradient descent、backpropagation、SGD、Adam、learning rate
-PPO/GRPO</p>
+<p>怎么学我们定义的“好”的function？</p>
+<p>gradient descent、backpropagation、SGD、Adam、learning rate</p>
+<p>PPO/GRPO</p>
 </li>
 </ol>
 </li>
