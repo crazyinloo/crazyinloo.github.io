@@ -12,9 +12,9 @@
 <ul>
 <li>IM：
 CPU只会从IM读取指令，永远不会写入指令 
-    <span id="mjx-263f927">
+    <span id="mjx-6a0e666">
       <style>
-      #mjx-263f927{
+      #mjx-6a0e666{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -175,9 +175,9 @@ g[data-mml-node="xypic"] path {
    使用ROM</li>
 <li>DM：
 可读（lw）可写（sw）
-    <span id="mjx-ae14b4b">
+    <span id="mjx-c60aeab">
       <style>
-      #mjx-ae14b4b{
+      #mjx-c60aeab{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -344,9 +344,9 @@ g[data-mml-node="xypic"] path {
 <li>用RTL描述每条指令
 <ul>
 <li>
-    <span id="mjx-923b9d28">
+    <span id="mjx-487ebce">
       <style>
-      #mjx-923b9d28{
+      #mjx-487ebce{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -552,9 +552,9 @@ The wrong behavior was next to the correct execution of MIPS code 0x3c083bc2.</p
 <ol>
 <li>
 <p>机器码 
-    <span id="mjx-6b8e87e8">
+    <span id="mjx-8dcaf4e">
       <style>
-      #mjx-6b8e87e8{
+      #mjx-8dcaf4e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -732,9 +732,9 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 
-    <span id="mjx-eaea264">
+    <span id="mjx-e24fa88">
       <style>
-      #mjx-eaea264{
+      #mjx-e24fa88{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2761,9 +2761,9 @@ File - Dump Memory
 <h1 id="前置知识">前置知识</h1>
 <h2 id="延迟槽">延迟槽</h2>
 <p>
-    <span id="mjx-dddae288">
+    <span id="mjx-275e9f8">
       <style>
-      #mjx-dddae288{
+      #mjx-275e9f8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3073,9 +3073,9 @@ wire isEven = ~rsData[0];</p>
 <li>
 <p>判断是否是2^n
 
-    <span id="mjx-9b428fc">
+    <span id="mjx-3ff42cf8">
       <style>
-      #mjx-9b428fc{
+      #mjx-3ff42cf8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3613,9 +3613,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p>
-    <span id="mjx-96eabc3">
+    <span id="mjx-424f3b98">
       <style>
-      #mjx-96eabc3{
+      #mjx-424f3b98{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3777,9 +3777,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p>
-    <span id="mjx-4255e3">
+    <span id="mjx-c8d962a">
       <style>
-      #mjx-4255e3{
+      #mjx-c8d962a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3938,9 +3938,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.36ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 1927.1 834.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1066,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>T</mi><mrow data-mjx-texclass="ORD"><mi>n</mi><mi>e</mi><mi>w</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ：位于某个流水级的某个指令，它经过
-    <span id="mjx-2610e468">
+    <span id="mjx-94caa198">
       <style>
-      #mjx-2610e468{
+      #mjx-94caa198{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4101,9 +4101,9 @@ g[data-mml-node="xypic"] path {
   个时钟周期,该指令的结果（即最终要<code>写回 GRF 的值</code>）才会被计算出来，并<code>存入</code>对应的流水级寄存器中，从而可以被后续指令安全使用或转发。</p>
 <ul>
 <li>
-    <span id="mjx-92bce38">
+    <span id="mjx-45eb28d8">
       <style>
-      #mjx-92bce38{
+      #mjx-45eb28d8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7537,9 +7537,9 @@ MEM stage：|不存在|RtData|不存在|不存在</p>
 <li>Req = 外部中断|内部异常</li>
 <li>外部中断（Interrupt）：
 能处理中断(<code>SR.IE</code>) &amp; 未在处理异常(<code>!SR.EXL</code>) &amp; 存在外部中断源且该中断源可以被处理(<code>SR.IM&amp;HWInt</code>)
-    <span id="mjx-daa976a">
+    <span id="mjx-8f7c737">
       <style>
-      #mjx-daa976a{
+      #mjx-8f7c737{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7704,9 +7704,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>内部异常（Execption）：
 未在处理异常(<code>!SR.EXL</code>) &amp; 存在内部异常(ExcCodeIn)
-    <span id="mjx-0b086eb8">
+    <span id="mjx-6da476b">
       <style>
-      #mjx-0b086eb8{
+      #mjx-6da476b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7874,9 +7874,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>CP0何时被写？
 
-    <span id="mjx-d6d5e24">
+    <span id="mjx-19d1c73">
       <style>
-      #mjx-d6d5e24{
+      #mjx-19d1c73{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8396,9 +8396,9 @@ g[data-mml-node="xypic"] path {
 <li>Timer0: <code>0x0000_7F00 ~ 0x0000_7F0B</code>   （长度 12 字节 = 3 个 4 字节寄存器）</li>
 <li>Timer:``define count  mem[2]`</li>
 <li>
-    <span id="mjx-771aa94">
+    <span id="mjx-2a6c0de8">
       <style>
-      #mjx-771aa94{
+      #mjx-2a6c0de8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8569,9 +8569,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>BDin
 
-    <span id="mjx-bc994388">
+    <span id="mjx-bbe99278">
       <style>
-      #mjx-bc994388{
+      #mjx-bbe99278{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8731,9 +8731,9 @@ g[data-mml-node="xypic"] path {
     </span>
    异常发生的这条指令是否位于延迟槽（B/J - 延迟槽（该指令））
 
-    <span id="mjx-826216a">
+    <span id="mjx-69447c08">
       <style>
-      #mjx-826216a{
+      #mjx-69447c08{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9065,129 +9065,72 @@ g[data-mml-node="xypic"] path {
       </categories>
   </entry>
   <entry>
-    <title>浅谈ML学习</title>
-    <url>/2026/10/16/%E6%B5%85%E8%B0%88ML%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p>博主曾多次尝试“学习ML”：</p>
+    <title>vim</title>
+    <url>/2026/03/01/vim/</url>
+    <content><![CDATA[<p><a href="https://coolshell.cn/articles/5426.html">vim学习</a></p>
+<h1 id="Vim">Vim</h1>
+<p>Linux系统下的开源文本编辑器</p>
 <ul>
-<li>各种专业课（涉及到但不教的/教但是一大半是老古董的/…）上：一点没掌握，期末手写个反向传播，卷子一交忘得干干净净；实验是只会疯狂tab的，交完报告了事</li>
-<li>cs231n：CV经典课，质量确实高但博主当时学的时候没开窍</li>
-<li>同理还有cs224n（NLP）</li>
-<li>应该还有别的但是往事不可查</li>
-</ul>
-<p>现在回想当初乱跑的经历，我现在认为问题出在，自己都不知道自己到底在学一个什么东西，汲取新东西没有目的性。外加花里胡哨的概念太多，一下子涌上来眼花缭乱更是不知所以然了。</p>
-<p>其实，学习ml，或者学习任何其它新领域，应当采用做research的思维去思考（本身这些方法也是从research中来的）。</p>
-<p>具体来说，以ml为例，首先应该问：</p>
-<blockquote>
-<p>如果 ML 是一个方法，那么它究竟是为了解决什么问题而诞生的？</p>
-</blockquote>
-<p>这个问句的答案是：为了更好地找到一个function的“形状”，我们发明了ml。</p>
-<p>自然而然地就有了下面的思考：</p>
+<li>基本输入操作
+<ul>
+<li>创建文件（touch）</li>
+<li>打开文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim helloworld.c</span><br></pre></td></tr></table></figure>
+</li>
+<li>输入内容：按<code>I</code>进入输入模式</li>
+<li>保存并退出vim
 <ol>
-<li>
-<p>我们允许学出什么样的 function</p>
-<p>我们认为怎样的 function family 更适合描述这个问题？</p>
-<p>详细展开来说，<mark>function框架</mark>长什么样？哪些参数要学？为什么设计成这样？</p>
-<p>例如：MLP / Transformer / CNN / GNN。</p>
-</li>
-<li>
-<p>如何学习？</p>
-<ol>
-<li>
-<p>从哪里学习？</p>
-<ul>
-<li>有标准答案，于是可以做 supervised learning。</li>
-<li>没有逐步的标准答案，只能通过和环境交互获得 reward，于是有了 reinforcement learning。</li>
-</ul>
-<p>还有 self-supervised learning、unsupervised learning 等等，本质上也都在回答：learning signal 从哪里来。</p>
-<p>我们能获得什么样的 feedback，会进一步决定该怎样构造 loss / objective / reward，以及整个 training procedure。</p>
-</li>
-<li>
-<p>怎么学我们定义的“好”的 function？</p>
-<ul>
-<li>gradient descent、backpropagation、SGD、Adam、learning rate</li>
-<li>PPO / GRPO</li>
-</ul>
-</li>
+<li>按<code>esc</code>回到命令模式</li>
+<li>按<code>shift+;</code>进入底线命令模式</li>
+<li>输入<code>w</code>并<code>enter</code>，保存文件</li>
+<li>再进入底线命令模式，输入<code>q</code>即可关闭文件回到CLI shell
+（3、4可合并为<code>wq</code>）</li>
 </ol>
 </li>
-</ol>
-<p>顺着这种research思路往下学习，才真正能内化零碎的知识。</p>
-<p>tips:</p>
-<ol>
-<li>其实博主的饺子醋是想批判常规的四分格教学思路（先学回归再学分类再学聚类之类的），这样只是提出了一个又一个新概念而已，知道了一大堆名词，却不知道它们为什么会出现在这里，这种上来就进入methodology的思路值得鄙视</li>
-<li>给了博主巨大帮助的教程：李宏毅老师的ML相关课程，在油管上均可以搜到。感谢老师的无偿分享TT</li>
-</ol>
+</ul>
+</li>
+</ul>
+<h2 id="配置">配置</h2>
+<ul>
+<li>配置文件：<code>.vimrc</code>,位于用户主目录下</li>
+<li><a href="https://www.ruanyifeng.com/blog/2018/09/vimrc.html">.vimrc配置</a></li>
+</ul>
+<h2 id="Normal模式">Normal模式</h2>
+<h3 id="复制粘贴">复制粘贴</h3>
+<p>如何复制选中内容到系统剪切板？</p>
+<ul>
+<li><a href="https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/">https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/</a></li>
+<li>粗暴：先cat file，直接打印到shell，再复制</li>
+</ul>
+<h3 id="Undo-Redo">Undo/Redo</h3>
+<ul>
+<li><code>u</code>:undo</li>
+<li><code>&lt;C-r&gt;</code>:redo</li>
+</ul>
+<h3 id="delete">delete</h3>
+<ul>
+<li><code>x</code>:删当前光标所在的一个字符</li>
+<li><code>dd</code>:删除当前行，并把删除的行存到剪贴板里</li>
+</ul>
+<h3 id="移动光标">移动光标</h3>
+<ul>
+<li><code>0</code>:到行头</li>
+<li><code>^</code>:到行首第一个非空字符</li>
+<li><code>:&lt;n&gt;</code>:移动到第n行</li>
+<li><code>gg</code>：移动到第一行</li>
+<li><code>&lt;C-f&gt;</code>/<code>&lt;C-b&gt;</code>：前后翻整页</li>
+</ul>
+<h2 id="可视模式">可视模式</h2>
+<p>输入<code>v</code>进入</p>
+<h3 id="复制粘贴-2">复制粘贴</h3>
+<p>以下仅限于vim内部操作</p>
+<ul>
+<li><code>d</code>:剪切选中的文本段</li>
+<li><code>y</code>:复制</li>
+<li><code>p</code>:粘贴</li>
+</ul>
 ]]></content>
       <categories>
-        <category>ML</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>2025-BUAA-OOPre学习心得</title>
-    <url>/2025/11/06/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[<h1 id="整体架构">整体架构</h1>
-<h2 id="UML类图">UML类图</h2>
-<p><img src="/images/OO/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/oopreUML.png" alt="alt text"></p>
-<h2 id="Main类">Main类</h2>
-<p>接收控制台读入，并对读入的字符串进行解析,获取对应的指令并执行指令。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">CommandFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CommandFactory</span>();</span><br><span class="line"><span class="type">Command</span> <span class="variable">cmd</span> <span class="operator">=</span> factory.parse(strings);</span><br><span class="line">cmd.execute(strings);</span><br></pre></td></tr></table></figure>
-<h1 id="迭代调整">迭代调整</h1>
-<h2 id="分离思想">分离思想</h2>
-<p>每个class功能应遵守单一职责原则，故当迭代中发现某个类功能<strong>过于繁杂、修改一动而牵全身</strong>时，应进行分离处理。</p>
-<ol>
-<li>在发现Adventurer类变得过于繁杂之后，<strong>分离</strong>了其中处理Portable（可携带品）的功能：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Adventurer class</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Inventory inventory;</span><br></pre></td></tr></table></figure>
-在Inventory内部实现涉及到Portable的操作。
-<img src="/images/OO/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/inventory.png" alt="alt text"></li>
-</ol>
-<h2 id="命令模式">命令模式</h2>
-<p>迭代过程中不断需要添加指令。初始设计为在Main类中用<code>case结构</code>执行对应指令，但很快发现：</p>
-<ol>
-<li>Main类中方法过长</li>
-<li>添加指令不方便</li>
-</ol>
-<p>因此引入<code>Command Pattern</code>设计模式，优化指令可拓展性并简化Main类</p>
-<h2 id="单例模式">单例模式</h2>
-<p>对Adventurer实例的管理：采取<code>单例模式</code>，创建<code>World类</code>，保证所有操作都是在同一个World实例里执行的。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">World</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, Adventurer&gt; adventurerMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">World</span> <span class="variable">world</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">World</span>(adventurerMap);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">World</span><span class="params">(Map&lt;String, Adventurer&gt; adventurerMap)</span> &#123;</span><br><span class="line">        World.adventurerMap = adventurerMap;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> World <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> world;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Adventurer&gt; <span class="title function_">getAdventurerMap</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> adventurerMap;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="工厂模式">工厂模式</h2>
-<p>将创建各种Usable的方法集成于CreateFactory类中。<img src="/images/OO/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/image-30.png" alt="alt text"></p>
-<h2 id="容器选择">容器选择</h2>
-<p>几乎所有操作的都涉及到<code>id</code>和<code>object</code>的对应关系（<code>key-value</code>），故基本都采用<code>HashMap</code>来管理对象。
-但，一旦涉及到<strong>顺序性</strong>，就必须更换容器，例如：</p>
-<ol>
-<li>fight指令涉及到战斗对象的先后顺序，故使用ArrayList来储存</li>
-<li>携带物品的操作涉及<code>FIFO</code>，故在Inventory中采用：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, LinkedList&lt;Portable&gt;&gt; bag;</span><br></pre></td></tr></table></figure>
-来记录携带信息</li>
-</ol>
-<h1 id="使用JUnit的心得体会">使用JUnit的心得体会</h1>
-<ol>
-<li>如果一个类很难被测试，通常意味着它的设计存在问题（例如职责不清、耦合度过高），进而推动我们修改代码。</li>
-</ol>
-<h1 id="学习OOPre的心得体会">学习OOPre的心得体会</h1>
-<ol>
-<li>什么才是一份好的代码？
-<ul>
-<li>易于维护、扩展和复用
-<ul>
-<li>尝试使用设计模式</li>
-<li>遵守设计原则：单一职责、开闭……</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>面向过程到面向对象的思维转变
-<ul>
-<li>思考应设计什么对象、对象应具备什么属性和行为、对象之间如何协作</li>
-</ul>
-</li>
-</ol>
-<h1 id="对OOPre课程的简单建议">对OOPre课程的简单建议</h1>
-<ol>
-<li>迭代作业每次要切换仓库，导致版本管理流程（如commit、push等）较为繁琐，建议统一使用同一个仓库来进行迭代开发。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>OO</category>
+        <category>OS</category>
       </categories>
   </entry>
   <entry>
@@ -9731,72 +9674,129 @@ e.g.+</p>
       </categories>
   </entry>
   <entry>
-    <title>vim</title>
-    <url>/2026/03/01/vim/</url>
-    <content><![CDATA[<p><a href="https://coolshell.cn/articles/5426.html">vim学习</a></p>
-<h1 id="Vim">Vim</h1>
-<p>Linux系统下的开源文本编辑器</p>
+    <title>浅谈ML学习</title>
+    <url>/2026/10/16/%E6%B5%85%E8%B0%88ML%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p>博主曾多次尝试“学习ML”：</p>
 <ul>
-<li>基本输入操作
-<ul>
-<li>创建文件（touch）</li>
-<li>打开文件<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim helloworld.c</span><br></pre></td></tr></table></figure>
-</li>
-<li>输入内容：按<code>I</code>进入输入模式</li>
-<li>保存并退出vim
+<li>各种专业课（涉及到但不教的/教但是一大半是老古董的/…）上：一点没掌握，期末手写个反向传播，卷子一交忘得干干净净；实验是只会疯狂tab的，交完报告了事</li>
+<li>cs231n：CV经典课，质量确实高但博主当时学的时候没开窍</li>
+<li>同理还有cs224n（NLP）</li>
+<li>应该还有别的但是往事不可查</li>
+</ul>
+<p>现在回想当初乱跑的经历，我现在认为问题出在，自己都不知道自己到底在学一个什么东西，汲取新东西没有目的性。外加花里胡哨的概念太多，一下子涌上来眼花缭乱更是不知所以然了。</p>
+<p>其实，学习ml，或者学习任何其它新领域，应当采用做research的思维去思考（本身这些方法也是从research中来的）。</p>
+<p>具体来说，以ml为例，首先应该问：</p>
+<blockquote>
+<p>如果 ML 是一个方法，那么它究竟是为了解决什么问题而诞生的？</p>
+</blockquote>
+<p>这个问句的答案是：为了更好地找到一个function的“形状”，我们发明了ml。</p>
+<p>自然而然地就有了下面的思考：</p>
 <ol>
-<li>按<code>esc</code>回到命令模式</li>
-<li>按<code>shift+;</code>进入底线命令模式</li>
-<li>输入<code>w</code>并<code>enter</code>，保存文件</li>
-<li>再进入底线命令模式，输入<code>q</code>即可关闭文件回到CLI shell
-（3、4可合并为<code>wq</code>）</li>
+<li>
+<p>我们允许学出什么样的 function</p>
+<p>我们认为怎样的 function family 更适合描述这个问题？</p>
+<p>详细展开来说，<mark>function框架</mark>长什么样？哪些参数要学？为什么设计成这样？</p>
+<p>例如：MLP / Transformer / CNN / GNN。</p>
+</li>
+<li>
+<p>如何学习？</p>
+<ol>
+<li>
+<p>从哪里学习？</p>
+<ul>
+<li>有标准答案，于是可以做 supervised learning。</li>
+<li>没有逐步的标准答案，只能通过和环境交互获得 reward，于是有了 reinforcement learning。</li>
+</ul>
+<p>还有 self-supervised learning、unsupervised learning 等等，本质上也都在回答：learning signal 从哪里来。</p>
+<p>我们能获得什么样的 feedback，会进一步决定该怎样构造 loss / objective / reward，以及整个 training procedure。</p>
+</li>
+<li>
+<p>怎么学我们定义的“好”的 function？</p>
+<ul>
+<li>gradient descent、backpropagation、SGD、Adam、learning rate</li>
+<li>PPO / GRPO</li>
+</ul>
+</li>
 </ol>
 </li>
+</ol>
+<p>顺着这种research思路往下学习，才真正能内化零碎的知识。</p>
+<p>tips:</p>
+<ol>
+<li>其实博主的饺子醋是想批判常规的四分格教学思路（先学回归再学分类再学聚类之类的），这样只是提出了一个又一个新概念而已，知道了一大堆名词，却不知道它们为什么会出现在这里，这种上来就进入methodology的思路值得鄙视</li>
+<li>给了博主巨大帮助的教程：李宏毅老师的ML相关课程，在油管上均可以搜到。感谢老师的无偿分享TT</li>
+</ol>
+]]></content>
+      <categories>
+        <category>ML</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>2025-BUAA-OOPre学习心得</title>
+    <url>/2025/11/06/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[<h1 id="整体架构">整体架构</h1>
+<h2 id="UML类图">UML类图</h2>
+<p><img src="/images/OO/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/oopreUML.png" alt="alt text"></p>
+<h2 id="Main类">Main类</h2>
+<p>接收控制台读入，并对读入的字符串进行解析,获取对应的指令并执行指令。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">CommandFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CommandFactory</span>();</span><br><span class="line"><span class="type">Command</span> <span class="variable">cmd</span> <span class="operator">=</span> factory.parse(strings);</span><br><span class="line">cmd.execute(strings);</span><br></pre></td></tr></table></figure>
+<h1 id="迭代调整">迭代调整</h1>
+<h2 id="分离思想">分离思想</h2>
+<p>每个class功能应遵守单一职责原则，故当迭代中发现某个类功能<strong>过于繁杂、修改一动而牵全身</strong>时，应进行分离处理。</p>
+<ol>
+<li>在发现Adventurer类变得过于繁杂之后，<strong>分离</strong>了其中处理Portable（可携带品）的功能：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Adventurer class</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Inventory inventory;</span><br></pre></td></tr></table></figure>
+在Inventory内部实现涉及到Portable的操作。
+<img src="/images/OO/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/inventory.png" alt="alt text"></li>
+</ol>
+<h2 id="命令模式">命令模式</h2>
+<p>迭代过程中不断需要添加指令。初始设计为在Main类中用<code>case结构</code>执行对应指令，但很快发现：</p>
+<ol>
+<li>Main类中方法过长</li>
+<li>添加指令不方便</li>
+</ol>
+<p>因此引入<code>Command Pattern</code>设计模式，优化指令可拓展性并简化Main类</p>
+<h2 id="单例模式">单例模式</h2>
+<p>对Adventurer实例的管理：采取<code>单例模式</code>，创建<code>World类</code>，保证所有操作都是在同一个World实例里执行的。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">World</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, Adventurer&gt; adventurerMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">World</span> <span class="variable">world</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">World</span>(adventurerMap);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">World</span><span class="params">(Map&lt;String, Adventurer&gt; adventurerMap)</span> &#123;</span><br><span class="line">        World.adventurerMap = adventurerMap;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> World <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> world;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Adventurer&gt; <span class="title function_">getAdventurerMap</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> adventurerMap;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="工厂模式">工厂模式</h2>
+<p>将创建各种Usable的方法集成于CreateFactory类中。<img src="/images/OO/2025-BUAA-OOPre%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/image-30.png" alt="alt text"></p>
+<h2 id="容器选择">容器选择</h2>
+<p>几乎所有操作的都涉及到<code>id</code>和<code>object</code>的对应关系（<code>key-value</code>），故基本都采用<code>HashMap</code>来管理对象。
+但，一旦涉及到<strong>顺序性</strong>，就必须更换容器，例如：</p>
+<ol>
+<li>fight指令涉及到战斗对象的先后顺序，故使用ArrayList来储存</li>
+<li>携带物品的操作涉及<code>FIFO</code>，故在Inventory中采用：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, LinkedList&lt;Portable&gt;&gt; bag;</span><br></pre></td></tr></table></figure>
+来记录携带信息</li>
+</ol>
+<h1 id="使用JUnit的心得体会">使用JUnit的心得体会</h1>
+<ol>
+<li>如果一个类很难被测试，通常意味着它的设计存在问题（例如职责不清、耦合度过高），进而推动我们修改代码。</li>
+</ol>
+<h1 id="学习OOPre的心得体会">学习OOPre的心得体会</h1>
+<ol>
+<li>什么才是一份好的代码？
+<ul>
+<li>易于维护、扩展和复用
+<ul>
+<li>尝试使用设计模式</li>
+<li>遵守设计原则：单一职责、开闭……</li>
 </ul>
 </li>
 </ul>
-<h2 id="配置">配置</h2>
+</li>
+<li>面向过程到面向对象的思维转变
 <ul>
-<li>配置文件：<code>.vimrc</code>,位于用户主目录下</li>
-<li><a href="https://www.ruanyifeng.com/blog/2018/09/vimrc.html">.vimrc配置</a></li>
+<li>思考应设计什么对象、对象应具备什么属性和行为、对象之间如何协作</li>
 </ul>
-<h2 id="Normal模式">Normal模式</h2>
-<h3 id="复制粘贴">复制粘贴</h3>
-<p>如何复制选中内容到系统剪切板？</p>
-<ul>
-<li><a href="https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/">https://zxkjack123.github.io/ubuntu/vim-copy-to-clipboard/</a></li>
-<li>粗暴：先cat file，直接打印到shell，再复制</li>
-</ul>
-<h3 id="Undo-Redo">Undo/Redo</h3>
-<ul>
-<li><code>u</code>:undo</li>
-<li><code>&lt;C-r&gt;</code>:redo</li>
-</ul>
-<h3 id="delete">delete</h3>
-<ul>
-<li><code>x</code>:删当前光标所在的一个字符</li>
-<li><code>dd</code>:删除当前行，并把删除的行存到剪贴板里</li>
-</ul>
-<h3 id="移动光标">移动光标</h3>
-<ul>
-<li><code>0</code>:到行头</li>
-<li><code>^</code>:到行首第一个非空字符</li>
-<li><code>:&lt;n&gt;</code>:移动到第n行</li>
-<li><code>gg</code>：移动到第一行</li>
-<li><code>&lt;C-f&gt;</code>/<code>&lt;C-b&gt;</code>：前后翻整页</li>
-</ul>
-<h2 id="可视模式">可视模式</h2>
-<p>输入<code>v</code>进入</p>
-<h3 id="复制粘贴-2">复制粘贴</h3>
-<p>以下仅限于vim内部操作</p>
-<ul>
-<li><code>d</code>:剪切选中的文本段</li>
-<li><code>y</code>:复制</li>
-<li><code>p</code>:粘贴</li>
-</ul>
+</li>
+</ol>
+<h1 id="对OOPre课程的简单建议">对OOPre课程的简单建议</h1>
+<ol>
+<li>迭代作业每次要切换仓库，导致版本管理流程（如commit、push等）较为繁琐，建议统一使用同一个仓库来进行迭代开发。</li>
+</ol>
 ]]></content>
       <categories>
-        <category>OS</category>
+        <category>OO</category>
       </categories>
   </entry>
   <entry>
@@ -10075,6 +10075,31 @@ e.g.+</p>
       </categories>
   </entry>
   <entry>
+    <title>I&#39;m Only Sleeping</title>
+    <url>/2026/07/07/I&#39;m%20Only%20Sleeping/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>密密的最终幻想（</p>
+<h1 id="正文">正文</h1>
+<p>有多久没睡过完整的一觉了。</p>
+<p>白日没有运送尸体的活找上门，无聊地度过一天光阴，在困倦中逐渐失去意识，一夜无梦，第二日懒洋洋地被太阳照醒；或是历经一番大战，修复好受损的血肉，就地躺下任凭自己昏迷，醒来再回船上待业。</p>
+<p>我好想再完整地睡一觉。</p>
+<p>上好的熊皮一定要准备一张，我要裹着它睡在雪被里。剩下的肉就在一旁的篝火上烧着吧，噢，讲起这个，烤肉酱好像用完了啊，我得抽个空去森林里再煮一锅，这次双子应该没那么多废话了吧。诶，好像忘了什么，之前不是说要和布拉德利一起去搜刮双子的房间来着，后来怎么没去呢？好烦，现在奥兹晚上恢复魔力了，就算趁天黑出击，大概也会被拦下来。那对双子总是搬救兵，丧失了半身力量的下场就是这样吗，真可怜。还是直接去闯魔王的城堡吧，也该到了一决胜负的时候了，我会证明自己才是夜之帝王的。日子就该这么过才对啊，马上就想传送过去打上一架。</p>
+<p>“クーレ・メミニ。”</p>
+<p>什么动静。</p>
+<p>我睁开眼，侧身躲开，但还是被蹭掉一大块皮。</p>
+<p>“アルシム。”</p>
+<p>欧文，它怎么在这里？</p>
+<p>“密斯拉，闯进梦之森，不需要先向主人打声招呼吗？”</p>
+<p>啊，我在梦之森，大灾厄还没结束，觉也根本没睡成。做了个可笑的白日梦，现在还被吵醒了，真烦人。</p>
+<p>“你是蠢货吗，呵呵……听不懂话也没关系，来了梦之森，总要留下点什么来滋养它吧，睡不着觉的你连梦境都没法提供，我就替可怜的它主持一下公道吧。”</p>
+<p>好想睡觉。</p>
+<p>总之，先解决眼前的挑衅吧，说不定，这次打累了可以睡个好觉呢。</p>
+]]></content>
+      <categories>
+        <category>产出</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Tears</title>
     <url>/2026/07/31/Tears/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
@@ -10108,31 +10133,6 @@ e.g.+</p>
 <p>“切雷塔，我会回来找我的猎物的。”</p>
 <p>脸上早已糊成一片，我用力抹了抹，却赶不走那种黏腻感，血迹也好，涎液也罢，早就在热气的蒸腾下凝固了，或许还混合着那滴泪。它看着我脏兮兮的样子，笑着应了声，挽住我的手带着我往死之湖飞去。</p>
 <p>哈，切雷塔这副不称职的老师模样，现在只有我知道了。眼泪的味道，再也不会有人为我解答了。</p>
-]]></content>
-      <categories>
-        <category>产出</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>I&#39;m Only Sleeping</title>
-    <url>/2026/07/07/I&#39;m%20Only%20Sleeping/</url>
-    <content><![CDATA[<h1 id="前言">前言</h1>
-<p>密密的最终幻想（</p>
-<h1 id="正文">正文</h1>
-<p>有多久没睡过完整的一觉了。</p>
-<p>白日没有运送尸体的活找上门，无聊地度过一天光阴，在困倦中逐渐失去意识，一夜无梦，第二日懒洋洋地被太阳照醒；或是历经一番大战，修复好受损的血肉，就地躺下任凭自己昏迷，醒来再回船上待业。</p>
-<p>我好想再完整地睡一觉。</p>
-<p>上好的熊皮一定要准备一张，我要裹着它睡在雪被里。剩下的肉就在一旁的篝火上烧着吧，噢，讲起这个，烤肉酱好像用完了啊，我得抽个空去森林里再煮一锅，这次双子应该没那么多废话了吧。诶，好像忘了什么，之前不是说要和布拉德利一起去搜刮双子的房间来着，后来怎么没去呢？好烦，现在奥兹晚上恢复魔力了，就算趁天黑出击，大概也会被拦下来。那对双子总是搬救兵，丧失了半身力量的下场就是这样吗，真可怜。还是直接去闯魔王的城堡吧，也该到了一决胜负的时候了，我会证明自己才是夜之帝王的。日子就该这么过才对啊，马上就想传送过去打上一架。</p>
-<p>“クーレ・メミニ。”</p>
-<p>什么动静。</p>
-<p>我睁开眼，侧身躲开，但还是被蹭掉一大块皮。</p>
-<p>“アルシム。”</p>
-<p>欧文，它怎么在这里？</p>
-<p>“密斯拉，闯进梦之森，不需要先向主人打声招呼吗？”</p>
-<p>啊，我在梦之森，大灾厄还没结束，觉也根本没睡成。做了个可笑的白日梦，现在还被吵醒了，真烦人。</p>
-<p>“你是蠢货吗，呵呵……听不懂话也没关系，来了梦之森，总要留下点什么来滋养它吧，睡不着觉的你连梦境都没法提供，我就替可怜的它主持一下公道吧。”</p>
-<p>好想睡觉。</p>
-<p>总之，先解决眼前的挑衅吧，说不定，这次打累了可以睡个好觉呢。</p>
 ]]></content>
       <categories>
         <category>产出</category>
@@ -10339,9 +10339,9 @@ e.g. <code>``` bash</code> xxx <code>```</code></li>
 <ul>
 <li><code>\sin</code></li>
 <li><code>\sqrt[n]{expression}</code> 
-    <span id="mjx-3c05b428">
+    <span id="mjx-1c4a396">
       <style>
-      #mjx-3c05b428{
+      #mjx-1c4a396{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10501,9 +10501,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\times</code> 
-    <span id="mjx-65b8943">
+    <span id="mjx-e3cd843">
       <style>
-      #mjx-65b8943{
+      #mjx-e3cd843{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10662,9 +10662,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0.02ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>×</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\div</code> 
-    <span id="mjx-fb718368">
+    <span id="mjx-d87f8a1">
       <style>
-      #mjx-fb718368{
+      #mjx-d87f8a1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10823,9 +10823,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.081ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.296ex" role="img" focusable="false" viewBox="0 -537 778 573" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="F7" d="M318 466Q318 500 339 518T386 537Q418 537 438 517T458 466Q458 438 440 417T388 396Q355 396 337 417T318 466ZM56 237T56 250T70 270H706Q721 262 721 250T706 230H70Q56 237 56 250ZM318 34Q318 68 339 86T386 105Q418 105 438 85T458 34Q458 6 440 -15T388 -36Q355 -36 337 -15T318 34Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>÷</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\cdot</code> 
-    <span id="mjx-626e4378">
+    <span id="mjx-c034d3a8">
       <style>
-      #mjx-626e4378{
+      #mjx-c034d3a8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10985,9 +10985,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\sum</code> 
-    <span id="mjx-a2f02ba8">
+    <span id="mjx-0ce34e38">
       <style>
-      #mjx-a2f02ba8{
+      #mjx-0ce34e38{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11146,9 +11146,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="2.389ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 1056 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2211" d="M61 748Q64 750 489 750H913L954 640Q965 609 976 579T993 533T999 516H979L959 517Q936 579 886 621T777 682Q724 700 655 705T436 710H319Q183 710 183 709Q186 706 348 484T511 259Q517 250 513 244L490 216Q466 188 420 134T330 27L149 -187Q149 -188 362 -188Q388 -188 436 -188T506 -189Q679 -189 778 -162T936 -43Q946 -27 959 6H999L913 -249L489 -250Q65 -250 62 -248Q56 -246 56 -239Q56 -234 118 -161Q186 -81 245 -11L428 206Q428 207 242 462L57 717L56 728Q56 744 61 748Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∑</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\int</code> 
-    <span id="mjx-3a74811">
+    <span id="mjx-d71b362">
       <style>
-      #mjx-3a74811{
+      #mjx-d71b362{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11307,9 +11307,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.691ex;" xmlns="http://www.w3.org/2000/svg" width="1.38ex" height="2.514ex" role="img" focusable="false" viewBox="0 -805.5 610 1111" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo" transform="translate(0 0.5)"><path data-c="222B" d="M113 -244Q113 -246 119 -251T139 -263T167 -269Q186 -269 199 -260Q220 -247 232 -218T251 -133T262 -15T276 155T297 367Q300 390 305 438T314 512T325 580T340 647T361 703T390 751T428 784T479 804Q481 804 488 804T501 805Q552 802 581 769T610 695Q610 669 594 657T561 645Q542 645 527 658T512 694Q512 705 516 714T526 729T538 737T548 742L552 743Q552 745 545 751T525 762T498 768Q475 768 460 756T434 716T418 652T407 559T398 444T387 300T369 133Q349 -38 337 -102T303 -207Q256 -306 169 -306Q119 -306 87 -272T55 -196Q55 -170 71 -158T104 -146Q123 -146 138 -159T153 -195Q153 -206 149 -215T139 -230T127 -238T117 -242L113 -244Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="OP">∫</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   ,<code>\lim</code> 
-    <span id="mjx-1b2d1e58">
+    <span id="mjx-8c3dd3e8">
       <style>
-      #mjx-1b2d1e58{
+      #mjx-8c3dd3e8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11469,9 +11469,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><code>\infty</code> 
-    <span id="mjx-4d98d0e8">
+    <span id="mjx-c3b67198">
       <style>
-      #mjx-4d98d0e8{
+      #mjx-c3b67198{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11638,9 +11638,9 @@ g[data-mml-node="xypic"] path {
  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A = \begin&#123;pmatrix&#125;</span><br><span class="line">a &amp; b \\\\</span><br><span class="line">c &amp; d</span><br><span class="line">\end&#123;pmatrix&#125;</span><br></pre></td></tr></table></figure>
 <p>效果：</p>
 
-    <span id="mjx-600ba5a8">
+    <span id="mjx-88bb23a8">
       <style>
-      #mjx-600ba5a8{
+      #mjx-88bb23a8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
